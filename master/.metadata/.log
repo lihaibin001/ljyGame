@@ -256,3 +256,6 @@ This warning can be switched off on the Team > Git > Confirmations and Warnings 
 
 !ENTRY org.eclipse.cdt.core 1 0 2018-09-18 09:39:21.292
 !MESSAGE Indexed 'master' (55 sources, 122 headers) in 1.88 sec: 10,493 declarations; 38,911 references; 1 unresolved inclusions; 36 syntax errors; 0 unresolved names (0%)
+
+!ENTRY com.atollic.truestudio.productmanager 1 0 2018-09-18 18:53:07.335
+!MESSAGE Unloading product manager

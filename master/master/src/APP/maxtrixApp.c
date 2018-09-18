@@ -1309,6 +1309,10 @@ static void vTimerCallback(void *p)
 
 void maxtriAppHandleMsg(uint8_t salver_id, uint8_t msg)
 {
+	if(!maxtrixAppGetGameStatus())
+	{
+		return;
+	}
 	if(salver_id == salverId1)
 	{
 		if(msg == 1)

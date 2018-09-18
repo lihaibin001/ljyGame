@@ -125,7 +125,6 @@ static void key1PressHandler(void)
 		maxtrixAppSetGameLevel(maxtrixAppGetGameLevel());
 	}
 }
-
 static void key2PressHandler(void)
 {
 	if(maxtrixAppGetShowMode() != showGameMode)
