@@ -3,5 +3,5 @@ CanApp.c:86:13:CanAppTxCompleteHalder	8	static
 CanApp.c:91:13:CanAppBuffOffHanlder	8	static
 CanApp.c:97:6:CanAppSendMsg	24	static
 CanApp.c:118:13:canAppCb	24	static
-CanApp.c:142:13:xTask	40	static
+CanApp.c:142:13:xTask	24	static
 CanApp.c:170:6:CanAppInit	16	static

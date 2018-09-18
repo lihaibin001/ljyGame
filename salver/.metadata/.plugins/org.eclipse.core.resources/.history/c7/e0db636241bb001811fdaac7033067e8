@@ -1,0 +1,33 @@
+#include "FreeRTOS.h"
+#include "task.h"
+#include "peridic.h"
+#include "eeprom.h"
+#include "iic.h"
+#include "sysclock.h"
+#include "gpioInit.h"
+#include "CanApp.h"
+#include "sys.h"
+#include "delay.h"
+
+void vApplicationDaemonTaskStartupHook( void )
+{
+	sysclock_init();
+	gpioInit();
+    CreateDisplayTask();
+    CanAppInit();
+    keyDetectInit();
+    RGBSetupRGBMatrixPorts();
+    maxtrixAppDisplayBootImage();
+    
+}
+
+void vApplicationIdleHook( void )
+{
+
+}
+
+void vApplicationTickHook( void )
+{
+    DisplayRefalsh();
+
+}

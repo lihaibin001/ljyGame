@@ -13,4 +13,4 @@ maxtrixApp.c:1274:6:maxtrixAppGetGameStatus	4	static
 maxtrixApp.c:1279:6:maxtriAppScoreIncrease	16	static
 maxtrixApp.c:1287:13:vTimerCallback	32	static
 maxtrixApp.c:1310:6:maxtriAppHandleMsg	16	static
-maxtrixApp.c:1333:6:maxtriAppInit	16	static
+maxtrixApp.c:1337:6:maxtriAppInit	16	static

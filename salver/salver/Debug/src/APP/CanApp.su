@@ -1,0 +1,7 @@
+CanApp.c:81:13:CanAppReceiveMsgHandler	32	static
+CanApp.c:100:13:CanAppTxCompleteHalder	8	static
+CanApp.c:105:13:CanAppBuffOffHanlder	8	static
+CanApp.c:111:6:CanAppSendMsg	24	static
+CanApp.c:132:13:canAppCb	24	static
+CanApp.c:156:13:xTask	24	static
+CanApp.c:184:6:CanAppInit	16	static

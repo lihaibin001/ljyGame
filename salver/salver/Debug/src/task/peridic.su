@@ -1,0 +1,9 @@
+peridic.c:23:13:peridic5ms	4	static
+peridic.c:24:13:peridic10ms	4	static
+peridic.c:25:13:peridic15ms	4	static
+peridic.c:26:13:peridic20ms	4	static
+peridic.c:27:13:peridic25ms	4	static
+peridic.c:28:13:peridic30ms	4	static
+peridic.c:30:13:peridicTask	24	static
+peridic.c:39:6:peridicTaskCreate	16	static
+peridic.c:45:6:peridicTriger	4	static

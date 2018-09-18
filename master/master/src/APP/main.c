@@ -4,10 +4,6 @@
 #include "FreeRTOS.h"
 #include "task.h"
 
-// ----- Timing definitions -------------------------------------------------
-
-extern const uint8_t IMAGE[];
-extern const uint8_t gImage_a[];
 int main()
 {
     vTaskStartScheduler();

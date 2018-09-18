@@ -154,15 +154,15 @@ static void xTask(void *pParamter)
 		}
 		else
 		{
-            can_frame_t heartbeat =
-            {
-                .length = 8,
-                .type = CAN_TYPE_DATA,
-                .format = CAN_TYPE_DATA,
-                .dataWord0 = 0,
-                .dataWord1 = 0,
-            };
-            CanAppSendMsg((can_frame_t *)&heartbeat);
+//            can_frame_t heartbeat =
+//            {
+//                .length = 8,
+//                .type = CAN_TYPE_DATA,
+//                .format = CAN_TYPE_DATA,
+//                .dataWord0 = 0,
+//                .dataWord1 = 0,
+//            };
+//            CanAppSendMsg((can_frame_t *)&heartbeat);
 		}
 	}
 }

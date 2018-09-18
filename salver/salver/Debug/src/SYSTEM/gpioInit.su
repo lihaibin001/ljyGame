@@ -1,0 +1,10 @@
+gpioInit.c:3:13:gpioInit_A	16	static
+gpioInit.c:13:13:gpioInit_B	16	static
+gpioInit.c:25:13:gpioInit_C	16	static
+gpioInit.c:38:13:gpioInit_D	16	static
+gpioInit.c:54:13:gpioInit_E	4	static
+gpioInit.c:57:13:gpioInit_F	4	static
+gpioInit.c:60:13:gpioInit_G	4	static
+gpioInit.c:65:13:gpioRemap	8	static
+gpioInit.c:70:6:gpioInit	8	static
+gpioInit.c:83:6:gpioDeinit	4	static

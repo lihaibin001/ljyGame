@@ -259,3 +259,78 @@ This warning can be switched off on the Team > Git > Confirmations and Warnings 
 
 !ENTRY com.atollic.truestudio.productmanager 1 0 2018-09-18 18:53:07.335
 !MESSAGE Unloading product manager
+!SESSION 2018-09-18 20:14:24.549 -----------------------------------------------
+eclipse.buildId=unknown
+java.version=1.8.0_152
+java.vendor=Oracle Corporation
+BootLoader constants: OS=win32, ARCH=x86, WS=win32, NL=en_US
+Command-line arguments:  -os win32 -ws win32 -arch x86
+
+!ENTRY com.atollic.truestudio.productmanager 1 0 2018-09-18 20:14:48.208
+!MESSAGE Loading product manager
+
+!ENTRY com.atollic.truestudio.productmanager 1 0 2018-09-18 20:14:48.239
+!MESSAGE OS info: Windows 10, 10.0, x86
+
+!ENTRY TrueSTUDIO 1 0 2018-09-18 20:14:51.712
+!MESSAGE Target: STM32, Version: 9.0.1, Build date: 20180420-1214, Installation dir: /C:/Program Files (x86)/Atollic/TrueSTUDIO for STM32 9.0.1/ide/
+
+!ENTRY TrueSTUDIO 1 0 2018-09-18 20:14:51.712
+!MESSAGE Workspace: C:\workspacePrivate\lijianye\code\ljyGame\master
+
+!ENTRY org.eclipse.jface 2 0 2018-09-18 20:14:56.439
+!MESSAGE Keybinding conflicts occurred.  They may interfere with normal accelerator operation.
+!SUBENTRY 1 org.eclipse.jface 2 0 2018-09-18 20:14:56.439
+!MESSAGE A conflict occurred for ALT+CTRL+T:
+Binding(ALT+CTRL+T,
+	ParameterizedCommand(Command(org.eclipse.team.svn.ui.command.EditPropertiesCommand,Show Properties,
+		,
+		Category(org.eclipse.team.svn.ui.command.category,SVN,null,true),
+		org.eclipse.ui.internal.WorkbenchHandlerServiceHandler@1d44289,
+		,,true),null),
+	org.eclipse.ui.defaultAcceleratorConfiguration,
+	org.eclipse.ui.contexts.window,,,system)
+Binding(ALT+CTRL+T,
+	ParameterizedCommand(Command(org.eclipse.tm.terminal.connector.local.command.launch,Open Local Terminal on Selection,
+		,
+		Category(org.eclipse.tm.terminal.view.ui.commands.category,Terminal Commands,null,true),
+		org.eclipse.ui.internal.WorkbenchHandlerServiceHandler@c56b32,
+		,,true),null),
+	org.eclipse.ui.defaultAcceleratorConfiguration,
+	org.eclipse.ui.contexts.window,,,system)
+
+!ENTRY com.atollic.truestudio.integration.processorexpert 0 0 2018-09-18 20:15:07.954
+!MESSAGE Atollic TrueSTUDIO Processor Expert integration is up.
+
+!ENTRY org.eclipse.egit.ui 2 0 2018-09-18 20:15:08.329
+!MESSAGE Warning: The environment variable HOME is not set. The following directory will be used to store the Git
+user global configuration and to define the default location to store repositories: 'C:\Users\murphy'. If this is
+not correct please set the HOME environment variable and restart Eclipse. Otherwise Git for Windows and
+EGit might behave differently since they see different configuration options.
+This warning can be switched off on the Team > Git > Confirmations and Warnings preference page.
+
+!ENTRY edu.hawaii.ics.csdl.jupiter 1 0 2018-09-18 20:15:08.532
+!MESSAGE Code Review is up.
+
+!ENTRY com.atollic.hardwaredebug.launch 2 0 2018-09-18 20:15:45.221
+!MESSAGE Won't launch debug session since we failed to locate the binary.
+
+!ENTRY org.eclipse.ui 4 4 2018-09-18 20:16:10.560
+!MESSAGE Referenced part does not exist yet: org.eclipse.ui.views.TaskList.
+
+!ENTRY org.eclipse.cdt.dsf 4 10005 2018-09-18 20:16:12.747
+!MESSAGE Request for monitor: 'RequestMonitor (org.eclipse.cdt.dsf.concurrent.RequestMonitor@1344971): Status ERROR: org.eclipse.cdt.dsf.gdb code=10005 Breakpoint already removed null' resulted in an error.
+!SUBENTRY 1 org.eclipse.cdt.dsf.gdb 4 10005 2018-09-18 20:16:12.747
+!MESSAGE Breakpoint already removed
+
+!ENTRY org.eclipse.cdt.dsf.gdb 4 5012 2018-09-18 21:46:18.901
+!MESSAGE Connection to target failed
+
+!ENTRY org.eclipse.cdt.dsf.gdb 4 5012 2018-09-18 21:46:34.476
+!MESSAGE Connection to target failed
+
+!ENTRY org.eclipse.cdt.dsf.gdb 4 5012 2018-09-18 21:46:56.632
+!MESSAGE Connection to target failed
+
+!ENTRY com.atollic.truestudio.productmanager 1 0 2018-09-18 22:25:33.327
+!MESSAGE Unloading product manager
