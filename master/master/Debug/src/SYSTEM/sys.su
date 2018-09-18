@@ -1,0 +1,4 @@
+sys.c:3:6:WFI_SET	4	static
+sys.c:8:6:INTX_DISABLE	4	static
+sys.c:13:6:INTX_ENABLE	4	static
+sys.c:18:6:MSR_MSP	16	static

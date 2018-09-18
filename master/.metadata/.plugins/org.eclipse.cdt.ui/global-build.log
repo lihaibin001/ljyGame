@@ -1,0 +1,506 @@
+09:45:23 **** Clean-only build of configuration Debug for project master ****
+rm -rf src/APP/maxtrixApp.o src/system_stm32f10x.d src/SYSTEM/rand.d src/APP/maxtrixApp.d src/SYSTEM/rand.o src/SYSTEM/sys.o Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_rtc.o src/HARDWARE/keyDetect.d Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_rtc.d src/HARDWARE/eeprom.d src/rgbMaxtrixLib/rgbMaxtrixFront.o src/HARDWARE/eeprom.o src/HARDWARE/keyDetect.o Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.o src/system_stm32f10x.o src/freertos/Source/event_groups.o src/freertos/Source/queue.d src/SYSTEM/delay.d Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dma.d src/freertos/Source/queue.o src/SYSTEM/delay.o Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_rcc.d Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_wwdg.d Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_rcc.o src/SYSTEM/sys.d Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_crc.d Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_crc.o src/SYSTEM/iwdog.d src/SYSTEM/iwdog.o master.elf Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_adc.d src/SYSTEM/wwdog.o src/SYSTEM/wwdog.d src/HARDWARE/RGBMatrix.o src/APP/main.d Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_wwdg.o src/APP/main.o src/task/displayTask.d src/task/displayTask.o src/freertos/Source/event_groups.d Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_fsmc.o Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_adc.o Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_fsmc.d src/rgbMaxtrixLib/rgbMaxtrixFront.d Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_i2c.o src/HARDWARE/led.d src/HARDWARE/led.o src/HARDWARE/RGBMatrix.d src/SYSTEM/iic.d src/freertos/Source/stream_buffer.o src/APP/CanApp.o src/SYSTEM/gpioInit.d src/SYSTEM/iic.o Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_i2c.d Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_usart.o src/APP/CanApp.d src/SYSTEM/gpioInit.o Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_usart.d src/freertos/Source/stream_buffer.d Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dbgmcu.d Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_sdio.d src/SYSTEM/can.d src/startup_stm32f10x_cl.o src/task/peridic.o Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_sdio.o Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dbgmcu.o Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_flash.d Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_cec.o Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dac.o Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_cec.d src/freertos/Source/portable/GCC/ARM_CM3/port.o Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_flash.o src/FFT_Library/cr4_fft_256_stm32.o src/task/peridic.d Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_dac.d src/freertos/Source/timers.d src/freertos/Source/timers.o Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_can.d src/APP/FreeRTOSHook.d Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_can.o src/APP/FreeRTOSHook.o Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_iwdg.d Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_tim.d src/freertos/Source/croutine.o Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_gpio.o Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_iwdg.o src/freertos/Source/portable/MemMang/heap_4.o Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_gpio.d src/freertos/Source/portable/MemMang/heap_4.d src/freertos/Source/croutine.d Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_spi.o Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_bkp.d src/freertos/Source/tasks.d Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_bkp.o Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_exti.d master Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_tim.o Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_spi.d Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_exti.o src/freertos/Source/list.d src/APP/stm32f10x_it.d src/freertos/Source/list.o src/freertos/Source/portable/GCC/ARM_CM3/port.d src/HARDWARE/bitmap.o src/APP/stm32f10x_it.o src/freertos/Source/tasks.o src/SYSTEM/sysclock.d src/HARDWARE/bitmap.d Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_pwr.d Libraries/STM32F10x_StdPeriph_Driver/src/misc.o src/SYSTEM/can.o src/FFT_Library/cr4_fft_64_stm32.o src/SYSTEM/sysclock.o Libraries/STM32F10x_StdPeriph_Driver/src/stm32f10x_pwr.o Libraries/STM32F10x_StdPeriph_Driver/src/misc.d 
+09:45:26 **** Rebuild of configuration Debug for project master ****
+Info: Internal Builder is used for build
+arm-atollic-eabi-gcc -c ..\Libraries\STM32F10x_StdPeriph_Driver\src\stm32f10x_dbgmcu.c -mthumb -mcpu=cortex-m3 -std=gnu11 -DSTM32F10X_CL -DUSE_STDPERIPH_DRIVER -I../src/APP -I..\src\freertos\Source\include -I..\src\freertos\Source\portable\GCC\ARM_CM3 -I..\src\HARDWARE -I..\src\rgbMaxtrixLib -I..\src\SYSTEM -I..\src\task -I../Libraries/STM32F10x_StdPeriph_Driver/inc -I../Libraries/CMSIS/Device/ST/STM32F10x/Include -I../Libraries/CMSIS/Include -O0 -ffunction-sections -fdata-sections -g -fstack-usage -Wall -specs=nano.specs -o Libraries\STM32F10x_StdPeriph_Driver\src\stm32f10x_dbgmcu.o 
+arm-atollic-eabi-gcc -c ..\Libraries\STM32F10x_StdPeriph_Driver\src\stm32f10x_bkp.c -mthumb -mcpu=cortex-m3 -std=gnu11 -DSTM32F10X_CL -DUSE_STDPERIPH_DRIVER -I../src/APP -I..\src\freertos\Source\include -I..\src\freertos\Source\portable\GCC\ARM_CM3 -I..\src\HARDWARE -I..\src\rgbMaxtrixLib -I..\src\SYSTEM -I..\src\task -I../Libraries/STM32F10x_StdPeriph_Driver/inc -I../Libraries/CMSIS/Device/ST/STM32F10x/Include -I../Libraries/CMSIS/Include -O0 -ffunction-sections -fdata-sections -g -fstack-usage -Wall -specs=nano.specs -o Libraries\STM32F10x_StdPeriph_Driver\src\stm32f10x_bkp.o 
+arm-atollic-eabi-gcc -c ..\src\APP\maxtrixApp.c -mthumb -mcpu=cortex-m3 -std=gnu11 -DSTM32F10X_CL -DUSE_STDPERIPH_DRIVER -I../src/APP -I..\src\freertos\Source\include -I..\src\freertos\Source\portable\GCC\ARM_CM3 -I..\src\HARDWARE -I..\src\rgbMaxtrixLib -I..\src\SYSTEM -I..\src\task -I../Libraries/STM32F10x_StdPeriph_Driver/inc -I../Libraries/CMSIS/Device/ST/STM32F10x/Include -I../Libraries/CMSIS/Include -O0 -ffunction-sections -fdata-sections -g -fstack-usage -Wall -specs=nano.specs -o src\APP\maxtrixApp.o 
+arm-atollic-eabi-gcc -c ..\Libraries\STM32F10x_StdPeriph_Driver\src\stm32f10x_dma.c -mthumb -mcpu=cortex-m3 -std=gnu11 -DSTM32F10X_CL -DUSE_STDPERIPH_DRIVER -I../src/APP -I..\src\freertos\Source\include -I..\src\freertos\Source\portable\GCC\ARM_CM3 -I..\src\HARDWARE -I..\src\rgbMaxtrixLib -I..\src\SYSTEM -I..\src\task -I../Libraries/STM32F10x_StdPeriph_Driver/inc -I../Libraries/CMSIS/Device/ST/STM32F10x/Include -I../Libraries/CMSIS/Include -O0 -ffunction-sections -fdata-sections -g -fstack-usage -Wall -specs=nano.specs -o Libraries\STM32F10x_StdPeriph_Driver\src\stm32f10x_dma.o 
+arm-atollic-eabi-gcc -c ..\src\freertos\Source\queue.c -mthumb -mcpu=cortex-m3 -std=gnu11 -DSTM32F10X_CL -DUSE_STDPERIPH_DRIVER -I../src/APP -I..\src\freertos\Source\include -I..\src\freertos\Source\portable\GCC\ARM_CM3 -I..\src\HARDWARE -I..\src\rgbMaxtrixLib -I..\src\SYSTEM -I..\src\task -I../Libraries/STM32F10x_StdPeriph_Driver/inc -I../Libraries/CMSIS/Device/ST/STM32F10x/Include -I../Libraries/CMSIS/Include -O0 -ffunction-sections -fdata-sections -g -fstack-usage -Wall -specs=nano.specs -o src\freertos\Source\queue.o 
+arm-atollic-eabi-gcc -c -mthumb -mcpu=cortex-m3 -DSTM32F10X_CL -DUSE_STDPERIPH_DRIVER -I../src -I../Libraries/STM32F10x_StdPeriph_Driver/inc -I../Libraries/CMSIS/Device/ST/STM32F10x/Include -I../Libraries/CMSIS/Include -g -Wa,--warn -x assembler-with-cpp -specs=nano.specs -o src\FFT_Library\cr4_fft_64_stm32.o ..\src\FFT_Library\cr4_fft_64_stm32.s 
+..\src\FFT_Library\cr4_fft_64_stm32.s: Assembler messages:
+..\src\FFT_Library\cr4_fft_64_stm32.s:1: Error: junk at end of line, first unrecognized character is `*'
+..\src\FFT_Library\cr4_fft_64_stm32.s:2: Error: junk at end of line, first unrecognized character is `*'
+..\src\FFT_Library\cr4_fft_64_stm32.s:3: Error: junk at end of line, first unrecognized character is `*'
+..\src\FFT_Library\cr4_fft_64_stm32.s:4: Error: junk at end of line, first unrecognized character is `*'
+..\src\FFT_Library\cr4_fft_64_stm32.s:5: Error: junk at end of line, first unrecognized character is `*'
+..\src\FFT_Library\cr4_fft_64_stm32.s:6: Error: junk at end of line, first unrecognized character is `*'
+..\src\FFT_Library\cr4_fft_64_stm32.s:7: Error: junk at end of line, first unrecognized character is `*'
+..\src\FFT_Library\cr4_fft_64_stm32.s:8: Error: junk at end of line, first unrecognized character is `*'
+..\src\FFT_Library\cr4_fft_64_stm32.s:9: Error: junk at end of line, first unrecognized character is `*'
+..\src\FFT_Library\cr4_fft_64_stm32.s:10: Error: junk at end of line, first unrecognized character is `*'
+..\src\FFT_Library\cr4_fft_64_stm32.s:11: Error: junk at end of line, first unrecognized character is `*'
+..\src\FFT_Library\cr4_fft_64_stm32.s:12: Error: junk at end of line, first unrecognized character is `*'
+..\src\FFT_Library\cr4_fft_64_stm32.s:13: Error: junk at end of line, first unrecognized character is `*'
+..\src\FFT_Library\cr4_fft_64_stm32.s:14: Error: junk at end of line, first unrecognized character is `*'
+..\src\FFT_Library\cr4_fft_64_stm32.s:16: Error: bad instruction `thumb'
+..\src\FFT_Library\cr4_fft_64_stm32.s:17: Error: bad instruction `require8'
+..\src\FFT_Library\cr4_fft_64_stm32.s:18: Error: bad instruction `preserve8'
+..\src\FFT_Library\cr4_fft_64_stm32.s:20: Error: bad instruction `area |.text|,CODE,READONLY,ALIGN=2'
+..\src\FFT_Library\cr4_fft_64_stm32.s:22: Error: bad instruction `export cr4_fft_64_stm32'
+..\src\FFT_Library\cr4_fft_64_stm32.s:23: Error: bad instruction `extern TableFFT'
+..\src\FFT_Library\cr4_fft_64_stm32.s:26: Error: bad instruction `pssk RN R0'
+..\src\FFT_Library\cr4_fft_64_stm32.s:27: Error: bad instruction `pssout RN R0'
+..\src\FFT_Library\cr4_fft_64_stm32.s:28: Error: bad instruction `pssx RN R1'
+..\src\FFT_Library\cr4_fft_64_stm32.s:29: Error: bad instruction `pssin RN R1'
+..\src\FFT_Library\cr4_fft_64_stm32.s:30: Error: bad instruction `butternbr RN R2'
+..\src\FFT_Library\cr4_fft_64_stm32.s:31: Error: bad instruction `nbin RN R2'
+..\src\FFT_Library\cr4_fft_64_stm32.s:32: Error: bad instruction `index RN R3'
+..\src\FFT_Library\cr4_fft_64_stm32.s:33: Error: bad instruction `ar RN R4'
+..\src\FFT_Library\cr4_fft_64_stm32.s:34: Error: bad instruction `ai RN R5'
+..\src\FFT_Library\cr4_fft_64_stm32.s:35: Error: bad instruction `br RN R6'
+..\src\FFT_Library\cr4_fft_64_stm32.s:36: Error: bad instruction `bi RN R7'
+..\src\FFT_Library\cr4_fft_64_stm32.s:37: Error: bad instruction `cr RN R8'
+..\src\FFT_Library\cr4_fft_64_stm32.s:38: Error: bad instruction `ci RN R9'
+..\src\FFT_Library\cr4_fft_64_stm32.s:39: Error: bad instruction `dr RN R10'
+..\src\FFT_Library\cr4_fft_64_stm32.s:40: Error: bad instruction `di RN R11'
+..\src\FFT_Library\cr4_fft_64_stm32.s:41: Error: bad instruction `cntrbitrev RN R12'
+..\src\FFT_Library\cr4_fft_64_stm32.s:42: Error: bad instruction `tmp RN R12'
+..\src\FFT_Library\cr4_fft_64_stm32.s:43: Error: bad instruction `pssin2 RN R14'
+..\src\FFT_Library\cr4_fft_64_stm32.s:44: Error: bad instruction `tmp2 RN R14'
+..\src\FFT_Library\cr4_fft_64_stm32.s:46: Error: bad instruction `npt EQU 64'
+..\src\FFT_Library\cr4_fft_64_stm32.s:48: Error: junk at end of line, first unrecognized character is `-'
+..\src\FFT_Library\cr4_fft_64_stm32.s:50: Error: bad instruction `macro'
+..\src\FFT_Library\cr4_fft_64_stm32.s:51: Error: bad instruction `dec $reg'
+..\src\FFT_Library\cr4_fft_64_stm32.s:52: Error: ARM register expected -- `sub $reg,$reg,#1'
+..\src\FFT_Library\cr4_fft_64_stm32.s:53: Error: bad instruction `mend'
+..\src\FFT_Library\cr4_fft_64_stm32.s:55: Error: bad instruction `macro'
+..\src\FFT_Library\cr4_fft_64_stm32.s:56: Error: bad instruction `inc $reg'
+..\src\FFT_Library\cr4_fft_64_stm32.s:57: Error: ARM register expected -- `add $reg,$reg,#1'
+..\src\FFT_Library\cr4_fft_64_stm32.s:58: Error: bad instruction `mend'
+..\src\FFT_Library\cr4_fft_64_stm32.s:61: Error: bad instruction `macro'
+..\src\FFT_Library\cr4_fft_64_stm32.s:62: Error: bad instruction `quad $reg'
+..\src\FFT_Library\cr4_fft_64_stm32.s:63: Error: ARM register expected -- `mov $reg,$reg,LSL#2'
+..\src\FFT_Library\cr4_fft_64_stm32.s:64: Error: bad instruction `mend'
+..\src\FFT_Library\cr4_fft_64_stm32.s:66: Error: bad expression
+..\src\FFT_Library\cr4_fft_64_stm32.s:66: Error: junk at end of line, first unrecognized character is `('
+..\src\FFT_Library\cr4_fft_64_stm32.s:66: Error: bad expression
+..\src\FFT_Library\cr4_fft_64_stm32.s:66: Error: junk at end of line, first unrecognized character is `P'
+..\src\FFT_Library\cr4_fft_64_stm32.s:66: Error: bad instruction `pssx +=offset'
+..\src\FFT_Library\cr4_fft_64_stm32.s:68: Error: bad instruction `macro'
+..\src\FFT_Library\cr4_fft_64_stm32.s:69: Error: bad instruction `ldr2q $sXr,$sXi,$PssX,$offset'
+..\src\FFT_Library\cr4_fft_64_stm32.s:70: Error: ARM register expected -- `ldrsh $sXi,[$PssX,#2]'
+..\src\FFT_Library\cr4_fft_64_stm32.s:71: Error: ARM register expected -- `ldrsh $sXr,[$PssX]'
+..\src\FFT_Library\cr4_fft_64_stm32.s:72: Error: ARM register expected -- `add $PssX,$PssX,$offset'
+..\src\FFT_Library\cr4_fft_64_stm32.s:73: Error: bad instruction `mend'
+..\src\FFT_Library\cr4_fft_64_stm32.s:75: Error: junk at end of line, first unrecognized character is `!'
+..\src\FFT_Library\cr4_fft_64_stm32.s:76: Error: bad instruction `macro'
+..\src\FFT_Library\cr4_fft_64_stm32.s:77: Error: bad instruction `ldr2qm $sXr,$sXi,$PssX,$offset'
+..\src\FFT_Library\cr4_fft_64_stm32.s:78: Error: ARM register expected -- `ldrsh $sXi,[$PssX,#2]'
+..\src\FFT_Library\cr4_fft_64_stm32.s:79: Error: ARM register expected -- `ldrsh $sXr,[$PssX]'
+..\src\FFT_Library\cr4_fft_64_stm32.s:80: Error: ARM register expected -- `sub $PssX,$PssX,$offset'
+..\src\FFT_Library\cr4_fft_64_stm32.s:81: Error: bad instruction `mend'
+..\src\FFT_Library\cr4_fft_64_stm32.s:83: Error: junk at end of line, first unrecognized character is `('
+..\src\FFT_Library\cr4_fft_64_stm32.s:83: Error: junk at end of line, first unrecognized character is `*'
+..\src\FFT_Library\cr4_fft_64_stm32.s:83: Error: bad instruction `pssx +=offset'
+..\src\FFT_Library\cr4_fft_64_stm32.s:84: Error: bad instruction `macro'
+..\src\FFT_Library\cr4_fft_64_stm32.s:85: Error: bad instruction `str2q $sXr,$sXi,$PssX,$offset'
+..\src\FFT_Library\cr4_fft_64_stm32.s:86: Error: ARM register expected -- `strh $sXi,[$PssX,#2]'
+..\src\FFT_Library\cr4_fft_64_stm32.s:87: Error: ARM register expected -- `strh $sXr,[$PssX]'
+..\src\FFT_Library\cr4_fft_64_stm32.s:88: Error: ARM register expected -- `add $PssX,$PssX,$offset'
+..\src\FFT_Library\cr4_fft_64_stm32.s:89: Error: bad instruction `mend'
+..\src\FFT_Library\cr4_fft_64_stm32.s:91: Error: junk at end of line, first unrecognized character is `('
+..\src\FFT_Library\cr4_fft_64_stm32.s:93: Error: bad instruction `use the following trick'
+..\src\FFT_Library\cr4_fft_64_stm32.s:95: Error: bad instruction `macro'
+..\src\FFT_Library\cr4_fft_64_stm32.s:96: Error: bad instruction `cxmul_v7 $YYr,$YYi,$Yr,$Yi,$Kr,$Ki,$tmp,$tmp2'
+..\src\FFT_Library\cr4_fft_64_stm32.s:97: Error: ARM register expected -- `sub $tmp2,$Yi,$Yr'
+..\src\FFT_Library\cr4_fft_64_stm32.s:97: Error: bad instruction `syi-sYr'
+..\src\FFT_Library\cr4_fft_64_stm32.s:98: Error: ARM register expected -- `mul $tmp,$tmp2,$Ki'
+..\src\FFT_Library\cr4_fft_64_stm32.s:98: Error: junk at end of line, first unrecognized character is `('
+..\src\FFT_Library\cr4_fft_64_stm32.s:99: Error: ARM register expected -- `add $tmp2,$Kr,$Ki,LSL#1'
+..\src\FFT_Library\cr4_fft_64_stm32.s:99: Error: junk at end of line, first unrecognized character is `('
+..\src\FFT_Library\cr4_fft_64_stm32.s:100: Error: ARM register expected -- `mla $YYi,$Yi,$Kr,$tmp'
+..\src\FFT_Library\cr4_fft_64_stm32.s:101: Error: ARM register expected -- `mla $YYr,$Yr,$tmp2,$tmp'
+..\src\FFT_Library\cr4_fft_64_stm32.s:102: Error: bad instruction `mend'
+..\src\FFT_Library\cr4_fft_64_stm32.s:104: Error: bad instruction `four point complex Fast Fourier Transform'
+..\src\FFT_Library\cr4_fft_64_stm32.s:105: Error: bad instruction `macro'
+..\src\FFT_Library\cr4_fft_64_stm32.s:106: Error: bad instruction `cxadda4 $s'
+..\src\FFT_Library\cr4_fft_64_stm32.s:107: Error: junk at end of line, first unrecognized character is `('
+..\src\FFT_Library\cr4_fft_64_stm32.s:108: Error: ARM register expected -- `add Cr,Cr,Dr'
+..\src\FFT_Library\cr4_fft_64_stm32.s:109: Error: ARM register expected -- `add Ci,Ci,Di'
+..\src\FFT_Library\cr4_fft_64_stm32.s:110: Error: ARM register expected -- `sub Dr,Cr,Dr,LSL#1'
+..\src\FFT_Library\cr4_fft_64_stm32.s:111: Error: ARM register expected -- `sub Di,Ci,Di,LSL#1'
+..\src\FFT_Library\cr4_fft_64_stm32.s:112: Error: junk at end of line, first unrecognized character is `('
+..\src\FFT_Library\cr4_fft_64_stm32.s:113: Error: ARM register expected -- `mov Ar,Ar,ASR#2'
+..\src\FFT_Library\cr4_fft_64_stm32.s:114: Error: ARM register expected -- `mov Ai,Ai,ASR#2'
+..\src\FFT_Library\cr4_fft_64_stm32.s:115: Error: ARM register expected -- `add Ar,Ar,Br,ASR#(2+$s)'
+..\src\FFT_Library\cr4_fft_64_stm32.s:116: Error: ARM register expected -- `add Ai,Ai,Bi,ASR#(2+$s)'
+..\src\FFT_Library\cr4_fft_64_stm32.s:117: Error: ARM register expected -- `sub Br,Ar,Br,ASR#(1+$s)'
+..\src\FFT_Library\cr4_fft_64_stm32.s:118: Error: ARM register expected -- `sub Bi,Ai,Bi,ASR#(1+$s)'
+..\src\FFT_Library\cr4_fft_64_stm32.s:119: Error: junk at end of line, first unrecognized character is `('
+..\src\FFT_Library\cr4_fft_64_stm32.s:120: Error: ARM register expected -- `add Ar,Ar,Cr,ASR#(2+$s)'
+..\src\FFT_Library\cr4_fft_64_stm32.s:121: Error: ARM register expected -- `add Ai,Ai,Ci,ASR#(2+$s)'
+..\src\FFT_Library\cr4_fft_64_stm32.s:122: Error: ARM register expected -- `sub Cr,Ar,Cr,ASR#(1+$s)'
+..\src\FFT_Library\cr4_fft_64_stm32.s:123: Error: ARM register expected -- `sub Ci,Ai,Ci,ASR#(1+$s)'
+..\src\FFT_Library\cr4_fft_64_stm32.s:124: Error: junk at end of line, first unrecognized character is `('
+..\src\FFT_Library\cr4_fft_64_stm32.s:125: Error: ARM register expected -- `add Br,Br,Di,ASR#(2+$s)'
+..\src\FFT_Library\cr4_fft_64_stm32.s:126: Error: ARM register expected -- `sub Bi,Bi,Dr,ASR#(2+$s)'
+..\src\FFT_Library\cr4_fft_64_stm32.s:127: Error: ARM register expected -- `sub Di,Br,Di,ASR#(1+$s)'
+..\src\FFT_Library\cr4_fft_64_stm32.s:128: Error: ARM register expected -- `add Dr,Bi,Dr,ASR#(1+$s)'
+..\src\FFT_Library\cr4_fft_64_stm32.s:129: Error: bad instruction `mend'
+..\src\FFT_Library\cr4_fft_64_stm32.s:132: Error: bad instruction `macro'
+..\src\FFT_Library\cr4_fft_64_stm32.s:133: Error: bad instruction `butfly4zero_opt $pIN,$offset,$pOUT'
+..\src\FFT_Library\cr4_fft_64_stm32.s:134: Error: ARM register expected -- `ldrsh Ai,[$pIN,#2]'
+..\src\FFT_Library\cr4_fft_64_stm32.s:135: Error: ARM register expected -- `ldrsh Ar,[$pIN],#NPT'
+..\src\FFT_Library\cr4_fft_64_stm32.s:136: Error: ARM register expected -- `ldrsh Ci,[$pIN,#2]'
+..\src\FFT_Library\cr4_fft_64_stm32.s:137: Error: ARM register expected -- `ldrsh Cr,[$pIN],#NPT'
+..\src\FFT_Library\cr4_fft_64_stm32.s:138: Error: ARM register expected -- `ldrsh Bi,[$pIN,#2]'
+..\src\FFT_Library\cr4_fft_64_stm32.s:139: Error: ARM register expected -- `ldrsh Br,[$pIN],#NPT'
+..\src\FFT_Library\cr4_fft_64_stm32.s:140: Error: ARM register expected -- `ldrsh Di,[$pIN,#2]'
+..\src\FFT_Library\cr4_fft_64_stm32.s:141: Error: ARM register expected -- `ldrsh Dr,[$pIN],#NPT'
+..\src\FFT_Library\cr4_fft_64_stm32.s:142: Error: junk at end of line, first unrecognized character is `('
+..\src\FFT_Library\cr4_fft_64_stm32.s:143: Error: ARM register expected -- `add Cr,Cr,Dr'
+..\src\FFT_Library\cr4_fft_64_stm32.s:144: Error: ARM register expected -- `add Ci,Ci,Di'
+..\src\FFT_Library\cr4_fft_64_stm32.s:145: Error: ARM register expected -- `sub Dr,Cr,Dr,LSL#1'
+..\src\FFT_Library\cr4_fft_64_stm32.s:145: Error: bad instruction `trick'
+..\src\FFT_Library\cr4_fft_64_stm32.s:146: Error: ARM register expected -- `sub Di,Ci,Di,LSL#1'
+..\src\FFT_Library\cr4_fft_64_stm32.s:146: Error: bad instruction `trick'
+..\src\FFT_Library\cr4_fft_64_stm32.s:147: Error: junk at end of line, first unrecognized character is `('
+..\src\FFT_Library\cr4_fft_64_stm32.s:148: Error: ARM register expected -- `mov Ar,Ar,ASR#2'
+..\src\FFT_Library\cr4_fft_64_stm32.s:149: Error: ARM register expected -- `mov Ai,Ai,ASR#2'
+..\src\FFT_Library\cr4_fft_64_stm32.s:150: Error: ARM register expected -- `add Ar,Ar,Br,ASR#2'
+..\src\FFT_Library\cr4_fft_64_stm32.s:151: Error: ARM register expected -- `add Ai,Ai,Bi,ASR#2'
+..\src\FFT_Library\cr4_fft_64_stm32.s:152: Error: ARM register expected -- `sub Br,Ar,Br,ASR#1'
+..\src\FFT_Library\cr4_fft_64_stm32.s:153: Error: ARM register expected -- `sub Bi,Ai,Bi,ASR#1'
+..\src\FFT_Library\cr4_fft_64_stm32.s:154: Error: junk at end of line, first unrecognized character is `('
+..\src\FFT_Library\cr4_fft_64_stm32.s:155: Error: ARM register expected -- `add Ar,Ar,Cr,ASR#2'
+..\src\FFT_Library\cr4_fft_64_stm32.s:156: Error: ARM register expected -- `add Ai,Ai,Ci,ASR#2'
+..\src\FFT_Library\cr4_fft_64_stm32.s:157: Error: ARM register expected -- `sub Cr,Ar,Cr,ASR#1'
+..\src\FFT_Library\cr4_fft_64_stm32.s:158: Error: ARM register expected -- `sub Ci,Ai,Ci,ASR#1'
+..\src\FFT_Library\cr4_fft_64_stm32.s:159: Error: junk at end of line, first unrecognized character is `('
+..\src\FFT_Library\cr4_fft_64_stm32.s:160: Error: ARM register expected -- `add Br,Br,Di,ASR#2'
+..\src\FFT_Library\cr4_fft_64_stm32.s:161: Error: ARM register expected -- `sub Bi,Bi,Dr,ASR#2'
+..\src\FFT_Library\cr4_fft_64_stm32.s:162: Error: ARM register expected -- `sub Di,Br,Di,ASR#1'
+..\src\FFT_Library\cr4_fft_64_stm32.s:163: Error: ARM register expected -- `add Dr,Bi,Dr,ASR#1'
+..\src\FFT_Library\cr4_fft_64_stm32.s:165: Error: ARM register expected -- `strh Ai,[$pOUT,#2]'
+..\src\FFT_Library\cr4_fft_64_stm32.s:166: Error: ARM register expected -- `strh Ar,[$pOUT],#4'
+..\src\FFT_Library\cr4_fft_64_stm32.s:167: Error: ARM register expected -- `strh Bi,[$pOUT,#2]'
+..\src\FFT_Library\cr4_fft_64_stm32.s:168: Error: ARM register expected -- `strh Br,[$pOUT],#4'
+..\src\FFT_Library\cr4_fft_64_stm32.s:169: Error: ARM register expected -- `strh Ci,[$pOUT,#2]'
+..\src\FFT_Library\cr4_fft_64_stm32.s:170: Error: ARM register expected -- `strh Cr,[$pOUT],#4'
+..\src\FFT_Library\cr4_fft_64_stm32.s:171: Error: ARM register expected -- `strh Dr,[$pOUT,#2]'
+..\src\FFT_Library\cr4_fft_64_stm32.s:171: Error: bad instruction `inversion here'
+..\src\FFT_Library\cr4_fft_64_stm32.s:172: Error: ARM register expected -- `strh Di,[$pOUT],#4'
+..\src\FFT_Library\cr4_fft_64_stm32.s:173: Error: bad instruction `mend'
+..\src\FFT_Library\cr4_fft_64_stm32.s:175: Error: bad instruction `macro'
+..\src\FFT_Library\cr4_fft_64_stm32.s:176: Error: bad instruction `butfly4_v7 $pssDin,$offset,$pssDout,$qformat,$pssK'
+..\src\FFT_Library\cr4_fft_64_stm32.s:177: Error: bad instruction `ldr2qm Ar,Ai,$pssDin,$offset'
+..\src\FFT_Library\cr4_fft_64_stm32.s:177: Error: junk at end of line, first unrecognized character is `-'
+..\src\FFT_Library\cr4_fft_64_stm32.s:178: Error: bad instruction `ldr2q Dr,Di,$pssK,#4'
+..\src\FFT_Library\cr4_fft_64_stm32.s:179: Error: bad instruction `format CXMUL_V7 YYr,YYi,Yr,Yi,Kr,Ki,tmp,tmp2'
+..\src\FFT_Library\cr4_fft_64_stm32.s:180: Error: bad instruction `cxmul_v7 Dr,Di,Ar,Ai,Dr,Di,tmp,tmp2'
+..\src\FFT_Library\cr4_fft_64_stm32.s:181: Error: bad instruction `ldr2qm Ar,Ai,$pssDin,$offset'
+..\src\FFT_Library\cr4_fft_64_stm32.s:181: Error: junk at end of line, first unrecognized character is `-'
+..\src\FFT_Library\cr4_fft_64_stm32.s:182: Error: bad instruction `ldr2q Cr,Ci,$pssK,#4'
+..\src\FFT_Library\cr4_fft_64_stm32.s:183: Error: bad instruction `cxmul_v7 Cr,Ci,Ar,Ai,Cr,Ci,tmp,tmp2'
+..\src\FFT_Library\cr4_fft_64_stm32.s:184: Error: bad instruction `ldr2qm Ar,Ai,$pssDin,$offset'
+..\src\FFT_Library\cr4_fft_64_stm32.s:184: Error: junk at end of line, first unrecognized character is `-'
+..\src\FFT_Library\cr4_fft_64_stm32.s:185: Error: bad instruction `ldr2q Br,Bi,$pssK,#4'
+..\src\FFT_Library\cr4_fft_64_stm32.s:186: Error: bad instruction `cxmul_v7 Br,Bi,Ar,Ai,Br,Bi,tmp,tmp2'
+..\src\FFT_Library\cr4_fft_64_stm32.s:187: Error: bad instruction `ldr2q Ar,Ai,$pssDin,#0'
+..\src\FFT_Library\cr4_fft_64_stm32.s:188: Error: bad instruction `cxadda4 $qformat'
+..\src\FFT_Library\cr4_fft_64_stm32.s:189: Error: ARM register expected -- `strh Ai,[$pssDout,#2]'
+..\src\FFT_Library\cr4_fft_64_stm32.s:190: Error: ARM register expected -- `strh Ar,[$pssDout]'
+..\src\FFT_Library\cr4_fft_64_stm32.s:191: Error: ARM register expected -- `add $pssDout,$pssDout,$offset'
+..\src\FFT_Library\cr4_fft_64_stm32.s:192: Error: ARM register expected -- `strh Bi,[$pssDout,#2]'
+..\src\FFT_Library\cr4_fft_64_stm32.s:193: Error: ARM register expected -- `strh Br,[$pssDout]'
+..\src\FFT_Library\cr4_fft_64_stm32.s:194: Error: ARM register expected -- `add $pssDout,$pssDout,$offset'
+..\src\FFT_Library\cr4_fft_64_stm32.s:195: Error: ARM register expected -- `strh Ci,[$pssDout,#2]'
+..\src\FFT_Library\cr4_fft_64_stm32.s:196: Error: ARM register expected -- `strh Cr,[$pssDout]'
+..\src\FFT_Library\cr4_fft_64_stm32.s:197: Error: ARM register expected -- `add $pssDout,$pssDout,$offset'
+..\src\FFT_Library\cr4_fft_64_stm32.s:198: Error: ARM register expected -- `strh Dr,[$pssDout,#2]'
+..\src\FFT_Library\cr4_fft_64_stm32.s:198: Error: bad instruction `inversion here'
+..\src\FFT_Library\cr4_fft_64_stm32.s:199: Error: ARM register expected -- `strh Di,[$pssDout],#4'
+..\src\FFT_Library\cr4_fft_64_stm32.s:200: Error: bad instruction `mend'
+..\src\FFT_Library\cr4_fft_64_stm32.s:202: Error: junk at end of line, first unrecognized character is `-'
+..\src\FFT_Library\cr4_fft_64_stm32.s:203: Error: junk at end of line, first unrecognized character is `='
+..\src\FFT_Library\cr4_fft_64_stm32.s:204: Error: junk at end of line, first unrecognized character is `*'
+..\src\FFT_Library\cr4_fft_64_stm32.s:205: Error: junk at end of line, first unrecognized character is `*'
+..\src\FFT_Library\cr4_fft_64_stm32.s:206: Error: junk at end of line, first unrecognized character is `*'
+..\src\FFT_Library\cr4_fft_64_stm32.s:207: Error: junk at end of line, first unrecognized character is `*'
+..\src\FFT_Library\cr4_fft_64_stm32.s:208: Error: junk at end of line, first unrecognized character is `*'
+..\src\FFT_Library\cr4_fft_64_stm32.s:209: Error: junk at end of line, first unrecognized character is `*'
+..\src\FFT_Library\cr4_fft_64_stm32.s:210: Error: junk at end of line, first unrecognized character is `*'
+..\src\FFT_Library\cr4_fft_64_stm32.s:211: Error: junk at end of line, first unrecognized character is `*'
+..\src\FFT_Library\cr4_fft_64_stm32.s:212: Error: junk at end of line, first unrecognized character is `*'
+..\src\FFT_Library\cr4_fft_64_stm32.s:213: Error: junk at end of line, first unrecognized character is `*'
+..\src\FFT_Library\cr4_fft_64_stm32.s:214: Error: bad instruction `cr4_fft_64_stm32'
+..\src\FFT_Library\cr4_fft_64_stm32.s:216: Error: lo register required -- `stmfd SP!,{R4-R11,LR}'
+..\src\FFT_Library\cr4_fft_64_stm32.s:218: Error: ARM register expected -- `mov cntrbitrev,#0'
+..\src\FFT_Library\cr4_fft_64_stm32.s:219: Error: ARM register expected -- `mov index,#0'
+..\src\FFT_Library\cr4_fft_64_stm32.s:221: Error: bad instruction `preloop_v7'
+..\src\FFT_Library\cr4_fft_64_stm32.s:222: Error: ARM register expected -- `add pssIN2,pssIN,cntrbitrev,LSR#26'
+..\src\FFT_Library\cr4_fft_64_stm32.s:222: Error: junk at end of line, first unrecognized character is `6'
+..\src\FFT_Library\cr4_fft_64_stm32.s:223: Error: bad instruction `butfly4zero_opt pssIN2,Nbin,pssOUT'
+..\src\FFT_Library\cr4_fft_64_stm32.s:224: Error: bad instruction `inc index'
+..\src\FFT_Library\cr4_fft_64_stm32.s:225: Error: ARM register expected -- `rbit cntrbitrev,index'
+..\src\FFT_Library\cr4_fft_64_stm32.s:226: Error: ARM register expected -- `cmp index,#16'
+..\src\FFT_Library\cr4_fft_64_stm32.s:226: Error: junk at end of line, first unrecognized character is `6'
+..\src\FFT_Library\cr4_fft_64_stm32.s:230: Error: ARM register expected -- `sub pssX,pssOUT,Nbin,LSL#2'
+..\src\FFT_Library\cr4_fft_64_stm32.s:231: Error: ARM register expected -- `mov index,#16'
+..\src\FFT_Library\cr4_fft_64_stm32.s:232: Error: ARM register expected -- `movs butternbr,Nbin,LSR#4'
+..\src\FFT_Library\cr4_fft_64_stm32.s:232: Error: bad instruction `dual use of register'
+..\src\FFT_Library\cr4_fft_64_stm32.s:234: Error: junk at end of line, first unrecognized character is `-'
+..\src\FFT_Library\cr4_fft_64_stm32.s:235: Error: bad instruction `the FFT coefficients table can be stored into Flash or RAM.'
+..\src\FFT_Library\cr4_fft_64_stm32.s:236: Error: bad instruction `the following two lines of code allow selecting the method for coefficients'
+..\src\FFT_Library\cr4_fft_64_stm32.s:237: Error: unexpected character `
+..\src\FFT_Library\cr4_fft_64_stm32.s:237: Error: bad instruction `storage.'
+..\src\FFT_Library\cr4_fft_64_stm32.s:238: Error: bad instruction `in the case of choosing coefficients in RAM,you have to:'
+..\src\FFT_Library\cr4_fft_64_stm32.s:239: Error: junk at end of line, first unrecognized character is `1'
+..\src\FFT_Library\cr4_fft_64_stm32.s:240: Error: bad instruction `in your main file.'
+..\src\FFT_Library\cr4_fft_64_stm32.s:241: Error: junk at end of line, first unrecognized character is `2'
+..\src\FFT_Library\cr4_fft_64_stm32.s:242: Error: selected processor does not support `adrl pssK,TableFFT_V7' in Thumb mode
+..\src\FFT_Library\cr4_fft_64_stm32.s:243: Error: junk at end of line, first unrecognized character is `3'
+..\src\FFT_Library\cr4_fft_64_stm32.s:244: Error: junk at end of line, first unrecognized character is `-'
+..\src\FFT_Library\cr4_fft_64_stm32.s:245: Error: selected processor does not support `adrl pssK,TableFFT_V7' in Thumb mode
+..\src\FFT_Library\cr4_fft_64_stm32.s:245: Error: bad instruction `coeff in Flash'
+..\src\FFT_Library\cr4_fft_64_stm32.s:246: Error: unexpected character `w' in type specifier
+..\src\FFT_Library\cr4_fft_64_stm32.s:246: Error: bad instruction `ldr.w pssK,=TableFFT'
+..\src\FFT_Library\cr4_fft_64_stm32.s:246: Error: bad instruction `coeff in RAM'
+..\src\FFT_Library\cr4_fft_64_stm32.s:248: Error: unknown pseudo-op: `................................'
+..\src\FFT_Library\cr4_fft_64_stm32.s:249: Error: bad instruction `passloop_v7'
+..\src\FFT_Library\cr4_fft_64_stm32.s:250: Error: ARM register expected -- `stmfd SP!,{pssX,butternbr}'
+..\src\FFT_Library\cr4_fft_64_stm32.s:251: Error: ARM register expected -- `add tmp,index,index,LSL#1'
+..\src\FFT_Library\cr4_fft_64_stm32.s:252: Error: ARM register expected -- `add pssX,pssX,tmp'
+..\src\FFT_Library\cr4_fft_64_stm32.s:253: Error: ARM register expected -- `sub butternbr,butternbr,#1<<16'
+..\src\FFT_Library\cr4_fft_64_stm32.s:254: Error: unknown pseudo-op: `................'
+..\src\FFT_Library\cr4_fft_64_stm32.s:255: Error: bad instruction `grouploop_v7'
+..\src\FFT_Library\cr4_fft_64_stm32.s:256: Error: ARM register expected -- `add butternbr,butternbr,index,LSL#(16-2)'
+..\src\FFT_Library\cr4_fft_64_stm32.s:257: Error: unknown pseudo-op: `.......'
+..\src\FFT_Library\cr4_fft_64_stm32.s:258: Error: bad instruction `butterloop_v7'
+..\src\FFT_Library\cr4_fft_64_stm32.s:259: Error: bad instruction `butfly4_v7 pssX,index,pssX,14,pssK'
+..\src\FFT_Library\cr4_fft_64_stm32.s:260: Error: ARM register expected -- `subs butternbr,butternbr,#1<<16'
+..\src\FFT_Library\cr4_fft_64_stm32.s:262: Error: unknown pseudo-op: `.......'
+..\src\FFT_Library\cr4_fft_64_stm32.s:263: Error: ARM register expected -- `add tmp,index,index,LSL#1'
+..\src\FFT_Library\cr4_fft_64_stm32.s:264: Error: ARM register expected -- `add pssX,pssX,tmp'
+..\src\FFT_Library\cr4_fft_64_stm32.s:265: Error: bad instruction `dec butternbr'
+..\src\FFT_Library\cr4_fft_64_stm32.s:266: Error: ARM register expected -- `movs tmp2,butternbr,LSL#16'
+..\src\FFT_Library\cr4_fft_64_stm32.s:268: Error: Thumb does not support conditional execution
+..\src\FFT_Library\cr4_fft_64_stm32.s:270: Error: unknown pseudo-op: `................'
+..\src\FFT_Library\cr4_fft_64_stm32.s:271: Error: ARM register expected -- `ldmfd sp!,{pssX,butternbr}'
+..\src\FFT_Library\cr4_fft_64_stm32.s:272: Error: bad instruction `quad index'
+..\src\FFT_Library\cr4_fft_64_stm32.s:273: Error: ARM register expected -- `movs butternbr,butternbr,LSR#2'
+..\src\FFT_Library\cr4_fft_64_stm32.s:273: Error: bad instruction `loop nbr/=radix'
+..\src\FFT_Library\cr4_fft_64_stm32.s:275: Error: unknown pseudo-op: `................................'
+..\src\FFT_Library\cr4_fft_64_stm32.s:276: Error: lo register required -- `ldmfd SP!,{R4-R11,PC}'
+..\src\FFT_Library\cr4_fft_64_stm32.s:278: Error: junk at end of line, first unrecognized character is `='
+..\src\FFT_Library\cr4_fft_64_stm32.s:280: Error: bad instruction `tablefft_v7'
+..\src\FFT_Library\cr4_fft_64_stm32.s:282: Error: bad instruction `dcw 0x4000,0x0000,0x4000,0x0000,0x4000,0x0000'
+..\src\FFT_Library\cr4_fft_64_stm32.s:283: Error: bad instruction `dcw 0xdd5d,0x3b21,0x22a3,0x187e,0x0000,0x2d41'
+..\src\FFT_Library\cr4_fft_64_stm32.s:284: Error: bad instruction `dcw 0xa57e,0x2d41,0x0000,0x2d41,0xc000,0x4000'
+..\src\FFT_Library\cr4_fft_64_stm32.s:285: Error: bad instruction `dcw 0xdd5d,0xe782,0xdd5d,0x3b21,0xa57e,0x2d41'
+..\src\FFT_Library\cr4_fft_64_stm32.s:287: Error: bad instruction `dcw 0x4000,0x0000,0x4000,0x0000,0x4000,0x0000'
+..\src\FFT_Library\cr4_fft_64_stm32.s:288: Error: bad instruction `dcw 0x2aaa,0x1294,0x396b,0x0646,0x3249,0x0c7c'
+..\src\FFT_Library\cr4_fft_64_stm32.s:289: Error: bad instruction `dcw 0x11a8,0x238e,0x3249,0x0c7c,0x22a3,0x187e'
+..\src\FFT_Library\cr4_fft_64_stm32.s:290: Error: bad instruction `dcw 0xf721,0x3179,0x2aaa,0x1294,0x11a8,0x238e'
+..\src\FFT_Library\cr4_fft_64_stm32.s:291: Error: bad instruction `dcw 0xdd5d,0x3b21,0x22a3,0x187e,0x0000,0x2d41'
+..\src\FFT_Library\cr4_fft_64_stm32.s:292: Error: bad instruction `dcw 0xc695,0x3fb1,0x1a46,0x1e2b,0xee58,0x3537'
+..\src\FFT_Library\cr4_fft_64_stm32.s:293: Error: bad instruction `dcw 0xb4be,0x3ec5,0x11a8,0x238e,0xdd5d,0x3b21'
+..\src\FFT_Library\cr4_fft_64_stm32.s:294: Error: bad instruction `dcw 0xa963,0x3871,0x08df,0x289a,0xcdb7,0x3ec5'
+..\src\FFT_Library\cr4_fft_64_stm32.s:295: Error: bad instruction `dcw 0xa57e,0x2d41,0x0000,0x2d41,0xc000,0x4000'
+..\src\FFT_Library\cr4_fft_64_stm32.s:296: Error: bad instruction `dcw 0xa963,0x1e2b,0xf721,0x3179,0xb4be,0x3ec5'
+..\src\FFT_Library\cr4_fft_64_stm32.s:297: Error: bad instruction `dcw 0xb4be,0x0c7c,0xee58,0x3537,0xac61,0x3b21'
+..\src\FFT_Library\cr4_fft_64_stm32.s:298: Error: bad instruction `dcw 0xc695,0xf9ba,0xe5ba,0x3871,0xa73b,0x3537'
+..\src\FFT_Library\cr4_fft_64_stm32.s:299: Error: bad instruction `dcw 0xdd5d,0xe782,0xdd5d,0x3b21,0xa57e,0x2d41'
+..\src\FFT_Library\cr4_fft_64_stm32.s:300: Error: bad instruction `dcw 0xf721,0xd766,0xd556,0x3d3f,0xa73b,0x238e'
+..\src\FFT_Library\cr4_fft_64_stm32.s:301: Error: bad instruction `dcw 0x11a8,0xcac9,0xcdb7,0x3ec5,0xac61,0x187e'
+..\src\FFT_Library\cr4_fft_64_stm32.s:302: Error: bad instruction `dcw 0x2aaa,0xc2c1,0xc695,0x3fb1,0xb4be,0x0c7c'
+..\src\FFT_Library\cr4_fft_64_stm32.s:304: Error: bad instruction `end'
+..\src\FFT_Library\cr4_fft_64_stm32.s:305: Error: junk at end of line, first unrecognized character is `*'
+..\src\FFT_Library\cr4_fft_64_stm32.s:92: Error: invalid operands (*UND* and *UND* sections) for `*'
+..\src\FFT_Library\cr4_fft_64_stm32.s:94: Error: invalid operands (*UND* and *UND* sections) for `-'
+..\src\FFT_Library\cr4_fft_64_stm32.s:94: Error: invalid operands (*UND* and *UND* sections) for `*'
+..\src\FFT_Library\cr4_fft_64_stm32.s:100: Error: invalid operands (*UND* and *UND* sections) for `*'
+..\src\FFT_Library\cr4_fft_64_stm32.s:100: Error: invalid operands (*UND* and *UND* sections) for `*'
+..\src\FFT_Library\cr4_fft_64_stm32.s:101: Error: invalid operands (*UND* and *UND* sections) for `*'
+..\src\FFT_Library\cr4_fft_64_stm32.s:101: Error: invalid operands (*UND* and *UND* sections) for `*'
+09:46:04 **** Incremental Build of configuration Debug for project master ****
+Info: Internal Builder is used for build
+arm-atollic-eabi-gcc -c ..\Libraries\STM32F10x_StdPeriph_Driver\src\stm32f10x_iwdg.c -mthumb -mcpu=cortex-m3 -std=gnu11 -DSTM32F10X_CL -DUSE_STDPERIPH_DRIVER -I../src/APP -I..\src\freertos\Source\include -I..\src\freertos\Source\portable\GCC\ARM_CM3 -I..\src\HARDWARE -I..\src\rgbMaxtrixLib -I..\src\SYSTEM -I..\src\task -I../Libraries/STM32F10x_StdPeriph_Driver/inc -I../Libraries/CMSIS/Device/ST/STM32F10x/Include -I../Libraries/CMSIS/Include -O0 -ffunction-sections -fdata-sections -g -fstack-usage -Wall -specs=nano.specs -o Libraries\STM32F10x_StdPeriph_Driver\src\stm32f10x_iwdg.o 
+arm-atollic-eabi-gcc -c ..\Libraries\STM32F10x_StdPeriph_Driver\src\misc.c -mthumb -mcpu=cortex-m3 -std=gnu11 -DSTM32F10X_CL -DUSE_STDPERIPH_DRIVER -I../src/APP -I..\src\freertos\Source\include -I..\src\freertos\Source\portable\GCC\ARM_CM3 -I..\src\HARDWARE -I..\src\rgbMaxtrixLib -I..\src\SYSTEM -I..\src\task -I../Libraries/STM32F10x_StdPeriph_Driver/inc -I../Libraries/CMSIS/Device/ST/STM32F10x/Include -I../Libraries/CMSIS/Include -O0 -ffunction-sections -fdata-sections -g -fstack-usage -Wall -specs=nano.specs -o Libraries\STM32F10x_StdPeriph_Driver\src\misc.o 
+arm-atollic-eabi-gcc -c ..\Libraries\STM32F10x_StdPeriph_Driver\src\stm32f10x_rcc.c -mthumb -mcpu=cortex-m3 -std=gnu11 -DSTM32F10X_CL -DUSE_STDPERIPH_DRIVER -I../src/APP -I..\src\freertos\Source\include -I..\src\freertos\Source\portable\GCC\ARM_CM3 -I..\src\HARDWARE -I..\src\rgbMaxtrixLib -I..\src\SYSTEM -I..\src\task -I../Libraries/STM32F10x_StdPeriph_Driver/inc -I../Libraries/CMSIS/Device/ST/STM32F10x/Include -I../Libraries/CMSIS/Include -O0 -ffunction-sections -fdata-sections -g -fstack-usage -Wall -specs=nano.specs -o Libraries\STM32F10x_StdPeriph_Driver\src\stm32f10x_rcc.o 
+arm-atollic-eabi-gcc -c ..\src\freertos\Source\croutine.c -mthumb -mcpu=cortex-m3 -std=gnu11 -DSTM32F10X_CL -DUSE_STDPERIPH_DRIVER -I../src/APP -I..\src\freertos\Source\include -I..\src\freertos\Source\portable\GCC\ARM_CM3 -I..\src\HARDWARE -I..\src\rgbMaxtrixLib -I..\src\SYSTEM -I..\src\task -I../Libraries/STM32F10x_StdPeriph_Driver/inc -I../Libraries/CMSIS/Device/ST/STM32F10x/Include -I../Libraries/CMSIS/Include -O0 -ffunction-sections -fdata-sections -g -fstack-usage -Wall -specs=nano.specs -o src\freertos\Source\croutine.o 
+arm-atollic-eabi-gcc -c ..\src\HARDWARE\RGBMatrix.c -mthumb -mcpu=cortex-m3 -std=gnu11 -DSTM32F10X_CL -DUSE_STDPERIPH_DRIVER -I../src/APP -I..\src\freertos\Source\include -I..\src\freertos\Source\portable\GCC\ARM_CM3 -I..\src\HARDWARE -I..\src\rgbMaxtrixLib -I..\src\SYSTEM -I..\src\task -I../Libraries/STM32F10x_StdPeriph_Driver/inc -I../Libraries/CMSIS/Device/ST/STM32F10x/Include -I../Libraries/CMSIS/Include -O0 -ffunction-sections -fdata-sections -g -fstack-usage -Wall -specs=nano.specs -o src\HARDWARE\RGBMatrix.o 
+arm-atollic-eabi-gcc -c ..\src\SYSTEM\wwdog.c -mthumb -mcpu=cortex-m3 -std=gnu11 -DSTM32F10X_CL -DUSE_STDPERIPH_DRIVER -I../src/APP -I..\src\freertos\Source\include -I..\src\freertos\Source\portable\GCC\ARM_CM3 -I..\src\HARDWARE -I..\src\rgbMaxtrixLib -I..\src\SYSTEM -I..\src\task -I../Libraries/STM32F10x_StdPeriph_Driver/inc -I../Libraries/CMSIS/Device/ST/STM32F10x/Include -I../Libraries/CMSIS/Include -O0 -ffunction-sections -fdata-sections -g -fstack-usage -Wall -specs=nano.specs -o src\SYSTEM\wwdog.o 
+arm-atollic-eabi-gcc -c ..\src\SYSTEM\gpioInit.c -mthumb -mcpu=cortex-m3 -std=gnu11 -DSTM32F10X_CL -DUSE_STDPERIPH_DRIVER -I../src/APP -I..\src\freertos\Source\include -I..\src\freertos\Source\portable\GCC\ARM_CM3 -I..\src\HARDWARE -I..\src\rgbMaxtrixLib -I..\src\SYSTEM -I..\src\task -I../Libraries/STM32F10x_StdPeriph_Driver/inc -I../Libraries/CMSIS/Device/ST/STM32F10x/Include -I../Libraries/CMSIS/Include -O0 -ffunction-sections -fdata-sections -g -fstack-usage -Wall -specs=nano.specs -o src\SYSTEM\gpioInit.o 
+arm-atollic-eabi-gcc -c ..\src\SYSTEM\rand.c -mthumb -mcpu=cortex-m3 -std=gnu11 -DSTM32F10X_CL -DUSE_STDPERIPH_DRIVER -I../src/APP -I..\src\freertos\Source\include -I..\src\freertos\Source\portable\GCC\ARM_CM3 -I..\src\HARDWARE -I..\src\rgbMaxtrixLib -I..\src\SYSTEM -I..\src\task -I../Libraries/STM32F10x_StdPeriph_Driver/inc -I../Libraries/CMSIS/Device/ST/STM32F10x/Include -I../Libraries/CMSIS/Include -O0 -ffunction-sections -fdata-sections -g -fstack-usage -Wall -specs=nano.specs -o src\SYSTEM\rand.o 
+arm-atollic-eabi-gcc -c ..\src\SYSTEM\can.c -mthumb -mcpu=cortex-m3 -std=gnu11 -DSTM32F10X_CL -DUSE_STDPERIPH_DRIVER -I../src/APP -I..\src\freertos\Source\include -I..\src\freertos\Source\portable\GCC\ARM_CM3 -I..\src\HARDWARE -I..\src\rgbMaxtrixLib -I..\src\SYSTEM -I..\src\task -I../Libraries/STM32F10x_StdPeriph_Driver/inc -I../Libraries/CMSIS/Device/ST/STM32F10x/Include -I../Libraries/CMSIS/Include -O0 -ffunction-sections -fdata-sections -g -fstack-usage -Wall -specs=nano.specs -o src\SYSTEM\can.o 
+arm-atollic-eabi-gcc -c ..\Libraries\STM32F10x_StdPeriph_Driver\src\stm32f10x_fsmc.c -mthumb -mcpu=cortex-m3 -std=gnu11 -DSTM32F10X_CL -DUSE_STDPERIPH_DRIVER -I../src/APP -I..\src\freertos\Source\include -I..\src\freertos\Source\portable\GCC\ARM_CM3 -I..\src\HARDWARE -I..\src\rgbMaxtrixLib -I..\src\SYSTEM -I..\src\task -I../Libraries/STM32F10x_StdPeriph_Driver/inc -I../Libraries/CMSIS/Device/ST/STM32F10x/Include -I../Libraries/CMSIS/Include -O0 -ffunction-sections -fdata-sections -g -fstack-usage -Wall -specs=nano.specs -o Libraries\STM32F10x_StdPeriph_Driver\src\stm32f10x_fsmc.o 
+arm-atollic-eabi-gcc -c ..\Libraries\STM32F10x_StdPeriph_Driver\src\stm32f10x_crc.c -mthumb -mcpu=cortex-m3 -std=gnu11 -DSTM32F10X_CL -DUSE_STDPERIPH_DRIVER -I../src/APP -I..\src\freertos\Source\include -I..\src\freertos\Source\portable\GCC\ARM_CM3 -I..\src\HARDWARE -I..\src\rgbMaxtrixLib -I..\src\SYSTEM -I..\src\task -I../Libraries/STM32F10x_StdPeriph_Driver/inc -I../Libraries/CMSIS/Device/ST/STM32F10x/Include -I../Libraries/CMSIS/Include -O0 -ffunction-sections -fdata-sections -g -fstack-usage -Wall -specs=nano.specs -o Libraries\STM32F10x_StdPeriph_Driver\src\stm32f10x_crc.o 
+arm-atollic-eabi-gcc -c ..\Libraries\STM32F10x_StdPeriph_Driver\src\stm32f10x_i2c.c -mthumb -mcpu=cortex-m3 -std=gnu11 -DSTM32F10X_CL -DUSE_STDPERIPH_DRIVER -I../src/APP -I..\src\freertos\Source\include -I..\src\freertos\Source\portable\GCC\ARM_CM3 -I..\src\HARDWARE -I..\src\rgbMaxtrixLib -I..\src\SYSTEM -I..\src\task -I../Libraries/STM32F10x_StdPeriph_Driver/inc -I../Libraries/CMSIS/Device/ST/STM32F10x/Include -I../Libraries/CMSIS/Include -O0 -ffunction-sections -fdata-sections -g -fstack-usage -Wall -specs=nano.specs -o Libraries\STM32F10x_StdPeriph_Driver\src\stm32f10x_i2c.o 
+arm-atollic-eabi-gcc -c ..\src\rgbMaxtrixLib\rgbMaxtrixFront.c -mthumb -mcpu=cortex-m3 -std=gnu11 -DSTM32F10X_CL -DUSE_STDPERIPH_DRIVER -I../src/APP -I..\src\freertos\Source\include -I..\src\freertos\Source\portable\GCC\ARM_CM3 -I..\src\HARDWARE -I..\src\rgbMaxtrixLib -I..\src\SYSTEM -I..\src\task -I../Libraries/STM32F10x_StdPeriph_Driver/inc -I../Libraries/CMSIS/Device/ST/STM32F10x/Include -I../Libraries/CMSIS/Include -O0 -ffunction-sections -fdata-sections -g -fstack-usage -Wall -specs=nano.specs -o src\rgbMaxtrixLib\rgbMaxtrixFront.o 
+..\src\rgbMaxtrixLib\rgbMaxtrixFront.c:1556:40: warning: missing braces around initializer [-Wmissing-braces]
+ const struct bitmap_font apple3x5 [] = {
+                                        ^
+..\src\rgbMaxtrixLib\rgbMaxtrixFront.c:1556:40: note: (near initialization for 'apple3x5')
+arm-atollic-eabi-gcc -c ..\Libraries\STM32F10x_StdPeriph_Driver\src\stm32f10x_adc.c -mthumb -mcpu=cortex-m3 -std=gnu11 -DSTM32F10X_CL -DUSE_STDPERIPH_DRIVER -I../src/APP -I..\src\freertos\Source\include -I..\src\freertos\Source\portable\GCC\ARM_CM3 -I..\src\HARDWARE -I..\src\rgbMaxtrixLib -I..\src\SYSTEM -I..\src\task -I../Libraries/STM32F10x_StdPeriph_Driver/inc -I../Libraries/CMSIS/Device/ST/STM32F10x/Include -I../Libraries/CMSIS/Include -O0 -ffunction-sections -fdata-sections -g -fstack-usage -Wall -specs=nano.specs -o Libraries\STM32F10x_StdPeriph_Driver\src\stm32f10x_adc.o 
+arm-atollic-eabi-gcc -c ..\src\HARDWARE\keyDetect.c -mthumb -mcpu=cortex-m3 -std=gnu11 -DSTM32F10X_CL -DUSE_STDPERIPH_DRIVER -I../src/APP -I..\src\freertos\Source\include -I..\src\freertos\Source\portable\GCC\ARM_CM3 -I..\src\HARDWARE -I..\src\rgbMaxtrixLib -I..\src\SYSTEM -I..\src\task -I../Libraries/STM32F10x_StdPeriph_Driver/inc -I../Libraries/CMSIS/Device/ST/STM32F10x/Include -I../Libraries/CMSIS/Include -O0 -ffunction-sections -fdata-sections -g -fstack-usage -Wall -specs=nano.specs -o src\HARDWARE\keyDetect.o 
+arm-atollic-eabi-gcc -c ..\src\SYSTEM\sys.c -mthumb -mcpu=cortex-m3 -std=gnu11 -DSTM32F10X_CL -DUSE_STDPERIPH_DRIVER -I../src/APP -I..\src\freertos\Source\include -I..\src\freertos\Source\portable\GCC\ARM_CM3 -I..\src\HARDWARE -I..\src\rgbMaxtrixLib -I..\src\SYSTEM -I..\src\task -I../Libraries/STM32F10x_StdPeriph_Driver/inc -I../Libraries/CMSIS/Device/ST/STM32F10x/Include -I../Libraries/CMSIS/Include -O0 -ffunction-sections -fdata-sections -g -fstack-usage -Wall -specs=nano.specs -o src\SYSTEM\sys.o 
+arm-atollic-eabi-gcc -c ..\Libraries\STM32F10x_StdPeriph_Driver\src\stm32f10x_tim.c -mthumb -mcpu=cortex-m3 -std=gnu11 -DSTM32F10X_CL -DUSE_STDPERIPH_DRIVER -I../src/APP -I..\src\freertos\Source\include -I..\src\freertos\Source\portable\GCC\ARM_CM3 -I..\src\HARDWARE -I..\src\rgbMaxtrixLib -I..\src\SYSTEM -I..\src\task -I../Libraries/STM32F10x_StdPeriph_Driver/inc -I../Libraries/CMSIS/Device/ST/STM32F10x/Include -I../Libraries/CMSIS/Include -O0 -ffunction-sections -fdata-sections -g -fstack-usage -Wall -specs=nano.specs -o Libraries\STM32F10x_StdPeriph_Driver\src\stm32f10x_tim.o 
+arm-atollic-eabi-gcc -c ..\Libraries\STM32F10x_StdPeriph_Driver\src\stm32f10x_wwdg.c -mthumb -mcpu=cortex-m3 -std=gnu11 -DSTM32F10X_CL -DUSE_STDPERIPH_DRIVER -I../src/APP -I..\src\freertos\Source\include -I..\src\freertos\Source\portable\GCC\ARM_CM3 -I..\src\HARDWARE -I..\src\rgbMaxtrixLib -I..\src\SYSTEM -I..\src\task -I../Libraries/STM32F10x_StdPeriph_Driver/inc -I../Libraries/CMSIS/Device/ST/STM32F10x/Include -I../Libraries/CMSIS/Include -O0 -ffunction-sections -fdata-sections -g -fstack-usage -Wall -specs=nano.specs -o Libraries\STM32F10x_StdPeriph_Driver\src\stm32f10x_wwdg.o 
+arm-atollic-eabi-gcc -c ..\src\freertos\Source\stream_buffer.c -mthumb -mcpu=cortex-m3 -std=gnu11 -DSTM32F10X_CL -DUSE_STDPERIPH_DRIVER -I../src/APP -I..\src\freertos\Source\include -I..\src\freertos\Source\portable\GCC\ARM_CM3 -I..\src\HARDWARE -I..\src\rgbMaxtrixLib -I..\src\SYSTEM -I..\src\task -I../Libraries/STM32F10x_StdPeriph_Driver/inc -I../Libraries/CMSIS/Device/ST/STM32F10x/Include -I../Libraries/CMSIS/Include -O0 -ffunction-sections -fdata-sections -g -fstack-usage -Wall -specs=nano.specs -o src\freertos\Source\stream_buffer.o 
+arm-atollic-eabi-gcc -c ..\Libraries\STM32F10x_StdPeriph_Driver\src\stm32f10x_rtc.c -mthumb -mcpu=cortex-m3 -std=gnu11 -DSTM32F10X_CL -DUSE_STDPERIPH_DRIVER -I../src/APP -I..\src\freertos\Source\include -I..\src\freertos\Source\portable\GCC\ARM_CM3 -I..\src\HARDWARE -I..\src\rgbMaxtrixLib -I..\src\SYSTEM -I..\src\task -I../Libraries/STM32F10x_StdPeriph_Driver/inc -I../Libraries/CMSIS/Device/ST/STM32F10x/Include -I../Libraries/CMSIS/Include -O0 -ffunction-sections -fdata-sections -g -fstack-usage -Wall -specs=nano.specs -o Libraries\STM32F10x_StdPeriph_Driver\src\stm32f10x_rtc.o 
+arm-atollic-eabi-gcc -c ..\src\SYSTEM\iwdog.c -mthumb -mcpu=cortex-m3 -std=gnu11 -DSTM32F10X_CL -DUSE_STDPERIPH_DRIVER -I../src/APP -I..\src\freertos\Source\include -I..\src\freertos\Source\portable\GCC\ARM_CM3 -I..\src\HARDWARE -I..\src\rgbMaxtrixLib -I..\src\SYSTEM -I..\src\task -I../Libraries/STM32F10x_StdPeriph_Driver/inc -I../Libraries/CMSIS/Device/ST/STM32F10x/Include -I../Libraries/CMSIS/Include -O0 -ffunction-sections -fdata-sections -g -fstack-usage -Wall -specs=nano.specs -o src\SYSTEM\iwdog.o 
+arm-atollic-eabi-gcc -c ..\src\freertos\Source\portable\MemMang\heap_4.c -mthumb -mcpu=cortex-m3 -std=gnu11 -DSTM32F10X_CL -DUSE_STDPERIPH_DRIVER -I../src/APP -I..\src\freertos\Source\include -I..\src\freertos\Source\portable\GCC\ARM_CM3 -I..\src\HARDWARE -I..\src\rgbMaxtrixLib -I..\src\SYSTEM -I..\src\task -I../Libraries/STM32F10x_StdPeriph_Driver/inc -I../Libraries/CMSIS/Device/ST/STM32F10x/Include -I../Libraries/CMSIS/Include -O0 -ffunction-sections -fdata-sections -g -fstack-usage -Wall -specs=nano.specs -o src\freertos\Source\portable\MemMang\heap_4.o 
+arm-atollic-eabi-gcc -c ..\src\freertos\Source\list.c -mthumb -mcpu=cortex-m3 -std=gnu11 -DSTM32F10X_CL -DUSE_STDPERIPH_DRIVER -I../src/APP -I..\src\freertos\Source\include -I..\src\freertos\Source\portable\GCC\ARM_CM3 -I..\src\HARDWARE -I..\src\rgbMaxtrixLib -I..\src\SYSTEM -I..\src\task -I../Libraries/STM32F10x_StdPeriph_Driver/inc -I../Libraries/CMSIS/Device/ST/STM32F10x/Include -I../Libraries/CMSIS/Include -O0 -ffunction-sections -fdata-sections -g -fstack-usage -Wall -specs=nano.specs -o src\freertos\Source\list.o 
+arm-atollic-eabi-gcc -c ..\src\freertos\Source\portable\GCC\ARM_CM3\port.c -mthumb -mcpu=cortex-m3 -std=gnu11 -DSTM32F10X_CL -DUSE_STDPERIPH_DRIVER -I../src/APP -I..\src\freertos\Source\include -I..\src\freertos\Source\portable\GCC\ARM_CM3 -I..\src\HARDWARE -I..\src\rgbMaxtrixLib -I..\src\SYSTEM -I..\src\task -I../Libraries/STM32F10x_StdPeriph_Driver/inc -I../Libraries/CMSIS/Device/ST/STM32F10x/Include -I../Libraries/CMSIS/Include -O0 -ffunction-sections -fdata-sections -g -fstack-usage -Wall -specs=nano.specs -o src\freertos\Source\portable\GCC\ARM_CM3\port.o 
+arm-atollic-eabi-gcc -c ..\src\task\peridic.c -mthumb -mcpu=cortex-m3 -std=gnu11 -DSTM32F10X_CL -DUSE_STDPERIPH_DRIVER -I../src/APP -I..\src\freertos\Source\include -I..\src\freertos\Source\portable\GCC\ARM_CM3 -I..\src\HARDWARE -I..\src\rgbMaxtrixLib -I..\src\SYSTEM -I..\src\task -I../Libraries/STM32F10x_StdPeriph_Driver/inc -I../Libraries/CMSIS/Device/ST/STM32F10x/Include -I../Libraries/CMSIS/Include -O0 -ffunction-sections -fdata-sections -g -fstack-usage -Wall -specs=nano.specs -o src\task\peridic.o 
+arm-atollic-eabi-gcc -c ..\src\HARDWARE\led.c -mthumb -mcpu=cortex-m3 -std=gnu11 -DSTM32F10X_CL -DUSE_STDPERIPH_DRIVER -I../src/APP -I..\src\freertos\Source\include -I..\src\freertos\Source\portable\GCC\ARM_CM3 -I..\src\HARDWARE -I..\src\rgbMaxtrixLib -I..\src\SYSTEM -I..\src\task -I../Libraries/STM32F10x_StdPeriph_Driver/inc -I../Libraries/CMSIS/Device/ST/STM32F10x/Include -I../Libraries/CMSIS/Include -O0 -ffunction-sections -fdata-sections -g -fstack-usage -Wall -specs=nano.specs -o src\HARDWARE\led.o 
+arm-atollic-eabi-gcc -c ..\src\HARDWARE\eeprom.c -mthumb -mcpu=cortex-m3 -std=gnu11 -DSTM32F10X_CL -DUSE_STDPERIPH_DRIVER -I../src/APP -I..\src\freertos\Source\include -I..\src\freertos\Source\portable\GCC\ARM_CM3 -I..\src\HARDWARE -I..\src\rgbMaxtrixLib -I..\src\SYSTEM -I..\src\task -I../Libraries/STM32F10x_StdPeriph_Driver/inc -I../Libraries/CMSIS/Device/ST/STM32F10x/Include -I../Libraries/CMSIS/Include -O0 -ffunction-sections -fdata-sections -g -fstack-usage -Wall -specs=nano.specs -o src\HARDWARE\eeprom.o 
+arm-atollic-eabi-gcc -c -mthumb -mcpu=cortex-m3 -DSTM32F10X_CL -DUSE_STDPERIPH_DRIVER -I../src -I../Libraries/STM32F10x_StdPeriph_Driver/inc -I../Libraries/CMSIS/Device/ST/STM32F10x/Include -I../Libraries/CMSIS/Include -g -Wa,--warn -x assembler-with-cpp -specs=nano.specs -o src\startup_stm32f10x_cl.o ..\src\startup_stm32f10x_cl.s 
+arm-atollic-eabi-gcc -c ..\Libraries\STM32F10x_StdPeriph_Driver\src\stm32f10x_flash.c -mthumb -mcpu=cortex-m3 -std=gnu11 -DSTM32F10X_CL -DUSE_STDPERIPH_DRIVER -I../src/APP -I..\src\freertos\Source\include -I..\src\freertos\Source\portable\GCC\ARM_CM3 -I..\src\HARDWARE -I..\src\rgbMaxtrixLib -I..\src\SYSTEM -I..\src\task -I../Libraries/STM32F10x_StdPeriph_Driver/inc -I../Libraries/CMSIS/Device/ST/STM32F10x/Include -I../Libraries/CMSIS/Include -O0 -ffunction-sections -fdata-sections -g -fstack-usage -Wall -specs=nano.specs -o Libraries\STM32F10x_StdPeriph_Driver\src\stm32f10x_flash.o 
+arm-atollic-eabi-gcc -c ..\src\APP\main.c -mthumb -mcpu=cortex-m3 -std=gnu11 -DSTM32F10X_CL -DUSE_STDPERIPH_DRIVER -I../src/APP -I..\src\freertos\Source\include -I..\src\freertos\Source\portable\GCC\ARM_CM3 -I..\src\HARDWARE -I..\src\rgbMaxtrixLib -I..\src\SYSTEM -I..\src\task -I../Libraries/STM32F10x_StdPeriph_Driver/inc -I../Libraries/CMSIS/Device/ST/STM32F10x/Include -I../Libraries/CMSIS/Include -O0 -ffunction-sections -fdata-sections -g -fstack-usage -Wall -specs=nano.specs -o src\APP\main.o 
+arm-atollic-eabi-gcc -c ..\Libraries\STM32F10x_StdPeriph_Driver\src\stm32f10x_cec.c -mthumb -mcpu=cortex-m3 -std=gnu11 -DSTM32F10X_CL -DUSE_STDPERIPH_DRIVER -I../src/APP -I..\src\freertos\Source\include -I..\src\freertos\Source\portable\GCC\ARM_CM3 -I..\src\HARDWARE -I..\src\rgbMaxtrixLib -I..\src\SYSTEM -I..\src\task -I../Libraries/STM32F10x_StdPeriph_Driver/inc -I../Libraries/CMSIS/Device/ST/STM32F10x/Include -I../Libraries/CMSIS/Include -O0 -ffunction-sections -fdata-sections -g -fstack-usage -Wall -specs=nano.specs -o Libraries\STM32F10x_StdPeriph_Driver\src\stm32f10x_cec.o 
+arm-atollic-eabi-gcc -c ..\src\APP\FreeRTOSHook.c -mthumb -mcpu=cortex-m3 -std=gnu11 -DSTM32F10X_CL -DUSE_STDPERIPH_DRIVER -I../src/APP -I..\src\freertos\Source\include -I..\src\freertos\Source\portable\GCC\ARM_CM3 -I..\src\HARDWARE -I..\src\rgbMaxtrixLib -I..\src\SYSTEM -I..\src\task -I../Libraries/STM32F10x_StdPeriph_Driver/inc -I../Libraries/CMSIS/Device/ST/STM32F10x/Include -I../Libraries/CMSIS/Include -O0 -ffunction-sections -fdata-sections -g -fstack-usage -Wall -specs=nano.specs -o src\APP\FreeRTOSHook.o 
+arm-atollic-eabi-gcc -c ..\src\SYSTEM\sysclock.c -mthumb -mcpu=cortex-m3 -std=gnu11 -DSTM32F10X_CL -DUSE_STDPERIPH_DRIVER -I../src/APP -I..\src\freertos\Source\include -I..\src\freertos\Source\portable\GCC\ARM_CM3 -I..\src\HARDWARE -I..\src\rgbMaxtrixLib -I..\src\SYSTEM -I..\src\task -I../Libraries/STM32F10x_StdPeriph_Driver/inc -I../Libraries/CMSIS/Device/ST/STM32F10x/Include -I../Libraries/CMSIS/Include -O0 -ffunction-sections -fdata-sections -g -fstack-usage -Wall -specs=nano.specs -o src\SYSTEM\sysclock.o 
+arm-atollic-eabi-gcc -c ..\src\APP\CanApp.c -mthumb -mcpu=cortex-m3 -std=gnu11 -DSTM32F10X_CL -DUSE_STDPERIPH_DRIVER -I../src/APP -I..\src\freertos\Source\include -I..\src\freertos\Source\portable\GCC\ARM_CM3 -I..\src\HARDWARE -I..\src\rgbMaxtrixLib -I..\src\SYSTEM -I..\src\task -I../Libraries/STM32F10x_StdPeriph_Driver/inc -I../Libraries/CMSIS/Device/ST/STM32F10x/Include -I../Libraries/CMSIS/Include -O0 -ffunction-sections -fdata-sections -g -fstack-usage -Wall -specs=nano.specs -o src\APP\CanApp.o 
+arm-atollic-eabi-gcc -c ..\src\SYSTEM\delay.c -mthumb -mcpu=cortex-m3 -std=gnu11 -DSTM32F10X_CL -DUSE_STDPERIPH_DRIVER -I../src/APP -I..\src\freertos\Source\include -I..\src\freertos\Source\portable\GCC\ARM_CM3 -I..\src\HARDWARE -I..\src\rgbMaxtrixLib -I..\src\SYSTEM -I..\src\task -I../Libraries/STM32F10x_StdPeriph_Driver/inc -I../Libraries/CMSIS/Device/ST/STM32F10x/Include -I../Libraries/CMSIS/Include -O0 -ffunction-sections -fdata-sections -g -fstack-usage -Wall -specs=nano.specs -o src\SYSTEM\delay.o 
+arm-atollic-eabi-gcc -c ..\src\freertos\Source\tasks.c -mthumb -mcpu=cortex-m3 -std=gnu11 -DSTM32F10X_CL -DUSE_STDPERIPH_DRIVER -I../src/APP -I..\src\freertos\Source\include -I..\src\freertos\Source\portable\GCC\ARM_CM3 -I..\src\HARDWARE -I..\src\rgbMaxtrixLib -I..\src\SYSTEM -I..\src\task -I../Libraries/STM32F10x_StdPeriph_Driver/inc -I../Libraries/CMSIS/Device/ST/STM32F10x/Include -I../Libraries/CMSIS/Include -O0 -ffunction-sections -fdata-sections -g -fstack-usage -Wall -specs=nano.specs -o src\freertos\Source\tasks.o 
+arm-atollic-eabi-gcc -c ..\src\system_stm32f10x.c -mthumb -mcpu=cortex-m3 -std=gnu11 -DSTM32F10X_CL -DUSE_STDPERIPH_DRIVER -I../src/APP -I..\src\freertos\Source\include -I..\src\freertos\Source\portable\GCC\ARM_CM3 -I..\src\HARDWARE -I..\src\rgbMaxtrixLib -I..\src\SYSTEM -I..\src\task -I../Libraries/STM32F10x_StdPeriph_Driver/inc -I../Libraries/CMSIS/Device/ST/STM32F10x/Include -I../Libraries/CMSIS/Include -O0 -ffunction-sections -fdata-sections -g -fstack-usage -Wall -specs=nano.specs -o src\system_stm32f10x.o 
+arm-atollic-eabi-gcc -c ..\src\task\displayTask.c -mthumb -mcpu=cortex-m3 -std=gnu11 -DSTM32F10X_CL -DUSE_STDPERIPH_DRIVER -I../src/APP -I..\src\freertos\Source\include -I..\src\freertos\Source\portable\GCC\ARM_CM3 -I..\src\HARDWARE -I..\src\rgbMaxtrixLib -I..\src\SYSTEM -I..\src\task -I../Libraries/STM32F10x_StdPeriph_Driver/inc -I../Libraries/CMSIS/Device/ST/STM32F10x/Include -I../Libraries/CMSIS/Include -O0 -ffunction-sections -fdata-sections -g -fstack-usage -Wall -specs=nano.specs -o src\task\displayTask.o 
+arm-atollic-eabi-gcc -c ..\src\freertos\Source\timers.c -mthumb -mcpu=cortex-m3 -std=gnu11 -DSTM32F10X_CL -DUSE_STDPERIPH_DRIVER -I../src/APP -I..\src\freertos\Source\include -I..\src\freertos\Source\portable\GCC\ARM_CM3 -I..\src\HARDWARE -I..\src\rgbMaxtrixLib -I..\src\SYSTEM -I..\src\task -I../Libraries/STM32F10x_StdPeriph_Driver/inc -I../Libraries/CMSIS/Device/ST/STM32F10x/Include -I../Libraries/CMSIS/Include -O0 -ffunction-sections -fdata-sections -g -fstack-usage -Wall -specs=nano.specs -o src\freertos\Source\timers.o 
+arm-atollic-eabi-gcc -c ..\Libraries\STM32F10x_StdPeriph_Driver\src\stm32f10x_sdio.c -mthumb -mcpu=cortex-m3 -std=gnu11 -DSTM32F10X_CL -DUSE_STDPERIPH_DRIVER -I../src/APP -I..\src\freertos\Source\include -I..\src\freertos\Source\portable\GCC\ARM_CM3 -I..\src\HARDWARE -I..\src\rgbMaxtrixLib -I..\src\SYSTEM -I..\src\task -I../Libraries/STM32F10x_StdPeriph_Driver/inc -I../Libraries/CMSIS/Device/ST/STM32F10x/Include -I../Libraries/CMSIS/Include -O0 -ffunction-sections -fdata-sections -g -fstack-usage -Wall -specs=nano.specs -o Libraries\STM32F10x_StdPeriph_Driver\src\stm32f10x_sdio.o 
+arm-atollic-eabi-gcc -c ..\src\SYSTEM\iic.c -mthumb -mcpu=cortex-m3 -std=gnu11 -DSTM32F10X_CL -DUSE_STDPERIPH_DRIVER -I../src/APP -I..\src\freertos\Source\include -I..\src\freertos\Source\portable\GCC\ARM_CM3 -I..\src\HARDWARE -I..\src\rgbMaxtrixLib -I..\src\SYSTEM -I..\src\task -I../Libraries/STM32F10x_StdPeriph_Driver/inc -I../Libraries/CMSIS/Device/ST/STM32F10x/Include -I../Libraries/CMSIS/Include -O0 -ffunction-sections -fdata-sections -g -fstack-usage -Wall -specs=nano.specs -o src\SYSTEM\iic.o 
+arm-atollic-eabi-gcc -c ..\src\HARDWARE\bitmap.c -mthumb -mcpu=cortex-m3 -std=gnu11 -DSTM32F10X_CL -DUSE_STDPERIPH_DRIVER -I../src/APP -I..\src\freertos\Source\include -I..\src\freertos\Source\portable\GCC\ARM_CM3 -I..\src\HARDWARE -I..\src\rgbMaxtrixLib -I..\src\SYSTEM -I..\src\task -I../Libraries/STM32F10x_StdPeriph_Driver/inc -I../Libraries/CMSIS/Device/ST/STM32F10x/Include -I../Libraries/CMSIS/Include -O0 -ffunction-sections -fdata-sections -g -fstack-usage -Wall -specs=nano.specs -o src\HARDWARE\bitmap.o 
+arm-atollic-eabi-gcc -c ..\src\APP\stm32f10x_it.c -mthumb -mcpu=cortex-m3 -std=gnu11 -DSTM32F10X_CL -DUSE_STDPERIPH_DRIVER -I../src/APP -I..\src\freertos\Source\include -I..\src\freertos\Source\portable\GCC\ARM_CM3 -I..\src\HARDWARE -I..\src\rgbMaxtrixLib -I..\src\SYSTEM -I..\src\task -I../Libraries/STM32F10x_StdPeriph_Driver/inc -I../Libraries/CMSIS/Device/ST/STM32F10x/Include -I../Libraries/CMSIS/Include -O0 -ffunction-sections -fdata-sections -g -fstack-usage -Wall -specs=nano.specs -o src\APP\stm32f10x_it.o 
+arm-atollic-eabi-gcc -c ..\Libraries\STM32F10x_StdPeriph_Driver\src\stm32f10x_usart.c -mthumb -mcpu=cortex-m3 -std=gnu11 -DSTM32F10X_CL -DUSE_STDPERIPH_DRIVER -I../src/APP -I..\src\freertos\Source\include -I..\src\freertos\Source\portable\GCC\ARM_CM3 -I..\src\HARDWARE -I..\src\rgbMaxtrixLib -I..\src\SYSTEM -I..\src\task -I../Libraries/STM32F10x_StdPeriph_Driver/inc -I../Libraries/CMSIS/Device/ST/STM32F10x/Include -I../Libraries/CMSIS/Include -O0 -ffunction-sections -fdata-sections -g -fstack-usage -Wall -specs=nano.specs -o Libraries\STM32F10x_StdPeriph_Driver\src\stm32f10x_usart.o 
+arm-atollic-eabi-gcc -c ..\Libraries\STM32F10x_StdPeriph_Driver\src\stm32f10x_gpio.c -mthumb -mcpu=cortex-m3 -std=gnu11 -DSTM32F10X_CL -DUSE_STDPERIPH_DRIVER -I../src/APP -I..\src\freertos\Source\include -I..\src\freertos\Source\portable\GCC\ARM_CM3 -I..\src\HARDWARE -I..\src\rgbMaxtrixLib -I..\src\SYSTEM -I..\src\task -I../Libraries/STM32F10x_StdPeriph_Driver/inc -I../Libraries/CMSIS/Device/ST/STM32F10x/Include -I../Libraries/CMSIS/Include -O0 -ffunction-sections -fdata-sections -g -fstack-usage -Wall -specs=nano.specs -o Libraries\STM32F10x_StdPeriph_Driver\src\stm32f10x_gpio.o 
+arm-atollic-eabi-gcc -c ..\Libraries\STM32F10x_StdPeriph_Driver\src\stm32f10x_spi.c -mthumb -mcpu=cortex-m3 -std=gnu11 -DSTM32F10X_CL -DUSE_STDPERIPH_DRIVER -I../src/APP -I..\src\freertos\Source\include -I..\src\freertos\Source\portable\GCC\ARM_CM3 -I..\src\HARDWARE -I..\src\rgbMaxtrixLib -I..\src\SYSTEM -I..\src\task -I../Libraries/STM32F10x_StdPeriph_Driver/inc -I../Libraries/CMSIS/Device/ST/STM32F10x/Include -I../Libraries/CMSIS/Include -O0 -ffunction-sections -fdata-sections -g -fstack-usage -Wall -specs=nano.specs -o Libraries\STM32F10x_StdPeriph_Driver\src\stm32f10x_spi.o 
+arm-atollic-eabi-gcc -c ..\Libraries\STM32F10x_StdPeriph_Driver\src\stm32f10x_exti.c -mthumb -mcpu=cortex-m3 -std=gnu11 -DSTM32F10X_CL -DUSE_STDPERIPH_DRIVER -I../src/APP -I..\src\freertos\Source\include -I..\src\freertos\Source\portable\GCC\ARM_CM3 -I..\src\HARDWARE -I..\src\rgbMaxtrixLib -I..\src\SYSTEM -I..\src\task -I../Libraries/STM32F10x_StdPeriph_Driver/inc -I../Libraries/CMSIS/Device/ST/STM32F10x/Include -I../Libraries/CMSIS/Include -O0 -ffunction-sections -fdata-sections -g -fstack-usage -Wall -specs=nano.specs -o Libraries\STM32F10x_StdPeriph_Driver\src\stm32f10x_exti.o 
+arm-atollic-eabi-gcc -c ..\Libraries\STM32F10x_StdPeriph_Driver\src\stm32f10x_can.c -mthumb -mcpu=cortex-m3 -std=gnu11 -DSTM32F10X_CL -DUSE_STDPERIPH_DRIVER -I../src/APP -I..\src\freertos\Source\include -I..\src\freertos\Source\portable\GCC\ARM_CM3 -I..\src\HARDWARE -I..\src\rgbMaxtrixLib -I..\src\SYSTEM -I..\src\task -I../Libraries/STM32F10x_StdPeriph_Driver/inc -I../Libraries/CMSIS/Device/ST/STM32F10x/Include -I../Libraries/CMSIS/Include -O0 -ffunction-sections -fdata-sections -g -fstack-usage -Wall -specs=nano.specs -o Libraries\STM32F10x_StdPeriph_Driver\src\stm32f10x_can.o 
+arm-atollic-eabi-gcc -c ..\Libraries\STM32F10x_StdPeriph_Driver\src\stm32f10x_pwr.c -mthumb -mcpu=cortex-m3 -std=gnu11 -DSTM32F10X_CL -DUSE_STDPERIPH_DRIVER -I../src/APP -I..\src\freertos\Source\include -I..\src\freertos\Source\portable\GCC\ARM_CM3 -I..\src\HARDWARE -I..\src\rgbMaxtrixLib -I..\src\SYSTEM -I..\src\task -I../Libraries/STM32F10x_StdPeriph_Driver/inc -I../Libraries/CMSIS/Device/ST/STM32F10x/Include -I../Libraries/CMSIS/Include -O0 -ffunction-sections -fdata-sections -g -fstack-usage -Wall -specs=nano.specs -o Libraries\STM32F10x_StdPeriph_Driver\src\stm32f10x_pwr.o 
+arm-atollic-eabi-gcc -c ..\src\freertos\Source\event_groups.c -mthumb -mcpu=cortex-m3 -std=gnu11 -DSTM32F10X_CL -DUSE_STDPERIPH_DRIVER -I../src/APP -I..\src\freertos\Source\include -I..\src\freertos\Source\portable\GCC\ARM_CM3 -I..\src\HARDWARE -I..\src\rgbMaxtrixLib -I..\src\SYSTEM -I..\src\task -I../Libraries/STM32F10x_StdPeriph_Driver/inc -I../Libraries/CMSIS/Device/ST/STM32F10x/Include -I../Libraries/CMSIS/Include -O0 -ffunction-sections -fdata-sections -g -fstack-usage -Wall -specs=nano.specs -o src\freertos\Source\event_groups.o 
+arm-atollic-eabi-gcc -c ..\Libraries\STM32F10x_StdPeriph_Driver\src\stm32f10x_dac.c -mthumb -mcpu=cortex-m3 -std=gnu11 -DSTM32F10X_CL -DUSE_STDPERIPH_DRIVER -I../src/APP -I..\src\freertos\Source\include -I..\src\freertos\Source\portable\GCC\ARM_CM3 -I..\src\HARDWARE -I..\src\rgbMaxtrixLib -I..\src\SYSTEM -I..\src\task -I../Libraries/STM32F10x_StdPeriph_Driver/inc -I../Libraries/CMSIS/Device/ST/STM32F10x/Include -I../Libraries/CMSIS/Include -O0 -ffunction-sections -fdata-sections -g -fstack-usage -Wall -specs=nano.specs -o Libraries\STM32F10x_StdPeriph_Driver\src\stm32f10x_dac.o 
+arm-atollic-eabi-gcc -o master.elf Libraries\STM32F10x_StdPeriph_Driver\src\misc.o Libraries\STM32F10x_StdPeriph_Driver\src\stm32f10x_adc.o Libraries\STM32F10x_StdPeriph_Driver\src\stm32f10x_bkp.o Libraries\STM32F10x_StdPeriph_Driver\src\stm32f10x_can.o Libraries\STM32F10x_StdPeriph_Driver\src\stm32f10x_cec.o Libraries\STM32F10x_StdPeriph_Driver\src\stm32f10x_crc.o Libraries\STM32F10x_StdPeriph_Driver\src\stm32f10x_dac.o Libraries\STM32F10x_StdPeriph_Driver\src\stm32f10x_dbgmcu.o Libraries\STM32F10x_StdPeriph_Driver\src\stm32f10x_dma.o Libraries\STM32F10x_StdPeriph_Driver\src\stm32f10x_exti.o Libraries\STM32F10x_StdPeriph_Driver\src\stm32f10x_flash.o Libraries\STM32F10x_StdPeriph_Driver\src\stm32f10x_fsmc.o Libraries\STM32F10x_StdPeriph_Driver\src\stm32f10x_gpio.o Libraries\STM32F10x_StdPeriph_Driver\src\stm32f10x_i2c.o Libraries\STM32F10x_StdPeriph_Driver\src\stm32f10x_iwdg.o Libraries\STM32F10x_StdPeriph_Driver\src\stm32f10x_pwr.o Libraries\STM32F10x_StdPeriph_Driver\src\stm32f10x_rcc.o Libraries\STM32F10x_StdPeriph_Driver\src\stm32f10x_rtc.o Libraries\STM32F10x_StdPeriph_Driver\src\stm32f10x_sdio.o Libraries\STM32F10x_StdPeriph_Driver\src\stm32f10x_spi.o Libraries\STM32F10x_StdPeriph_Driver\src\stm32f10x_tim.o Libraries\STM32F10x_StdPeriph_Driver\src\stm32f10x_usart.o Libraries\STM32F10x_StdPeriph_Driver\src\stm32f10x_wwdg.o src\APP\CanApp.o src\APP\FreeRTOSHook.o src\APP\main.o src\APP\maxtrixApp.o src\APP\stm32f10x_it.o src\HARDWARE\RGBMatrix.o src\HARDWARE\bitmap.o src\HARDWARE\eeprom.o src\HARDWARE\keyDetect.o src\HARDWARE\led.o src\SYSTEM\can.o src\SYSTEM\delay.o src\SYSTEM\gpioInit.o src\SYSTEM\iic.o src\SYSTEM\iwdog.o src\SYSTEM\rand.o src\SYSTEM\sys.o src\SYSTEM\sysclock.o src\SYSTEM\wwdog.o src\freertos\Source\croutine.o src\freertos\Source\event_groups.o src\freertos\Source\list.o src\freertos\Source\portable\GCC\ARM_CM3\port.o src\freertos\Source\portable\MemMang\heap_4.o src\freertos\Source\queue.o src\freertos\Source\stream_buffer.o src\freertos\Source\tasks.o src\freertos\Source\timers.o src\rgbMaxtrixLib\rgbMaxtrixFront.o src\startup_stm32f10x_cl.o src\system_stm32f10x.o src\task\displayTask.o src\task\peridic.o -mthumb -mcpu=cortex-m3 -T../stm32_flash.ld -specs=nosys.specs -static -Wl,-cref,-u,Reset_Handler -Wl,-Map=master.map -Wl,--gc-sections -Wl,--defsym=malloc_getpagesize_P=0x80 -Wl,--start-group -lc -lm -Wl,--end-group -specs=nano.specs 
+C:\Program Files (x86)\Atollic\TrueSTUDIO for STM32 9.0.1\ide\jre\bin\java -jar C:\Program Files (x86)\Atollic\TrueSTUDIO for STM32 9.0.1\Tools\arm-atollic-reports.jar sizeinfo list master.elf 
+Generate build reports...
+Print size information
+   text	   data	    bss	    dec	    hex	filename
+  37132	    432	  24768	  62332	   f37c	master.elf
+Print size information done
+Generate listing file
+Output sent to: master.list
+Generate listing file done
+Generate build reports done
+09:55:12 **** Incremental Build of configuration Debug for project master ****
+Info: Internal Builder is used for build
+arm-atollic-eabi-gcc -c ..\src\rgbMaxtrixLib\rgbMaxtrixFront.c -mthumb -mcpu=cortex-m3 -std=gnu11 -DSTM32F10X_CL -DUSE_STDPERIPH_DRIVER -I../src/APP -I..\src\freertos\Source\include -I..\src\freertos\Source\portable\GCC\ARM_CM3 -I..\src\HARDWARE -I..\src\rgbMaxtrixLib -I..\src\SYSTEM -I..\src\task -I../Libraries/STM32F10x_StdPeriph_Driver/inc -I../Libraries/CMSIS/Device/ST/STM32F10x/Include -I../Libraries/CMSIS/Include -O0 -ffunction-sections -fdata-sections -g -fstack-usage -Wall -specs=nano.specs -o src\rgbMaxtrixLib\rgbMaxtrixFront.o 
+arm-atollic-eabi-gcc -o master.elf Libraries\STM32F10x_StdPeriph_Driver\src\misc.o Libraries\STM32F10x_StdPeriph_Driver\src\stm32f10x_adc.o Libraries\STM32F10x_StdPeriph_Driver\src\stm32f10x_bkp.o Libraries\STM32F10x_StdPeriph_Driver\src\stm32f10x_can.o Libraries\STM32F10x_StdPeriph_Driver\src\stm32f10x_cec.o Libraries\STM32F10x_StdPeriph_Driver\src\stm32f10x_crc.o Libraries\STM32F10x_StdPeriph_Driver\src\stm32f10x_dac.o Libraries\STM32F10x_StdPeriph_Driver\src\stm32f10x_dbgmcu.o Libraries\STM32F10x_StdPeriph_Driver\src\stm32f10x_dma.o Libraries\STM32F10x_StdPeriph_Driver\src\stm32f10x_exti.o Libraries\STM32F10x_StdPeriph_Driver\src\stm32f10x_flash.o Libraries\STM32F10x_StdPeriph_Driver\src\stm32f10x_fsmc.o Libraries\STM32F10x_StdPeriph_Driver\src\stm32f10x_gpio.o Libraries\STM32F10x_StdPeriph_Driver\src\stm32f10x_i2c.o Libraries\STM32F10x_StdPeriph_Driver\src\stm32f10x_iwdg.o Libraries\STM32F10x_StdPeriph_Driver\src\stm32f10x_pwr.o Libraries\STM32F10x_StdPeriph_Driver\src\stm32f10x_rcc.o Libraries\STM32F10x_StdPeriph_Driver\src\stm32f10x_rtc.o Libraries\STM32F10x_StdPeriph_Driver\src\stm32f10x_sdio.o Libraries\STM32F10x_StdPeriph_Driver\src\stm32f10x_spi.o Libraries\STM32F10x_StdPeriph_Driver\src\stm32f10x_tim.o Libraries\STM32F10x_StdPeriph_Driver\src\stm32f10x_usart.o Libraries\STM32F10x_StdPeriph_Driver\src\stm32f10x_wwdg.o src\APP\CanApp.o src\APP\FreeRTOSHook.o src\APP\main.o src\APP\maxtrixApp.o src\APP\stm32f10x_it.o src\HARDWARE\RGBMatrix.o src\HARDWARE\bitmap.o src\HARDWARE\eeprom.o src\HARDWARE\keyDetect.o src\HARDWARE\led.o src\SYSTEM\can.o src\SYSTEM\delay.o src\SYSTEM\gpioInit.o src\SYSTEM\iic.o src\SYSTEM\iwdog.o src\SYSTEM\rand.o src\SYSTEM\sys.o src\SYSTEM\sysclock.o src\SYSTEM\wwdog.o src\freertos\Source\croutine.o src\freertos\Source\event_groups.o src\freertos\Source\list.o src\freertos\Source\portable\GCC\ARM_CM3\port.o src\freertos\Source\portable\MemMang\heap_4.o src\freertos\Source\queue.o src\freertos\Source\stream_buffer.o src\freertos\Source\tasks.o src\freertos\Source\timers.o src\rgbMaxtrixLib\rgbMaxtrixFront.o src\startup_stm32f10x_cl.o src\system_stm32f10x.o src\task\displayTask.o src\task\peridic.o -mthumb -mcpu=cortex-m3 -T../stm32_flash.ld -specs=nosys.specs -static -Wl,-cref,-u,Reset_Handler -Wl,-Map=master.map -Wl,--gc-sections -Wl,--defsym=malloc_getpagesize_P=0x80 -Wl,--start-group -lc -lm -Wl,--end-group -specs=nano.specs 
+C:\Program Files (x86)\Atollic\TrueSTUDIO for STM32 9.0.1\ide\jre\bin\java -jar C:\Program Files (x86)\Atollic\TrueSTUDIO for STM32 9.0.1\Tools\arm-atollic-reports.jar sizeinfo list master.elf 
+Generate build reports...
+Print size information
+   text	   data	    bss	    dec	    hex	filename
+  37132	    432	  24768	  62332	   f37c	master.elf
+Print size information done
+Generate listing file
+Output sent to: master.list
+Generate listing file done
+Generate build reports done
+11:38:21 **** Incremental Build of configuration Debug for project master ****
+Info: Internal Builder is used for build
+arm-atollic-eabi-gcc -c ..\src\APP\maxtrixApp.c -mthumb -mcpu=cortex-m3 -std=gnu11 -DSTM32F10X_CL -DUSE_STDPERIPH_DRIVER -I../src/APP -I..\src\freertos\Source\include -I..\src\freertos\Source\portable\GCC\ARM_CM3 -I..\src\HARDWARE -I..\src\rgbMaxtrixLib -I..\src\SYSTEM -I..\src\task -I../Libraries/STM32F10x_StdPeriph_Driver/inc -I../Libraries/CMSIS/Device/ST/STM32F10x/Include -I../Libraries/CMSIS/Include -O0 -ffunction-sections -fdata-sections -g -fstack-usage -Wall -specs=nano.specs -o src\APP\maxtrixApp.o 
+arm-atollic-eabi-gcc -o master.elf Libraries\STM32F10x_StdPeriph_Driver\src\misc.o Libraries\STM32F10x_StdPeriph_Driver\src\stm32f10x_adc.o Libraries\STM32F10x_StdPeriph_Driver\src\stm32f10x_bkp.o Libraries\STM32F10x_StdPeriph_Driver\src\stm32f10x_can.o Libraries\STM32F10x_StdPeriph_Driver\src\stm32f10x_cec.o Libraries\STM32F10x_StdPeriph_Driver\src\stm32f10x_crc.o Libraries\STM32F10x_StdPeriph_Driver\src\stm32f10x_dac.o Libraries\STM32F10x_StdPeriph_Driver\src\stm32f10x_dbgmcu.o Libraries\STM32F10x_StdPeriph_Driver\src\stm32f10x_dma.o Libraries\STM32F10x_StdPeriph_Driver\src\stm32f10x_exti.o Libraries\STM32F10x_StdPeriph_Driver\src\stm32f10x_flash.o Libraries\STM32F10x_StdPeriph_Driver\src\stm32f10x_fsmc.o Libraries\STM32F10x_StdPeriph_Driver\src\stm32f10x_gpio.o Libraries\STM32F10x_StdPeriph_Driver\src\stm32f10x_i2c.o Libraries\STM32F10x_StdPeriph_Driver\src\stm32f10x_iwdg.o Libraries\STM32F10x_StdPeriph_Driver\src\stm32f10x_pwr.o Libraries\STM32F10x_StdPeriph_Driver\src\stm32f10x_rcc.o Libraries\STM32F10x_StdPeriph_Driver\src\stm32f10x_rtc.o Libraries\STM32F10x_StdPeriph_Driver\src\stm32f10x_sdio.o Libraries\STM32F10x_StdPeriph_Driver\src\stm32f10x_spi.o Libraries\STM32F10x_StdPeriph_Driver\src\stm32f10x_tim.o Libraries\STM32F10x_StdPeriph_Driver\src\stm32f10x_usart.o Libraries\STM32F10x_StdPeriph_Driver\src\stm32f10x_wwdg.o src\APP\CanApp.o src\APP\FreeRTOSHook.o src\APP\main.o src\APP\maxtrixApp.o src\APP\stm32f10x_it.o src\HARDWARE\RGBMatrix.o src\HARDWARE\bitmap.o src\HARDWARE\eeprom.o src\HARDWARE\keyDetect.o src\HARDWARE\led.o src\SYSTEM\can.o src\SYSTEM\delay.o src\SYSTEM\gpioInit.o src\SYSTEM\iic.o src\SYSTEM\iwdog.o src\SYSTEM\rand.o src\SYSTEM\sys.o src\SYSTEM\sysclock.o src\SYSTEM\wwdog.o src\freertos\Source\croutine.o src\freertos\Source\event_groups.o src\freertos\Source\list.o src\freertos\Source\portable\GCC\ARM_CM3\port.o src\freertos\Source\portable\MemMang\heap_4.o src\freertos\Source\queue.o src\freertos\Source\stream_buffer.o src\freertos\Source\tasks.o src\freertos\Source\timers.o src\rgbMaxtrixLib\rgbMaxtrixFront.o src\startup_stm32f10x_cl.o src\system_stm32f10x.o src\task\displayTask.o src\task\peridic.o -mthumb -mcpu=cortex-m3 -T../stm32_flash.ld -specs=nosys.specs -static -Wl,-cref,-u,Reset_Handler -Wl,-Map=master.map -Wl,--gc-sections -Wl,--defsym=malloc_getpagesize_P=0x80 -Wl,--start-group -lc -lm -Wl,--end-group -specs=nano.specs 
+C:\Program Files (x86)\Atollic\TrueSTUDIO for STM32 9.0.1\ide\jre\bin\java -jar C:\Program Files (x86)\Atollic\TrueSTUDIO for STM32 9.0.1\Tools\arm-atollic-reports.jar sizeinfo list master.elf 
+Generate build reports...
+Print size information
+   text	   data	    bss	    dec	    hex	filename
+  37116	    432	  24768	  62316	   f36c	master.elf
+Print size information done
+Generate listing file
+Output sent to: master.list
+Generate listing file done
+Generate build reports done
+11:38:33 **** Incremental Build of configuration Debug for project master ****
+Info: Internal Builder is used for build
+arm-atollic-eabi-gcc -c ..\src\APP\maxtrixApp.c -mthumb -mcpu=cortex-m3 -std=gnu11 -DSTM32F10X_CL -DUSE_STDPERIPH_DRIVER -I../src/APP -I..\src\freertos\Source\include -I..\src\freertos\Source\portable\GCC\ARM_CM3 -I..\src\HARDWARE -I..\src\rgbMaxtrixLib -I..\src\SYSTEM -I..\src\task -I../Libraries/STM32F10x_StdPeriph_Driver/inc -I../Libraries/CMSIS/Device/ST/STM32F10x/Include -I../Libraries/CMSIS/Include -O0 -ffunction-sections -fdata-sections -g -fstack-usage -Wall -specs=nano.specs -o src\APP\maxtrixApp.o 
+arm-atollic-eabi-gcc -o master.elf Libraries\STM32F10x_StdPeriph_Driver\src\misc.o Libraries\STM32F10x_StdPeriph_Driver\src\stm32f10x_adc.o Libraries\STM32F10x_StdPeriph_Driver\src\stm32f10x_bkp.o Libraries\STM32F10x_StdPeriph_Driver\src\stm32f10x_can.o Libraries\STM32F10x_StdPeriph_Driver\src\stm32f10x_cec.o Libraries\STM32F10x_StdPeriph_Driver\src\stm32f10x_crc.o Libraries\STM32F10x_StdPeriph_Driver\src\stm32f10x_dac.o Libraries\STM32F10x_StdPeriph_Driver\src\stm32f10x_dbgmcu.o Libraries\STM32F10x_StdPeriph_Driver\src\stm32f10x_dma.o Libraries\STM32F10x_StdPeriph_Driver\src\stm32f10x_exti.o Libraries\STM32F10x_StdPeriph_Driver\src\stm32f10x_flash.o Libraries\STM32F10x_StdPeriph_Driver\src\stm32f10x_fsmc.o Libraries\STM32F10x_StdPeriph_Driver\src\stm32f10x_gpio.o Libraries\STM32F10x_StdPeriph_Driver\src\stm32f10x_i2c.o Libraries\STM32F10x_StdPeriph_Driver\src\stm32f10x_iwdg.o Libraries\STM32F10x_StdPeriph_Driver\src\stm32f10x_pwr.o Libraries\STM32F10x_StdPeriph_Driver\src\stm32f10x_rcc.o Libraries\STM32F10x_StdPeriph_Driver\src\stm32f10x_rtc.o Libraries\STM32F10x_StdPeriph_Driver\src\stm32f10x_sdio.o Libraries\STM32F10x_StdPeriph_Driver\src\stm32f10x_spi.o Libraries\STM32F10x_StdPeriph_Driver\src\stm32f10x_tim.o Libraries\STM32F10x_StdPeriph_Driver\src\stm32f10x_usart.o Libraries\STM32F10x_StdPeriph_Driver\src\stm32f10x_wwdg.o src\APP\CanApp.o src\APP\FreeRTOSHook.o src\APP\main.o src\APP\maxtrixApp.o src\APP\stm32f10x_it.o src\HARDWARE\RGBMatrix.o src\HARDWARE\bitmap.o src\HARDWARE\eeprom.o src\HARDWARE\keyDetect.o src\HARDWARE\led.o src\SYSTEM\can.o src\SYSTEM\delay.o src\SYSTEM\gpioInit.o src\SYSTEM\iic.o src\SYSTEM\iwdog.o src\SYSTEM\rand.o src\SYSTEM\sys.o src\SYSTEM\sysclock.o src\SYSTEM\wwdog.o src\freertos\Source\croutine.o src\freertos\Source\event_groups.o src\freertos\Source\list.o src\freertos\Source\portable\GCC\ARM_CM3\port.o src\freertos\Source\portable\MemMang\heap_4.o src\freertos\Source\queue.o src\freertos\Source\stream_buffer.o src\freertos\Source\tasks.o src\freertos\Source\timers.o src\rgbMaxtrixLib\rgbMaxtrixFront.o src\startup_stm32f10x_cl.o src\system_stm32f10x.o src\task\displayTask.o src\task\peridic.o -mthumb -mcpu=cortex-m3 -T../stm32_flash.ld -specs=nosys.specs -static -Wl,-cref,-u,Reset_Handler -Wl,-Map=master.map -Wl,--gc-sections -Wl,--defsym=malloc_getpagesize_P=0x80 -Wl,--start-group -lc -lm -Wl,--end-group -specs=nano.specs 
+C:\Program Files (x86)\Atollic\TrueSTUDIO for STM32 9.0.1\ide\jre\bin\java -jar C:\Program Files (x86)\Atollic\TrueSTUDIO for STM32 9.0.1\Tools\arm-atollic-reports.jar sizeinfo list master.elf 
+Generate build reports...
+Print size information
+   text	   data	    bss	    dec	    hex	filename
+  37116	    432	  24768	  62316	   f36c	master.elf
+Print size information done
+Generate listing file
+Output sent to: master.list
+Generate listing file done
+Generate build reports done
+Info: Nothing to build for master
+Info: Nothing to build for master
+13:54:25 **** Incremental Build of configuration Debug for project master ****
+Info: Internal Builder is used for build
+arm-atollic-eabi-gcc -c ..\src\task\displayTask.c -mthumb -mcpu=cortex-m3 -std=gnu11 -DSTM32F10X_CL -DUSE_STDPERIPH_DRIVER -I../src/APP -I..\src\freertos\Source\include -I..\src\freertos\Source\portable\GCC\ARM_CM3 -I..\src\HARDWARE -I..\src\rgbMaxtrixLib -I..\src\SYSTEM -I..\src\task -I../Libraries/STM32F10x_StdPeriph_Driver/inc -I../Libraries/CMSIS/Device/ST/STM32F10x/Include -I../Libraries/CMSIS/Include -O0 -ffunction-sections -fdata-sections -g -fstack-usage -Wall -specs=nano.specs -o src\task\displayTask.o 
+arm-atollic-eabi-gcc -c ..\src\APP\FreeRTOSHook.c -mthumb -mcpu=cortex-m3 -std=gnu11 -DSTM32F10X_CL -DUSE_STDPERIPH_DRIVER -I../src/APP -I..\src\freertos\Source\include -I..\src\freertos\Source\portable\GCC\ARM_CM3 -I..\src\HARDWARE -I..\src\rgbMaxtrixLib -I..\src\SYSTEM -I..\src\task -I../Libraries/STM32F10x_StdPeriph_Driver/inc -I../Libraries/CMSIS/Device/ST/STM32F10x/Include -I../Libraries/CMSIS/Include -O0 -ffunction-sections -fdata-sections -g -fstack-usage -Wall -specs=nano.specs -o src\APP\FreeRTOSHook.o 
+..\src\APP\FreeRTOSHook.c: In function 'vApplicationDaemonTaskStartupHook':
+..\src\APP\FreeRTOSHook.c:23:5: warning: implicit declaration of function 'maxtrixDisplayBootImage' [-Wimplicit-function-declaration]
+     maxtrixDisplayBootImage();
+     ^~~~~~~~~~~~~~~~~~~~~~~
+arm-atollic-eabi-gcc -c ..\src\HARDWARE\keyDetect.c -mthumb -mcpu=cortex-m3 -std=gnu11 -DSTM32F10X_CL -DUSE_STDPERIPH_DRIVER -I../src/APP -I..\src\freertos\Source\include -I..\src\freertos\Source\portable\GCC\ARM_CM3 -I..\src\HARDWARE -I..\src\rgbMaxtrixLib -I..\src\SYSTEM -I..\src\task -I../Libraries/STM32F10x_StdPeriph_Driver/inc -I../Libraries/CMSIS/Device/ST/STM32F10x/Include -I../Libraries/CMSIS/Include -O0 -ffunction-sections -fdata-sections -g -fstack-usage -Wall -specs=nano.specs -o src\HARDWARE\keyDetect.o 
+..\src\HARDWARE\keyDetect.c: In function 'key2PressHandler':
+..\src\HARDWARE\keyDetect.c:132:25: warning: implicit declaration of function 'maxtrixGetGameMode' [-Wimplicit-function-declaration]
+   maxtrixAppSetGameMode(maxtrixGetGameMode());
+                         ^~~~~~~~~~~~~~~~~~
+..\src\HARDWARE\keyDetect.c: In function 'key3PressHandler':
+..\src\HARDWARE\keyDetect.c:150:5: warning: implicit declaration of function 'maxtrixGameStart' [-Wimplicit-function-declaration]
+     maxtrixGameStart();
+     ^~~~~~~~~~~~~~~~
+arm-atollic-eabi-gcc -c ..\src\APP\maxtrixApp.c -mthumb -mcpu=cortex-m3 -std=gnu11 -DSTM32F10X_CL -DUSE_STDPERIPH_DRIVER -I../src/APP -I..\src\freertos\Source\include -I..\src\freertos\Source\portable\GCC\ARM_CM3 -I..\src\HARDWARE -I..\src\rgbMaxtrixLib -I..\src\SYSTEM -I..\src\task -I../Libraries/STM32F10x_StdPeriph_Driver/inc -I../Libraries/CMSIS/Device/ST/STM32F10x/Include -I../Libraries/CMSIS/Include -O0 -ffunction-sections -fdata-sections -g -fstack-usage -Wall -specs=nano.specs -o src\APP\maxtrixApp.o 
+..\src\APP\maxtrixApp.c: In function 'maxtrixAppGameStart':
+..\src\APP\maxtrixApp.c:1261:2: warning: implicit declaration of function 'maxtrixSetGameScoreRefresh' [-Wimplicit-function-declaration]
+  maxtrixSetGameScoreRefresh();
+  ^~~~~~~~~~~~~~~~~~~~~~~~~~
+..\src\APP\maxtrixApp.c: In function 'maxtrixAppGameStop':
+..\src\APP\maxtrixApp.c:1269:2: warning: implicit declaration of function 'maxtrixDisplayBootImage' [-Wimplicit-function-declaration]
+  maxtrixDisplayBootImage();
+  ^~~~~~~~~~~~~~~~~~~~~~~
+arm-atollic-eabi-gcc -o master.elf Libraries\STM32F10x_StdPeriph_Driver\src\misc.o Libraries\STM32F10x_StdPeriph_Driver\src\stm32f10x_adc.o Libraries\STM32F10x_StdPeriph_Driver\src\stm32f10x_bkp.o Libraries\STM32F10x_StdPeriph_Driver\src\stm32f10x_can.o Libraries\STM32F10x_StdPeriph_Driver\src\stm32f10x_cec.o Libraries\STM32F10x_StdPeriph_Driver\src\stm32f10x_crc.o Libraries\STM32F10x_StdPeriph_Driver\src\stm32f10x_dac.o Libraries\STM32F10x_StdPeriph_Driver\src\stm32f10x_dbgmcu.o Libraries\STM32F10x_StdPeriph_Driver\src\stm32f10x_dma.o Libraries\STM32F10x_StdPeriph_Driver\src\stm32f10x_exti.o Libraries\STM32F10x_StdPeriph_Driver\src\stm32f10x_flash.o Libraries\STM32F10x_StdPeriph_Driver\src\stm32f10x_fsmc.o Libraries\STM32F10x_StdPeriph_Driver\src\stm32f10x_gpio.o Libraries\STM32F10x_StdPeriph_Driver\src\stm32f10x_i2c.o Libraries\STM32F10x_StdPeriph_Driver\src\stm32f10x_iwdg.o Libraries\STM32F10x_StdPeriph_Driver\src\stm32f10x_pwr.o Libraries\STM32F10x_StdPeriph_Driver\src\stm32f10x_rcc.o Libraries\STM32F10x_StdPeriph_Driver\src\stm32f10x_rtc.o Libraries\STM32F10x_StdPeriph_Driver\src\stm32f10x_sdio.o Libraries\STM32F10x_StdPeriph_Driver\src\stm32f10x_spi.o Libraries\STM32F10x_StdPeriph_Driver\src\stm32f10x_tim.o Libraries\STM32F10x_StdPeriph_Driver\src\stm32f10x_usart.o Libraries\STM32F10x_StdPeriph_Driver\src\stm32f10x_wwdg.o src\APP\CanApp.o src\APP\FreeRTOSHook.o src\APP\main.o src\APP\maxtrixApp.o src\APP\stm32f10x_it.o src\HARDWARE\RGBMatrix.o src\HARDWARE\bitmap.o src\HARDWARE\eeprom.o src\HARDWARE\keyDetect.o src\HARDWARE\led.o src\SYSTEM\can.o src\SYSTEM\delay.o src\SYSTEM\gpioInit.o src\SYSTEM\iic.o src\SYSTEM\iwdog.o src\SYSTEM\rand.o src\SYSTEM\sys.o src\SYSTEM\sysclock.o src\SYSTEM\wwdog.o src\freertos\Source\croutine.o src\freertos\Source\event_groups.o src\freertos\Source\list.o src\freertos\Source\portable\GCC\ARM_CM3\port.o src\freertos\Source\portable\MemMang\heap_4.o src\freertos\Source\queue.o src\freertos\Source\stream_buffer.o src\freertos\Source\tasks.o src\freertos\Source\timers.o src\rgbMaxtrixLib\rgbMaxtrixFront.o src\startup_stm32f10x_cl.o src\system_stm32f10x.o src\task\displayTask.o src\task\peridic.o -mthumb -mcpu=cortex-m3 -T../stm32_flash.ld -specs=nosys.specs -static -Wl,-cref,-u,Reset_Handler -Wl,-Map=master.map -Wl,--gc-sections -Wl,--defsym=malloc_getpagesize_P=0x80 -Wl,--start-group -lc -lm -Wl,--end-group -specs=nano.specs 
+src\APP\FreeRTOSHook.o: In function `vApplicationDaemonTaskStartupHook':
+D:\workspace\myself\workspace\master\master\Debug/..\src\APP/FreeRTOSHook.c:23: undefined reference to `maxtrixDisplayBootImage'
+src\HARDWARE\keyDetect.o: In function `key2PressHandler':
+D:\workspace\myself\workspace\master\master\Debug/..\src\HARDWARE/keyDetect.c:132: undefined reference to `maxtrixGetGameMode'
+D:\workspace\myself\workspace\master\master\Debug/..\src\HARDWARE/keyDetect.c:136: undefined reference to `maxtrixGetGameMode'
+src\HARDWARE\keyDetect.o: In function `key3PressHandler':
+D:\workspace\myself\workspace\master\master\Debug/..\src\HARDWARE/keyDetect.c:150: undefined reference to `maxtrixGameStart'
+collect2.exe: error: ld returned 1 exit status
+13:55:30 **** Incremental Build of configuration Debug for project master ****
+Info: Internal Builder is used for build
+arm-atollic-eabi-gcc -c ..\src\APP\FreeRTOSHook.c -mthumb -mcpu=cortex-m3 -std=gnu11 -DSTM32F10X_CL -DUSE_STDPERIPH_DRIVER -I../src/APP -I..\src\freertos\Source\include -I..\src\freertos\Source\portable\GCC\ARM_CM3 -I..\src\HARDWARE -I..\src\rgbMaxtrixLib -I..\src\SYSTEM -I..\src\task -I../Libraries/STM32F10x_StdPeriph_Driver/inc -I../Libraries/CMSIS/Device/ST/STM32F10x/Include -I../Libraries/CMSIS/Include -O0 -ffunction-sections -fdata-sections -g -fstack-usage -Wall -specs=nano.specs -o src\APP\FreeRTOSHook.o 
+arm-atollic-eabi-gcc -c ..\src\HARDWARE\keyDetect.c -mthumb -mcpu=cortex-m3 -std=gnu11 -DSTM32F10X_CL -DUSE_STDPERIPH_DRIVER -I../src/APP -I..\src\freertos\Source\include -I..\src\freertos\Source\portable\GCC\ARM_CM3 -I..\src\HARDWARE -I..\src\rgbMaxtrixLib -I..\src\SYSTEM -I..\src\task -I../Libraries/STM32F10x_StdPeriph_Driver/inc -I../Libraries/CMSIS/Device/ST/STM32F10x/Include -I../Libraries/CMSIS/Include -O0 -ffunction-sections -fdata-sections -g -fstack-usage -Wall -specs=nano.specs -o src\HARDWARE\keyDetect.o 
+arm-atollic-eabi-gcc -o master.elf Libraries\STM32F10x_StdPeriph_Driver\src\misc.o Libraries\STM32F10x_StdPeriph_Driver\src\stm32f10x_adc.o Libraries\STM32F10x_StdPeriph_Driver\src\stm32f10x_bkp.o Libraries\STM32F10x_StdPeriph_Driver\src\stm32f10x_can.o Libraries\STM32F10x_StdPeriph_Driver\src\stm32f10x_cec.o Libraries\STM32F10x_StdPeriph_Driver\src\stm32f10x_crc.o Libraries\STM32F10x_StdPeriph_Driver\src\stm32f10x_dac.o Libraries\STM32F10x_StdPeriph_Driver\src\stm32f10x_dbgmcu.o Libraries\STM32F10x_StdPeriph_Driver\src\stm32f10x_dma.o Libraries\STM32F10x_StdPeriph_Driver\src\stm32f10x_exti.o Libraries\STM32F10x_StdPeriph_Driver\src\stm32f10x_flash.o Libraries\STM32F10x_StdPeriph_Driver\src\stm32f10x_fsmc.o Libraries\STM32F10x_StdPeriph_Driver\src\stm32f10x_gpio.o Libraries\STM32F10x_StdPeriph_Driver\src\stm32f10x_i2c.o Libraries\STM32F10x_StdPeriph_Driver\src\stm32f10x_iwdg.o Libraries\STM32F10x_StdPeriph_Driver\src\stm32f10x_pwr.o Libraries\STM32F10x_StdPeriph_Driver\src\stm32f10x_rcc.o Libraries\STM32F10x_StdPeriph_Driver\src\stm32f10x_rtc.o Libraries\STM32F10x_StdPeriph_Driver\src\stm32f10x_sdio.o Libraries\STM32F10x_StdPeriph_Driver\src\stm32f10x_spi.o Libraries\STM32F10x_StdPeriph_Driver\src\stm32f10x_tim.o Libraries\STM32F10x_StdPeriph_Driver\src\stm32f10x_usart.o Libraries\STM32F10x_StdPeriph_Driver\src\stm32f10x_wwdg.o src\APP\CanApp.o src\APP\FreeRTOSHook.o src\APP\main.o src\APP\maxtrixApp.o src\APP\stm32f10x_it.o src\HARDWARE\RGBMatrix.o src\HARDWARE\bitmap.o src\HARDWARE\eeprom.o src\HARDWARE\keyDetect.o src\HARDWARE\led.o src\SYSTEM\can.o src\SYSTEM\delay.o src\SYSTEM\gpioInit.o src\SYSTEM\iic.o src\SYSTEM\iwdog.o src\SYSTEM\rand.o src\SYSTEM\sys.o src\SYSTEM\sysclock.o src\SYSTEM\wwdog.o src\freertos\Source\croutine.o src\freertos\Source\event_groups.o src\freertos\Source\list.o src\freertos\Source\portable\GCC\ARM_CM3\port.o src\freertos\Source\portable\MemMang\heap_4.o src\freertos\Source\queue.o src\freertos\Source\stream_buffer.o src\freertos\Source\tasks.o src\freertos\Source\timers.o src\rgbMaxtrixLib\rgbMaxtrixFront.o src\startup_stm32f10x_cl.o src\system_stm32f10x.o src\task\displayTask.o src\task\peridic.o -mthumb -mcpu=cortex-m3 -T../stm32_flash.ld -specs=nosys.specs -static -Wl,-cref,-u,Reset_Handler -Wl,-Map=master.map -Wl,--gc-sections -Wl,--defsym=malloc_getpagesize_P=0x80 -Wl,--start-group -lc -lm -Wl,--end-group -specs=nano.specs 
+src\APP\maxtrixApp.o: In function `maxtrixAppGameStart':
+D:\workspace\myself\workspace\master\master\Debug/..\src\APP/maxtrixApp.c:1261: undefined reference to `maxtrixSetGameScoreRefresh'
+src\APP\maxtrixApp.o: In function `maxtrixAppGameStop':
+D:\workspace\myself\workspace\master\master\Debug/..\src\APP/maxtrixApp.c:1269: undefined reference to `maxtrixDisplayBootImage'
+collect2.exe: error: ld returned 1 exit status
+13:55:43 **** Incremental Build of configuration Debug for project master ****
+Info: Internal Builder is used for build
+arm-atollic-eabi-gcc -c ..\src\APP\maxtrixApp.c -mthumb -mcpu=cortex-m3 -std=gnu11 -DSTM32F10X_CL -DUSE_STDPERIPH_DRIVER -I../src/APP -I..\src\freertos\Source\include -I..\src\freertos\Source\portable\GCC\ARM_CM3 -I..\src\HARDWARE -I..\src\rgbMaxtrixLib -I..\src\SYSTEM -I..\src\task -I../Libraries/STM32F10x_StdPeriph_Driver/inc -I../Libraries/CMSIS/Device/ST/STM32F10x/Include -I../Libraries/CMSIS/Include -O0 -ffunction-sections -fdata-sections -g -fstack-usage -Wall -specs=nano.specs -o src\APP\maxtrixApp.o 
+arm-atollic-eabi-gcc -o master.elf Libraries\STM32F10x_StdPeriph_Driver\src\misc.o Libraries\STM32F10x_StdPeriph_Driver\src\stm32f10x_adc.o Libraries\STM32F10x_StdPeriph_Driver\src\stm32f10x_bkp.o Libraries\STM32F10x_StdPeriph_Driver\src\stm32f10x_can.o Libraries\STM32F10x_StdPeriph_Driver\src\stm32f10x_cec.o Libraries\STM32F10x_StdPeriph_Driver\src\stm32f10x_crc.o Libraries\STM32F10x_StdPeriph_Driver\src\stm32f10x_dac.o Libraries\STM32F10x_StdPeriph_Driver\src\stm32f10x_dbgmcu.o Libraries\STM32F10x_StdPeriph_Driver\src\stm32f10x_dma.o Libraries\STM32F10x_StdPeriph_Driver\src\stm32f10x_exti.o Libraries\STM32F10x_StdPeriph_Driver\src\stm32f10x_flash.o Libraries\STM32F10x_StdPeriph_Driver\src\stm32f10x_fsmc.o Libraries\STM32F10x_StdPeriph_Driver\src\stm32f10x_gpio.o Libraries\STM32F10x_StdPeriph_Driver\src\stm32f10x_i2c.o Libraries\STM32F10x_StdPeriph_Driver\src\stm32f10x_iwdg.o Libraries\STM32F10x_StdPeriph_Driver\src\stm32f10x_pwr.o Libraries\STM32F10x_StdPeriph_Driver\src\stm32f10x_rcc.o Libraries\STM32F10x_StdPeriph_Driver\src\stm32f10x_rtc.o Libraries\STM32F10x_StdPeriph_Driver\src\stm32f10x_sdio.o Libraries\STM32F10x_StdPeriph_Driver\src\stm32f10x_spi.o Libraries\STM32F10x_StdPeriph_Driver\src\stm32f10x_tim.o Libraries\STM32F10x_StdPeriph_Driver\src\stm32f10x_usart.o Libraries\STM32F10x_StdPeriph_Driver\src\stm32f10x_wwdg.o src\APP\CanApp.o src\APP\FreeRTOSHook.o src\APP\main.o src\APP\maxtrixApp.o src\APP\stm32f10x_it.o src\HARDWARE\RGBMatrix.o src\HARDWARE\bitmap.o src\HARDWARE\eeprom.o src\HARDWARE\keyDetect.o src\HARDWARE\led.o src\SYSTEM\can.o src\SYSTEM\delay.o src\SYSTEM\gpioInit.o src\SYSTEM\iic.o src\SYSTEM\iwdog.o src\SYSTEM\rand.o src\SYSTEM\sys.o src\SYSTEM\sysclock.o src\SYSTEM\wwdog.o src\freertos\Source\croutine.o src\freertos\Source\event_groups.o src\freertos\Source\list.o src\freertos\Source\portable\GCC\ARM_CM3\port.o src\freertos\Source\portable\MemMang\heap_4.o src\freertos\Source\queue.o src\freertos\Source\stream_buffer.o src\freertos\Source\tasks.o src\freertos\Source\timers.o src\rgbMaxtrixLib\rgbMaxtrixFront.o src\startup_stm32f10x_cl.o src\system_stm32f10x.o src\task\displayTask.o src\task\peridic.o -mthumb -mcpu=cortex-m3 -T../stm32_flash.ld -specs=nosys.specs -static -Wl,-cref,-u,Reset_Handler -Wl,-Map=master.map -Wl,--gc-sections -Wl,--defsym=malloc_getpagesize_P=0x80 -Wl,--start-group -lc -lm -Wl,--end-group -specs=nano.specs 
+C:\Program Files (x86)\Atollic\TrueSTUDIO for STM32 9.0.1\ide\jre\bin\java -jar C:\Program Files (x86)\Atollic\TrueSTUDIO for STM32 9.0.1\Tools\arm-atollic-reports.jar sizeinfo list master.elf 
+Generate build reports...
+Print size information
+   text	   data	    bss	    dec	    hex	filename
+  37276	    432	  24772	  62480	   f410	master.elf
+Print size information done
+Generate listing file
+Output sent to: master.list
+Generate listing file done
+Generate build reports done
+14:22:42 **** Incremental Build of configuration Debug for project master ****
+Info: Internal Builder is used for build
+arm-atollic-eabi-gcc -c ..\src\APP\maxtrixApp.c -mthumb -mcpu=cortex-m3 -std=gnu11 -DSTM32F10X_CL -DUSE_STDPERIPH_DRIVER -I../src/APP -I..\src\freertos\Source\include -I..\src\freertos\Source\portable\GCC\ARM_CM3 -I..\src\HARDWARE -I..\src\rgbMaxtrixLib -I..\src\SYSTEM -I..\src\task -I../Libraries/STM32F10x_StdPeriph_Driver/inc -I../Libraries/CMSIS/Device/ST/STM32F10x/Include -I../Libraries/CMSIS/Include -O0 -ffunction-sections -fdata-sections -g -fstack-usage -Wall -specs=nano.specs -o src\APP\maxtrixApp.o 
+arm-atollic-eabi-gcc -o master.elf Libraries\STM32F10x_StdPeriph_Driver\src\misc.o Libraries\STM32F10x_StdPeriph_Driver\src\stm32f10x_adc.o Libraries\STM32F10x_StdPeriph_Driver\src\stm32f10x_bkp.o Libraries\STM32F10x_StdPeriph_Driver\src\stm32f10x_can.o Libraries\STM32F10x_StdPeriph_Driver\src\stm32f10x_cec.o Libraries\STM32F10x_StdPeriph_Driver\src\stm32f10x_crc.o Libraries\STM32F10x_StdPeriph_Driver\src\stm32f10x_dac.o Libraries\STM32F10x_StdPeriph_Driver\src\stm32f10x_dbgmcu.o Libraries\STM32F10x_StdPeriph_Driver\src\stm32f10x_dma.o Libraries\STM32F10x_StdPeriph_Driver\src\stm32f10x_exti.o Libraries\STM32F10x_StdPeriph_Driver\src\stm32f10x_flash.o Libraries\STM32F10x_StdPeriph_Driver\src\stm32f10x_fsmc.o Libraries\STM32F10x_StdPeriph_Driver\src\stm32f10x_gpio.o Libraries\STM32F10x_StdPeriph_Driver\src\stm32f10x_i2c.o Libraries\STM32F10x_StdPeriph_Driver\src\stm32f10x_iwdg.o Libraries\STM32F10x_StdPeriph_Driver\src\stm32f10x_pwr.o Libraries\STM32F10x_StdPeriph_Driver\src\stm32f10x_rcc.o Libraries\STM32F10x_StdPeriph_Driver\src\stm32f10x_rtc.o Libraries\STM32F10x_StdPeriph_Driver\src\stm32f10x_sdio.o Libraries\STM32F10x_StdPeriph_Driver\src\stm32f10x_spi.o Libraries\STM32F10x_StdPeriph_Driver\src\stm32f10x_tim.o Libraries\STM32F10x_StdPeriph_Driver\src\stm32f10x_usart.o Libraries\STM32F10x_StdPeriph_Driver\src\stm32f10x_wwdg.o src\APP\CanApp.o src\APP\FreeRTOSHook.o src\APP\main.o src\APP\maxtrixApp.o src\APP\stm32f10x_it.o src\HARDWARE\RGBMatrix.o src\HARDWARE\bitmap.o src\HARDWARE\eeprom.o src\HARDWARE\keyDetect.o src\HARDWARE\led.o src\SYSTEM\can.o src\SYSTEM\delay.o src\SYSTEM\gpioInit.o src\SYSTEM\iic.o src\SYSTEM\iwdog.o src\SYSTEM\rand.o src\SYSTEM\sys.o src\SYSTEM\sysclock.o src\SYSTEM\wwdog.o src\freertos\Source\croutine.o src\freertos\Source\event_groups.o src\freertos\Source\list.o src\freertos\Source\portable\GCC\ARM_CM3\port.o src\freertos\Source\portable\MemMang\heap_4.o src\freertos\Source\queue.o src\freertos\Source\stream_buffer.o src\freertos\Source\tasks.o src\freertos\Source\timers.o src\rgbMaxtrixLib\rgbMaxtrixFront.o src\startup_stm32f10x_cl.o src\system_stm32f10x.o src\task\displayTask.o src\task\peridic.o -mthumb -mcpu=cortex-m3 -T../stm32_flash.ld -specs=nosys.specs -static -Wl,-cref,-u,Reset_Handler -Wl,-Map=master.map -Wl,--gc-sections -Wl,--defsym=malloc_getpagesize_P=0x80 -Wl,--start-group -lc -lm -Wl,--end-group -specs=nano.specs 
+C:\Program Files (x86)\Atollic\TrueSTUDIO for STM32 9.0.1\ide\jre\bin\java -jar C:\Program Files (x86)\Atollic\TrueSTUDIO for STM32 9.0.1\Tools\arm-atollic-reports.jar sizeinfo list master.elf 
+Generate build reports...
+Print size information
+   text	   data	    bss	    dec	    hex	filename
+  37276	    432	  24772	  62480	   f410	master.elf
+Print size information done
+Generate listing file
+Output sent to: master.list
+Generate listing file done
+Generate build reports done
+15:58:53 **** Incremental Build of configuration Debug for project master ****
+Info: Internal Builder is used for build
+arm-atollic-eabi-gcc -c ..\src\APP\maxtrixApp.c -mthumb -mcpu=cortex-m3 -std=gnu11 -DSTM32F10X_CL -DUSE_STDPERIPH_DRIVER -I../src/APP -I..\src\freertos\Source\include -I..\src\freertos\Source\portable\GCC\ARM_CM3 -I..\src\HARDWARE -I..\src\rgbMaxtrixLib -I..\src\SYSTEM -I..\src\task -I../Libraries/STM32F10x_StdPeriph_Driver/inc -I../Libraries/CMSIS/Device/ST/STM32F10x/Include -I../Libraries/CMSIS/Include -O0 -ffunction-sections -fdata-sections -g -fstack-usage -Wall -specs=nano.specs -o src\APP\maxtrixApp.o 
+arm-atollic-eabi-gcc -o master.elf Libraries\STM32F10x_StdPeriph_Driver\src\misc.o Libraries\STM32F10x_StdPeriph_Driver\src\stm32f10x_adc.o Libraries\STM32F10x_StdPeriph_Driver\src\stm32f10x_bkp.o Libraries\STM32F10x_StdPeriph_Driver\src\stm32f10x_can.o Libraries\STM32F10x_StdPeriph_Driver\src\stm32f10x_cec.o Libraries\STM32F10x_StdPeriph_Driver\src\stm32f10x_crc.o Libraries\STM32F10x_StdPeriph_Driver\src\stm32f10x_dac.o Libraries\STM32F10x_StdPeriph_Driver\src\stm32f10x_dbgmcu.o Libraries\STM32F10x_StdPeriph_Driver\src\stm32f10x_dma.o Libraries\STM32F10x_StdPeriph_Driver\src\stm32f10x_exti.o Libraries\STM32F10x_StdPeriph_Driver\src\stm32f10x_flash.o Libraries\STM32F10x_StdPeriph_Driver\src\stm32f10x_fsmc.o Libraries\STM32F10x_StdPeriph_Driver\src\stm32f10x_gpio.o Libraries\STM32F10x_StdPeriph_Driver\src\stm32f10x_i2c.o Libraries\STM32F10x_StdPeriph_Driver\src\stm32f10x_iwdg.o Libraries\STM32F10x_StdPeriph_Driver\src\stm32f10x_pwr.o Libraries\STM32F10x_StdPeriph_Driver\src\stm32f10x_rcc.o Libraries\STM32F10x_StdPeriph_Driver\src\stm32f10x_rtc.o Libraries\STM32F10x_StdPeriph_Driver\src\stm32f10x_sdio.o Libraries\STM32F10x_StdPeriph_Driver\src\stm32f10x_spi.o Libraries\STM32F10x_StdPeriph_Driver\src\stm32f10x_tim.o Libraries\STM32F10x_StdPeriph_Driver\src\stm32f10x_usart.o Libraries\STM32F10x_StdPeriph_Driver\src\stm32f10x_wwdg.o src\APP\CanApp.o src\APP\FreeRTOSHook.o src\APP\main.o src\APP\maxtrixApp.o src\APP\stm32f10x_it.o src\HARDWARE\RGBMatrix.o src\HARDWARE\bitmap.o src\HARDWARE\eeprom.o src\HARDWARE\keyDetect.o src\HARDWARE\led.o src\SYSTEM\can.o src\SYSTEM\delay.o src\SYSTEM\gpioInit.o src\SYSTEM\iic.o src\SYSTEM\iwdog.o src\SYSTEM\rand.o src\SYSTEM\sys.o src\SYSTEM\sysclock.o src\SYSTEM\wwdog.o src\freertos\Source\croutine.o src\freertos\Source\event_groups.o src\freertos\Source\list.o src\freertos\Source\portable\GCC\ARM_CM3\port.o src\freertos\Source\portable\MemMang\heap_4.o src\freertos\Source\queue.o src\freertos\Source\stream_buffer.o src\freertos\Source\tasks.o src\freertos\Source\timers.o src\rgbMaxtrixLib\rgbMaxtrixFront.o src\startup_stm32f10x_cl.o src\system_stm32f10x.o src\task\displayTask.o src\task\peridic.o -mthumb -mcpu=cortex-m3 -T../stm32_flash.ld -specs=nosys.specs -static -Wl,-cref,-u,Reset_Handler -Wl,-Map=master.map -Wl,--gc-sections -Wl,--defsym=malloc_getpagesize_P=0x80 -Wl,--start-group -lc -lm -Wl,--end-group -specs=nano.specs 
+C:\Program Files (x86)\Atollic\TrueSTUDIO for STM32 9.0.1\ide\jre\bin\java -jar C:\Program Files (x86)\Atollic\TrueSTUDIO for STM32 9.0.1\Tools\arm-atollic-reports.jar sizeinfo list master.elf 
+Generate build reports...
+Print size information
+   text	   data	    bss	    dec	    hex	filename
+  37276	    432	  24772	  62480	   f410	master.elf
+Print size information done
+Generate listing file
+Output sent to: master.list
+Generate listing file done
+Generate build reports done
+Info: Nothing to build for master

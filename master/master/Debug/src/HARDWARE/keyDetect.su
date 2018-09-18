@@ -1,0 +1,8 @@
+keyDetect.c:58:13:vTimerCallback	16	static
+keyDetect.c:63:6:keyDetectInit	24	static
+keyDetect.c:75:13:keyStatusDetect	16	static
+keyDetect.c:117:13:key1PressHandler	8	static
+keyDetect.c:128:13:key2PressHandler	8	static
+keyDetect.c:147:13:key3PressHandler	8	static
+keyDetect.c:157:13:key4PressHandler	4	static
+keyDetect.c:162:13:key1ConsecutivePressHandler	8	static

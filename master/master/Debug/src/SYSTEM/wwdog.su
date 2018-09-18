@@ -1,0 +1,4 @@
+wwdog.c:4:6:wwdogInit	8	static
+wwdog.c:24:6:wwdogFeed	8	static
+wwdog.c:30:6:wwdogEnable	8	static
+wwdog.c:36:6:wwdogDisable	8	static

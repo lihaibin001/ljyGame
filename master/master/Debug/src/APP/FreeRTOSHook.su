@@ -1,0 +1,3 @@
+FreeRTOSHook.c:15:6:vApplicationDaemonTaskStartupHook	8	static
+FreeRTOSHook.c:27:6:vApplicationIdleHook	4	static
+FreeRTOSHook.c:32:6:vApplicationTickHook	8	static
