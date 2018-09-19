@@ -22,12 +22,13 @@ const int scan = MATRIX_HEIGHT / 2;
 uint32_t birthRate;
 uint8_t gammaTable[256];
 RGB_t RGB[MATRIX_SIZE];
-
+//RGB_t RGBDisplayTmp[MATRIX_SIZE];
 // ----- Timing definitions -------------------------------------------------
 
 
 void RGBProcessor(void)
 {
+	//memcpy(RGBDisplayTmp, RGB, sizeof(RGB_t));
 	RGBDisplayBuffer(RGB);
 }
 
@@ -361,6 +362,11 @@ void drawImage(uint8_t x, uint8_t y, uint32_t Color, const uint8_t *addres)
 
 void GRBSetCell(uint32_t cellNum, uint32_t color)
 {
+	if(cellNum >= MATRIX_SIZE)
+	{
+		while(1)
+			;
+	}
 	RGB[cellNum].r = gammaTable[(uint8_t)(color & 0xFF)];
 	RGB[cellNum].b = gammaTable[(uint8_t)((color >> 8) & 0xff)];
 	RGB[cellNum].g = gammaTable[(uint8_t)((color >> 16) & 0xff)];

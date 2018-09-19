@@ -22,4 +22,5 @@ uint8_t maxtrixAppGetGameMode(void);
 void maxtrixAppGameStart(void);
 void maxtrixAppGameStop(void);
 bool maxtrixAppGetGameStatus(void);
+void maxtriAppInit(void);
 #endif

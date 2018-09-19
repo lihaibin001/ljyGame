@@ -12,6 +12,7 @@
 #include "displayTask.h"
 #include "keyDetect.h"
 #include "maxtrixApp.h"
+
 void vApplicationDaemonTaskStartupHook( void )
 {
 	sysclock_init();
@@ -20,6 +21,7 @@ void vApplicationDaemonTaskStartupHook( void )
     CanAppInit();
     keyDetectInit();
     RGBSetupRGBMatrixPorts();
+    maxtriAppInit();
     maxtrixAppDisplayBootImage();
     
 }

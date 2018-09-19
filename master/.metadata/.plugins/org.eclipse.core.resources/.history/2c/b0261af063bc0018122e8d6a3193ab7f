@@ -14,6 +14,9 @@ static showMode_t showMode;
 
 static TimerHandle_t xTimers;
 
+static uint8_t salverId1;
+static uint8_t salverId2;
+
 const uint8_t IMAGE[] =
 {
 	0X00, 0X00, 0X00, 0X00, 0X00, 0X00, 0X00, 0X00, 0X00, 0X00, 0X00, 0X00, 0X00, 0X00, 0X00, 0X00, 0X00, 0X00, 0X00, 0X00, 0X00, 0X00, 0X00, 0X00, 0X00, 0X00, 0X00, 0X00, 0X00, 0X00, 0X00, 0X00,
@@ -643,7 +646,6 @@ const uint8_t num4[] =
 	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
 	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
 	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-
 };
 
 const uint8_t num5[] =
@@ -745,7 +747,6 @@ const uint8_t num9[] =
 	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
 	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
 	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-
 };
 
 const uint8_t *pNumber[] =
@@ -807,7 +808,7 @@ uint8_t maxtrixAppSetGameLevel(uint8_t level)
 		{
 			xoffset = 48;
 			xoffset1 = 38;
-			for(i = 0; i < sizeof(gameLevel); i++)
+			for(i = 0; i < sizeof(num0); i++)
 			{
 
 				for(j = 0; j < 8; j++)
@@ -820,7 +821,7 @@ uint8_t maxtrixAppSetGameLevel(uint8_t level)
 				}
 			}
 		}
-		for(i = 0; i < sizeof(gameLevel); i++)
+		for(i = 0; i < sizeof(num0); i++)
 		{
 
 			for(j = 0; j < 8; j++)
@@ -871,7 +872,7 @@ uint8_t maxtrixAppSetGameMode(uint8_t cnt)
 		color = rand();
 	}
 	while((color & 0xFF) <= 0x7F && ((color & 0xFF00) <= 0x7F00) && ((color & 0xFF000) <= 0x7F000));
-	for(i = 0; i < sizeof(gameLevel); i++)
+	for(i = 0; i < sizeof(gameMode); i++)
 	{
 		for(j = 0; j < 8; j++)
 		{
@@ -888,7 +889,7 @@ uint8_t maxtrixAppSetGameMode(uint8_t cnt)
 		color = rand();
 	}
 	while((color & 0xFF) <= 0x7F && ((color & 0xFF00) <= 0x7F00) && ((color & 0xFF000) <= 0x7F000));
-	for(i = 0; i < sizeof(gameLevel); i++)
+	for(i = 0; i < sizeof(singleMode); i++)
 	{
 		for(j = 0; j < 8; j++)
 		{
@@ -922,7 +923,7 @@ uint8_t maxtrixAppSetImage(uint8_t *pImage)
 	return 1;
 }
 
-void maxtrixDisplayBootImage(void)
+void maxtrixAppDisplayBootImage(void)
 {
 	uint32_t i = 0;
 	uint32_t color = 0;
@@ -935,7 +936,7 @@ void maxtrixDisplayBootImage(void)
 	}
 }
 
-uint8_t maxtrixGetGameMode(void)
+uint8_t maxtrixAppGetGameMode(void)
 {
 	return gGameMode;
 }
@@ -945,7 +946,7 @@ showMode_t maxtrixAppGetShowMode(void)
 	return showMode;
 }
 
-void maxtrixSetGameScoreRefresh(void)
+void maxtrixAppSetGameScoreRefresh(void)
 {
 	uint32_t i;
 	uint8_t j;
@@ -960,7 +961,7 @@ void maxtrixSetGameScoreRefresh(void)
 		uint8_t *pLevel1 = (uint8_t *)pNumber[hundreds];
 		uint8_t *pLevel2 = (uint8_t *)pNumber[tens];
 		uint8_t *pLevel3 = (uint8_t *)pNumber[units];
-		for(i = 0; i < sizeof(gameLevel); i++)
+		for(i = 0; i < sizeof(scoreImage); i++)
 		{
 			for(j = 0; j < 8; j++)
 			{
@@ -972,8 +973,12 @@ void maxtrixSetGameScoreRefresh(void)
 		}
 		if(gScore[0] < 10)
 		{
-			for(i = 0; i < sizeof(gameLevel); i++)
+			for(i = 0; i < sizeof(num0); i++)
 			{
+				if(i == 125)
+				{
+					break;
+				}
 				for(j = 0; j < 8; j++)
 				{
 					if((pLevel3[i]) & (0x01 << j))
@@ -986,7 +991,7 @@ void maxtrixSetGameScoreRefresh(void)
 		}
 		else if(gScore[0] < 100)
 		{
-			for(i = 0; i < sizeof(gameLevel); i++)
+			for(i = 0; i < sizeof(num0); i++)
 			{
 				for(j = 0; j < 8; j++)
 				{
@@ -998,7 +1003,7 @@ void maxtrixSetGameScoreRefresh(void)
 
 				}
 			}
-			for(i = 0; i < sizeof(gameLevel); i++)
+			for(i = 0; i < sizeof(num0); i++)
 			{
 				for(j = 0; j < 8; j++)
 				{
@@ -1012,7 +1017,7 @@ void maxtrixSetGameScoreRefresh(void)
 		}
 		else
 		{
-			for(i = 0; i < sizeof(gameLevel); i++)
+			for(i = 0; i < sizeof(num0); i++)
 			{
 				for(j = 0; j < 8; j++)
 				{
@@ -1022,7 +1027,7 @@ void maxtrixSetGameScoreRefresh(void)
 					}
 				}
 			}
-			for(i = 0; i < sizeof(gameLevel); i++)
+			for(i = 0; i < sizeof(num0); i++)
 			{
 				for(j = 0; j < 8; j++)
 				{
@@ -1034,7 +1039,7 @@ void maxtrixSetGameScoreRefresh(void)
 
 				}
 			}
-			for(i = 0; i < sizeof(gameLevel); i++)
+			for(i = 0; i < sizeof(num0); i++)
 			{
 				for(j = 0; j < 8; j++)
 				{
@@ -1056,7 +1061,7 @@ void maxtrixSetGameScoreRefresh(void)
 		uint8_t *pLevel1 = (uint8_t *)pNumber[hundreds];
 		uint8_t *pLevel2 = (uint8_t *)pNumber[tens];
 		uint8_t *pLevel3 = (uint8_t *)pNumber[units];
-		for(i = 0; i < sizeof(gameLevel); i++)
+		for(i = 0; i < sizeof(scoreImage); i++)
 		{
 			for(j = 0; j < 8; j++)
 			{
@@ -1069,7 +1074,7 @@ void maxtrixSetGameScoreRefresh(void)
 
 		if(gScore[0] < 10)
 		{
-			for(i = 0; i < sizeof(gameLevel); i++)
+			for(i = 0; i < sizeof(num0); i++)
 			{
 				for(j = 0; j < 8; j++)
 				{
@@ -1084,7 +1089,7 @@ void maxtrixSetGameScoreRefresh(void)
 		}
 		else if(gScore[0] < 100)
 		{
-			for(i = 0; i < sizeof(gameLevel); i++)
+			for(i = 0; i < sizeof(num0); i++)
 			{
 				for(j = 0; j < 8; j++)
 				{
@@ -1096,7 +1101,7 @@ void maxtrixSetGameScoreRefresh(void)
 
 				}
 			}
-			for(i = 0; i < sizeof(gameLevel); i++)
+			for(i = 0; i < sizeof(num0); i++)
 			{
 				for(j = 0; j < 8; j++)
 				{
@@ -1111,7 +1116,7 @@ void maxtrixSetGameScoreRefresh(void)
 		}
 		else
 		{
-			for(i = 0; i < sizeof(gameLevel); i++)
+			for(i = 0; i < sizeof(num0); i++)
 			{
 				for(j = 0; j < 8; j++)
 				{
@@ -1122,7 +1127,7 @@ void maxtrixSetGameScoreRefresh(void)
 
 				}
 			}
-			for(i = 0; i < sizeof(gameLevel); i++)
+			for(i = 0; i < sizeof(num0); i++)
 			{
 				for(j = 0; j < 8; j++)
 				{
@@ -1134,7 +1139,7 @@ void maxtrixSetGameScoreRefresh(void)
 
 				}
 			}
-			for(i = 0; i < sizeof(gameLevel); i++)
+			for(i = 0; i < sizeof(num0); i++)
 			{
 				for(j = 0; j < 8; j++)
 				{
@@ -1149,7 +1154,7 @@ void maxtrixSetGameScoreRefresh(void)
 		}
 
 		color = 0x00FF00;
-		for(i = 0; i < sizeof(gameLevel); i++)
+		for(i = 0; i < sizeof(num0); i++)
 		{
 			for(j = 0; j < 8; j++)
 			{
@@ -1170,7 +1175,7 @@ void maxtrixSetGameScoreRefresh(void)
 		pLevel3 = (uint8_t *)pNumber[units];
 		if(gScore[1] < 10)
 		{
-			for(i = 0; i < sizeof(gameLevel); i++)
+			for(i = 0; i < sizeof(num0); i++)
 			{
 				for(j = 0; j < 8; j++)
 				{
@@ -1185,7 +1190,7 @@ void maxtrixSetGameScoreRefresh(void)
 		}
 		else if(gScore[1] < 100)
 		{
-			for(i = 0; i < sizeof(gameLevel); i++)
+			for(i = 0; i < sizeof(num0); i++)
 			{
 				for(j = 0; j < 8; j++)
 				{
@@ -1197,7 +1202,7 @@ void maxtrixSetGameScoreRefresh(void)
 
 				}
 			}
-			for(i = 0; i < sizeof(gameLevel); i++)
+			for(i = 0; i < sizeof(num0); i++)
 			{
 				for(j = 0; j < 8; j++)
 				{
@@ -1212,7 +1217,7 @@ void maxtrixSetGameScoreRefresh(void)
 		}
 		else
 		{
-			for(i = 0; i < sizeof(gameLevel); i++)
+			for(i = 0; i < sizeof(num0); i++)
 			{
 				for(j = 0; j < 8; j++)
 				{
@@ -1224,7 +1229,7 @@ void maxtrixSetGameScoreRefresh(void)
 
 				}
 			}
-			for(i = 0; i < sizeof(gameLevel); i++)
+			for(i = 0; i < sizeof(num0); i++)
 			{
 				for(j = 0; j < 8; j++)
 				{
@@ -1236,7 +1241,7 @@ void maxtrixSetGameScoreRefresh(void)
 
 				}
 			}
-			for(i = 0; i < sizeof(gameLevel); i++)
+			for(i = 0; i < sizeof(num0); i++)
 			{
 				for(j = 0; j < 8; j++)
 				{
@@ -1252,24 +1257,25 @@ void maxtrixSetGameScoreRefresh(void)
 	}
 }
 
-void maxtrixGameStart(void)
+void maxtrixAppGameStart(void)
 {
 	gScore[0] = 0;
 	gScore[1] = 0;
 	showMode = showScores;
-	gGameStatus = 1;
-	maxtrixSetGameScoreRefresh();
-	xTimerChangePeriod(xTimers, (20 - maxtrixAppGetGameLevel()), 0);
-	xTimerStart(xTimers, 0);
+	gGameStatus = true;
+	maxtrixAppSetGameScoreRefresh();
+//	xTimerChangePeriod(xTimers, 4000 - 200*(20 - maxtrixAppGetGameLevel()), 0);
+//	xTimerStart(xTimers, 0);
 }
 
-void maxtrixGameStop(void)
+void maxtrixAppGameStop(void)
 {
 	gGameStatus = 0;
-	maxtrixDisplayBootImage();
+	maxtrixAppDisplayBootImage();
+	xTimerStop(xTimers, 100);
 }
 
-bool maxtrixGetGameStatus(void)
+bool maxtrixAppGetGameStatus(void)
 {
 	return gGameStatus;
 }
@@ -1285,19 +1291,51 @@ void maxtriAppScoreIncrease(uint8_t player)
 static void vTimerCallback(void *p)
 {
     can_frame_t frame;
+    salverId1 = 0;
+    salverId2 = 0;
+    frame.id = 1;
+    frame.length = 8;
+    srand(xTaskGetTickCount());
     if(gGameMode == 2)
     {
-        srand(xTaskGetTickCount());
-        uint8_t salverId1 = rand()%7 + 1;
-        uint8_t salverId2 = rand()%7 + 8;
+        salverId1 = rand()%8 + 1;
+        salverId2 = rand()%8 + 1;
         frame.dataByte0 = salverId1;
         frame.dataByte1 = salverId2;
-        CanAppSendMsg(&frame);
     }
     else
     {
-
+        salverId1 = rand()%8 + 1;
+        frame.dataByte0 = salverId1;
     }
+	CanAppSendMsg(&frame);
+}
+
+void maxtriAppHandleMsg(uint8_t salver_id, uint8_t msg)
+{
+	if(!maxtrixAppGetGameStatus())
+	{
+		return;
+	}
+	if(salver_id == salverId1)
+	{
+		if(msg == 1)
+		{
+			maxtriAppScoreIncrease(0);
+		}
+	}
+	else if(salver_id == salverId2)
+	{
+		if(msg == 1)
+		{
+			maxtriAppScoreIncrease(1);
+		}
+	}
+	else
+	{
+		//do nothing
+	}
+	maxtrixAppSetGameScoreRefresh();
 }
 
 void maxtriAppInit(void)
