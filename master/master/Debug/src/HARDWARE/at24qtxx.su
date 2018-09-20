@@ -1,4 +1,0 @@
-at24qtxx.c:14:13:vTimerCallback	32	static
-at24qtxx.c:76:6:at24qt_intit	24	static
-at24qtxx.c:82:6:at24qt_getOutPutStatus	4	static
-at24qtxx.c:86:6:at24qt_setMode	16	static

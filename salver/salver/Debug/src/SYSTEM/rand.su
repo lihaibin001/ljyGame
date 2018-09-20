@@ -1,3 +1,0 @@
-rand.c:97:12:__random_r	40	static
-rand.c:138:5:rand	16	static
-rand.c:145:6:srand	16	static

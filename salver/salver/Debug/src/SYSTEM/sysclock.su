@@ -1,2 +1,0 @@
-sysclock.c:17:6:sysclock_init	8	static
-sysclock.c:23:6:sysclok_deinit	8	static
