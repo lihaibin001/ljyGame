@@ -79,8 +79,30 @@ const canFIrlterList_t firlterList =
 static void CanAppReceiveMsgHandler(void)
 {
     can_frame_t frame;
-    CanGet_MSG(CAN_APP_CONTROLLER, &frame);
-    CanAppSendMsg(&frame);
+    if(CanGet_MSG(CAN_APP_CONTROLLER, &frame))
+    {
+    	if(1 == maxtrixAppGetGameMode())
+    	{
+    		if(frame.id == maxtriAppGetPlayerSalverId(1))
+    		{
+    			maxtriAppScoreIncrease(1);
+    		}
+    	}
+    	else
+    	{
+    		if(frame.id == maxtriAppGetPlayerSalverId(1))
+    		{
+    			maxtriAppScoreIncrease(1);
+    		}
+    		else if(frame.id == maxtriAppGetPlayerSalverId(2))
+    		{
+    			maxtriAppScoreIncrease(2);
+    		}
+    	}
+
+
+    }
+    //CanAppSendMsg(&frame);
 }
 
 static void CanAppTxCompleteHalder(void)

@@ -11,7 +11,6 @@ static uint8_t gGameMode = 1;
 static bool gGameStatus;
 static uint8_t gScore[2] = {0};
 static showMode_t showMode;
-
 static TimerHandle_t xTimers;
 
 static uint8_t salverId1;
@@ -1284,15 +1283,14 @@ void maxtriAppScoreIncrease(uint8_t player)
 {
 	if(gGameStatus == true)
 	{
-		gScore[player]++;
+		gScore[player-1]++;
 	}
 }
 
 static void vTimerCallback(void *p)
 {
     can_frame_t frame;
-    salverId1 = 0;
-    salverId2 = 0;
+
     frame.id = 1;
     frame.length = 8;
     srand(xTaskGetTickCount());
@@ -1345,4 +1343,13 @@ void maxtriAppInit(void)
 	{
 		return;
 	}
+}
+
+uint8_t maxtriAppGetPlayerSalverId(uint8_t player)
+{
+	if(player==1)
+	{
+		return salverId1;
+	}
+	return salverId2;
 }

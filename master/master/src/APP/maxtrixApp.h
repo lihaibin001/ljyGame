@@ -23,4 +23,5 @@ void maxtrixAppGameStart(void);
 void maxtrixAppGameStop(void);
 bool maxtrixAppGetGameStatus(void);
 void maxtriAppInit(void);
+uint8_t maxtriAppGetPlayerSalverId(uint8_t player);
 #endif

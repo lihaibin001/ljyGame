@@ -72,6 +72,8 @@ static void vTimerCallback(TimerHandle_t xTimer)
 //				leds[i].r = rand() / 255;
 			}
 			ws2812b_SendRGB(leds, NUM_GRB_LEDS);
+			can_frame_t frame;
+			CanAppSendMsg(&frame);
 		}
 	}
 }
