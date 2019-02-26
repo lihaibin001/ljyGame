@@ -6,8 +6,7 @@
 #include "rand.h"
 #include "string.h"
 #include "ws2812b_conf.h"
-
-
+#include "canApp.h"
 
 static TimerHandle_t xTimers;
 static bool touchButtonSta;
@@ -17,43 +16,26 @@ static void vTimerCallback(TimerHandle_t xTimer)
 	static uint8_t debouching;
 	uint8_t stat = GPIO_ReadInputDataBit(GPIOC, GPIO_Pin_9);
 
-	if(stat)
+	if(stat && !touchButtonSta)
 	{
-		if(touchButtonSta == true)
+		if(++debouching == 3)
 		{
+			touchButtonSta = true;
 			debouching = 0;
 		}
-		else
+	}
+	else if(!stat && touchButtonSta)
+	{
+
+		if(++debouching == 3)
 		{
-			if(++debouching == 3)
-			{
-				touchButtonSta = true;
-				debouching = 0;
-			}
+			touchButtonSta = false;
+			debouching = 0;
 		}
 	}
 	else
 	{
-		if(touchButtonSta == false)
-		{
-			while(!ws2812b_IsReady());  // wait
-			for(i = 0; i <= NUM_GRB_LEDS ; i++)
-			{
-				leds[i].b = 0;
-				leds[i].g = 0;
-				leds[i].r = 0;
-			}
-			ws2812b_SendRGB(leds, NUM_GRB_LEDS);
-			debouching = 0;
-		}
-		else
-		{
-			if(++debouching == 3)
-			{
-				touchButtonSta = false;
-				debouching = 0;
-			}
-		}
+		debouching = 0;
 	}
 	if(touchButtonSta)
 	{

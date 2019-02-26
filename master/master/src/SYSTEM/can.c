@@ -43,6 +43,13 @@ static void filterConfig(const canFIrlterList_t *pFirlterList)
 		//CAN_FilterInitStructure.CAN_FilterFIFOAssignment = i / 2;
 		CAN_FilterInit(&CAN_FilterInitStructure);
 	}
+//	CAN_FilterInit(&CAN_FilterInitStructure);
+}
+
+static void filterDisbale(void)
+{
+	CAN_FilterInitTypeDef CAN_FilterInitStructure;
+	CAN_FilterInitStructure.CAN_FilterActivation = DISABLE;
 	CAN_FilterInit(&CAN_FilterInitStructure);
 }
 
@@ -56,7 +63,7 @@ void CanInit(CanControllerIdx_t controller, CanBaud_t baud, pHanlderCb cb, const
 	}
 	if(baud >= CAN_Baud_Num)
 	{
-		ERROR_DEBUG("[CAN] Baud outof range\r\n");
+		ERROR_DEBUG("[CAN] Baud out off range\r\n");
 		while(1)
 			;
 	}
@@ -81,6 +88,10 @@ void CanInit(CanControllerIdx_t controller, CanBaud_t baud, pHanlderCb cb, const
 	if(pFirlterList != NULL)
 	{
 		filterConfig(pFirlterList);
+	}
+	else
+	{
+		filterDisbale();
 	}
 	switch((uint32_t)controller)
 	{

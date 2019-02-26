@@ -10,6 +10,7 @@
 #include "delay.h"
 #include "ws2812b.h"
 #include "at24qtxx.h"
+#include "led.h"
 void vApplicationDaemonTaskStartupHook( void )
 {
 	sysclock_init();
@@ -17,6 +18,7 @@ void vApplicationDaemonTaskStartupHook( void )
     CanAppInit();
     ws2812b_Init();
     at24qt_intit();
+    LED_Init();
 }
 
 void vApplicationIdleHook( void )

@@ -26,7 +26,7 @@ bool CreateDisplayTask(void)
     {
         return false;
     }
-	if(pdPASS !=  xTaskCreate(xTask, "Dispaly", 128, NULL, 3, NULL))
+	if(pdPASS !=  xTaskCreate(xTask, "Dispaly", 128, NULL, 2, NULL))
     {
         return false;
     }

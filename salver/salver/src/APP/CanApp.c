@@ -46,7 +46,7 @@ static void canAppCb(CanControllerIdx_t controller, uint8_t it_flag);
 
 static QueueHandle_t xQueue;
 static SemaphoreHandle_t xSemphore;
-static uint32_t selfId;
+static uint8_t selfId;
 const static pvoidFunc CanAppEvtHandler[CanAppEvtNum] =
 {
 	CanAppReceiveMsgHandler,
@@ -62,14 +62,7 @@ const CanAppHalder_t CanAppHandler[] =
 };
 const canFirlter_t canFirlter[] =
 {
-	{CAN_ID_STANDRD, 1},
-	{CAN_ID_STANDRD, 2},
-	{CAN_ID_STANDRD, 3},
-	{CAN_ID_STANDRD, 4},
-	{CAN_ID_STANDRD, 5},
-	{CAN_ID_STANDRD, 6},
-	{CAN_ID_STANDRD, 7},
-	{CAN_ID_STANDRD, 8},
+	{CAN_ID_STANDRD, 0x40},
 };
 const canFIrlterList_t firlterList =
 {
@@ -82,16 +75,38 @@ static void CanAppReceiveMsgHandler(void)
 {
     can_frame_t frame;
     CanGet_MSG(CAN_APP_CONTROLLER, &frame);
-    if(frame.id == 0x01 && frame.dataByte0 == selfId)
+    uint8_t data;
+    if(frame.id == 0x40)
     {
-    	uint8_t i;
+		uint8_t i;
+    	if(selfId & 0x20)
+    	{
+    		data = frame.dataByte1;
+    	}
+    	else
+    	{
+    		data = frame.dataByte0;
+    	}
 		while(!ws2812b_IsReady());  // wait
-		for(i = 0; i <= NUM_GRB_LEDS; i++)
-		{
-			leds[i].b = 0;
-			leds[i].g = 0;
-			leds[i].r = 0xFF;
-		}
+    	if(data != (selfId & 0x1F))
+    	{
+    		for(i = 0; i <= NUM_GRB_LEDS; i++)
+    		{
+    			leds[i].b = 0;
+    			leds[i].g = 0;
+    			leds[i].r = 0;
+    		}
+    	}
+    	else
+    	{
+			for(i = 0; i <= NUM_GRB_LEDS; i++)
+			{
+				leds[i].b = 0;
+				leds[i].g = 0;
+				leds[i].r = 0xFF;
+			}
+    	}
+
 		ws2812b_SendRGB(leds, NUM_GRB_LEDS);
     }
     //CanAppSendMsg(&frame);
@@ -183,7 +198,7 @@ static void xTask(void *pParamter)
 
 void CanAppInit(void)
 {
-	selfId = PDin(8) | (PDin(9) << 1) | (PDin(10) << 2) | (PDin(11) << 3) | (PDin(11) << 4) | (PDin(12) << 5);
+	selfId = PDin(8) | (PDin(9) << 1) | (PDin(10) << 2) | (PDin(11) << 3) | (PDin(12) << 4) | (PDin(13) << 5);
 	xQueue = xQueueCreate(3, 1);
 	xSemphore = xSemaphoreCreateBinary();
 	xTaskCreate(xTask, "CanApp", 128, NULL, 3, NULL);

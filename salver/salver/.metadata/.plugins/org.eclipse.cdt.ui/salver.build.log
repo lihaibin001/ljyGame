@@ -1,0 +1,20 @@
+23:07:03 **** Incremental Build of configuration Debug for project salver ****
+Info: Internal Builder is used for build
+arm-atollic-eabi-gcc -c ..\src\APP\CanApp.c -mthumb -mcpu=cortex-m3 -std=gnu11 -DSTM32F10X_CL -DUSE_STDPERIPH_DRIVER -I../src -I..\src\APP -I..\src\freertos\Source\include -I..\src\freertos\Source\portable\GCC\ARM_CM3 -I..\src\HARDWARE -I..\src\SYSTEM -I..\src\task -I../Libraries/STM32F10x_StdPeriph_Driver/inc -I../Libraries/CMSIS/Device/ST/STM32F10x/Include -I../Libraries/CMSIS/Include -O0 -ffunction-sections -fdata-sections -g -fstack-usage -Wall -specs=nano.specs -o src\APP\CanApp.o 
+arm-atollic-eabi-gcc -o salver.elf Libraries\STM32F10x_StdPeriph_Driver\src\misc.o Libraries\STM32F10x_StdPeriph_Driver\src\stm32f10x_adc.o Libraries\STM32F10x_StdPeriph_Driver\src\stm32f10x_bkp.o Libraries\STM32F10x_StdPeriph_Driver\src\stm32f10x_can.o Libraries\STM32F10x_StdPeriph_Driver\src\stm32f10x_cec.o Libraries\STM32F10x_StdPeriph_Driver\src\stm32f10x_crc.o Libraries\STM32F10x_StdPeriph_Driver\src\stm32f10x_dac.o Libraries\STM32F10x_StdPeriph_Driver\src\stm32f10x_dbgmcu.o Libraries\STM32F10x_StdPeriph_Driver\src\stm32f10x_dma.o Libraries\STM32F10x_StdPeriph_Driver\src\stm32f10x_exti.o Libraries\STM32F10x_StdPeriph_Driver\src\stm32f10x_flash.o Libraries\STM32F10x_StdPeriph_Driver\src\stm32f10x_fsmc.o Libraries\STM32F10x_StdPeriph_Driver\src\stm32f10x_gpio.o Libraries\STM32F10x_StdPeriph_Driver\src\stm32f10x_i2c.o Libraries\STM32F10x_StdPeriph_Driver\src\stm32f10x_iwdg.o Libraries\STM32F10x_StdPeriph_Driver\src\stm32f10x_pwr.o Libraries\STM32F10x_StdPeriph_Driver\src\stm32f10x_rcc.o Libraries\STM32F10x_StdPeriph_Driver\src\stm32f10x_rtc.o Libraries\STM32F10x_StdPeriph_Driver\src\stm32f10x_sdio.o Libraries\STM32F10x_StdPeriph_Driver\src\stm32f10x_spi.o Libraries\STM32F10x_StdPeriph_Driver\src\stm32f10x_tim.o Libraries\STM32F10x_StdPeriph_Driver\src\stm32f10x_usart.o Libraries\STM32F10x_StdPeriph_Driver\src\stm32f10x_wwdg.o src\APP\CanApp.o src\APP\FreeRTOSHook.o src\APP\main.o src\APP\stm32f10x_it.o src\HARDWARE\at24qtxx.o src\HARDWARE\bitmap.o src\HARDWARE\eeprom.o src\HARDWARE\led.o src\HARDWARE\ws2812b.o src\SYSTEM\can.o src\SYSTEM\delay.o src\SYSTEM\gpioInit.o src\SYSTEM\iic.o src\SYSTEM\iwdog.o src\SYSTEM\rand.o src\SYSTEM\sys.o src\SYSTEM\sysclock.o src\SYSTEM\wwdog.o src\freertos\Source\croutine.o src\freertos\Source\event_groups.o src\freertos\Source\list.o src\freertos\Source\portable\GCC\ARM_CM3\port.o src\freertos\Source\portable\MemMang\heap_4.o src\freertos\Source\queue.o src\freertos\Source\stream_buffer.o src\freertos\Source\tasks.o src\freertos\Source\timers.o src\startup_stm32f10x_cl.o src\system_stm32f10x.o src\task\peridic.o -mthumb -mcpu=cortex-m3 -T../stm32_flash.ld -specs=nosys.specs -static -Wl,-cref,-u,Reset_Handler -Wl,-Map=salver.map -Wl,--gc-sections -Wl,--defsym=malloc_getpagesize_P=0x80 -Wl,--start-group -lc -lm -Wl,--end-group -specs=nano.specs 
+C:\Program Files (x86)\Atollic\TrueSTUDIO for STM32 9.0.1\ide\jre\bin\java -jar C:\Program Files (x86)\Atollic\TrueSTUDIO for STM32 9.0.1\Tools\arm-atollic-reports.jar convert-hex sizeinfo list salver.elf 
+Generate build reports...
+Converting build output to hex
+Output sent to: salver.hex
+Converting build output to hex done
+Print size information
+   text	   data	    bss	    dec	    hex	filename
+  18060	     20	  21280	  39360	   99c0	salver.elf
+Print size information done
+Generate listing file
+Output sent to: salver.list
+Generate listing file done
+Generate build reports done
+
+23:07:05 Build Finished (took 2s.387ms)
+

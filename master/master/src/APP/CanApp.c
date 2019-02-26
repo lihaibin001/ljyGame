@@ -4,7 +4,7 @@
 #include "queue.h"
 #include "semphr.h"
 #include "sys.h"
-
+#include "maxtrixApp.h"
 #ifdef CAN_APP_DEBUG
 #define DEBUG(...) printf(...)
 #else
@@ -68,6 +68,15 @@ const canFirlter_t canFirlter[] =
 	{CAN_ID_STANDRD, 6},
 	{CAN_ID_STANDRD, 7},
 	{CAN_ID_STANDRD, 8},
+	{CAN_ID_STANDRD, 0x21},
+	{CAN_ID_STANDRD, 0x22},
+	{CAN_ID_STANDRD, 0x23},
+	{CAN_ID_STANDRD, 0x24},
+	{CAN_ID_STANDRD, 0x25},
+	{CAN_ID_STANDRD, 0x26},
+	{CAN_ID_STANDRD, 0x27},
+	{CAN_ID_STANDRD, 0x28},
+
 };
 const canFIrlterList_t firlterList =
 {
@@ -86,6 +95,7 @@ static void CanAppReceiveMsgHandler(void)
     		if(frame.id == maxtriAppGetPlayerSalverId(1))
     		{
     			maxtriAppScoreIncrease(1);
+    			maxtriAppResetPlayerSalverId();
     		}
     	}
     	else
@@ -93,14 +103,14 @@ static void CanAppReceiveMsgHandler(void)
     		if(frame.id == maxtriAppGetPlayerSalverId(1))
     		{
     			maxtriAppScoreIncrease(1);
+    			maxtriAppResetPlayerSalverId();
     		}
     		else if(frame.id == maxtriAppGetPlayerSalverId(2))
     		{
     			maxtriAppScoreIncrease(2);
+    			maxtriAppResetPlayerSalverId();
     		}
     	}
-
-
     }
     //CanAppSendMsg(&frame);
 }
@@ -191,9 +201,9 @@ static void xTask(void *pParamter)
 
 void CanAppInit(void)
 {
-	selfId = 1;
+	selfId = 0x40;
 	xQueue = xQueueCreate(3, 1);
 	xSemphore = xSemaphoreCreateBinary();
-	xTaskCreate(xTask, "CanApp", 128, NULL, 4, NULL);
+	xTaskCreate(xTask, "CanApp", 128, NULL, 3, NULL);
 	CanInit(CanAppHandler[0].controller, CanAppHandler[0].baud, canAppCb, &firlterList);
 }
