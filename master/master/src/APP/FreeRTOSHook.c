@@ -15,6 +15,7 @@
 
 void vApplicationDaemonTaskStartupHook( void )
 {
+	RGBClearBuff();
 	sysclock_init();
 	gpioInit();
     CreateDisplayTask();
@@ -22,8 +23,8 @@ void vApplicationDaemonTaskStartupHook( void )
     keyDetectInit();
     RGBSetupRGBMatrixPorts();
     maxtriAppInit();
-    maxtrixAppDisplayBootImage();
-    
+    maxtrixAppBooting();
+    //maxtrixAppDisplayBootImage();
 }
 
 void vApplicationIdleHook( void )

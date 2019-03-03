@@ -338,6 +338,8 @@ void RGBrawString(uint8_t x, uint8_t y, uint32_t Color, char *text)
 	}
 }
 
+
+
 void drawImage(uint8_t x, uint8_t y, uint32_t Color, const uint8_t *addres)
 {
 	uint8_t b, c, d;

@@ -935,6 +935,44 @@ void maxtrixAppDisplayBootImage(void)
 	}
 }
 
+static maxtrixAppSelfTest(void)
+{
+	uint8_t i;
+	for(i=0; i<8; i++)
+	{
+		can_frame_t msg;
+		msg.format = CAN_ID_STANDRD;
+		msg.type = CAN_TYPE_DATA;
+		CanAppSendMsg(&msg);
+		vTaskDelay(100);
+	}
+
+}
+
+void maxtrixAppBooting(void)
+{
+	uint8_t i;
+	RGBrawString(18, 12, 0x0000FF, "WAN DE");
+	vTaskDelay(500);
+	RGBClearBuff();
+	for(i=0; i<5; i++)
+	{
+		RGBrawString(12, 12, 0x0000FF, "init   ");
+		vTaskDelay(100);
+		RGBClearBuff();
+		RGBrawString(12, 12, 0x0000FF, "init.  ");
+		vTaskDelay(100);
+		RGBClearBuff();
+		RGBrawString(12, 12, 0x0000FF, "init.. ");
+		vTaskDelay(100);
+		RGBClearBuff();
+		RGBrawString(12, 12, 0x0000FF, "init...");
+		vTaskDelay(100);
+		RGBClearBuff();
+	}
+	RGBrawString(18, 12, 0x0000FF, "MOD 1.1");
+}
+
 uint8_t maxtrixAppGetGameMode(void)
 {
 	return gGameMode;
