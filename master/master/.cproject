@@ -45,6 +45,7 @@
 								</option>
 								<option id="com.atollic.truestudio.gcc.directories.select.927573067" name="Include path" superClass="com.atollic.truestudio.gcc.directories.select" useByScannerDiscovery="false" valueType="includePath">
 									<listOptionValue builtIn="false" value="../src/APP"/>
+									<listOptionValue builtIn="false" value="&quot;..\src\statemachine&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;..\src\freertos\Source\include&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;..\src\freertos\Source\portable\GCC\ARM_CM3&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;..\src\HARDWARE&quot;"/>
