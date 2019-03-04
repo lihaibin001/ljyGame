@@ -8,10 +8,11 @@
 #ifndef APP_SYNC_H_
 #define APP_SYNC_H_
 
-#include "fsm.h"
+//#include "fsm.h"
 
 typedef enum
 {
+	PS_EVT_BOOT,
 	PS_EVT_SNATCH_LED,
 	PS_EVT_ROAD_BLOCK,
 	PS_EVT_WIPE_LED,
@@ -25,6 +26,6 @@ typedef enum
 #include "fsm_stat.h"
 #include "ps_stt.h"
 
-void Psync_Task(void *pvParameters);
+void ps_task_create(void);
 
 #endif /* APP_SYNC_H_ */

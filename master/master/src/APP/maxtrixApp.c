@@ -935,17 +935,16 @@ void maxtrixAppDisplayBootImage(void)
 	}
 }
 
-static maxtrixAppSelfTest(void)
+void maxtrixAppSelfTest(void)
 {
-	uint8_t i;
-	for(i=0; i<8; i++)
-	{
-		can_frame_t msg;
-		msg.format = CAN_ID_STANDRD;
-		msg.type = CAN_TYPE_DATA;
-		CanAppSendMsg(&msg);
-		vTaskDelay(100);
-	}
+	static uint8_t channel_status;
+	int8_t drawBuff[16] = "init";
+
+	strcpy(drawBuff, ".");
+//		can_frame_t msg;
+//		msg.format = CAN_ID_STANDRD;
+//		msg.type = CAN_TYPE_DATA;
+//		CanAppSendMsg(&msg);
 
 }
 

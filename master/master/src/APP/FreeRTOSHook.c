@@ -19,12 +19,11 @@ void vApplicationDaemonTaskStartupHook( void )
 	sysclock_init();
 	gpioInit();
     CreateDisplayTask();
+    ps_task_create();
     CanAppInit();
     keyDetectInit();
     RGBSetupRGBMatrixPorts();
     maxtriAppInit();
-    maxtrixAppBooting();
-    //maxtrixAppDisplayBootImage();
 }
 
 void vApplicationIdleHook( void )
@@ -35,5 +34,4 @@ void vApplicationIdleHook( void )
 void vApplicationTickHook( void )
 {
     DisplayRefalsh();
-
 }
