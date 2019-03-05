@@ -10,6 +10,10 @@ typedef enum
     showScores,
 }showMode_t;
 
+#define PALATE_STA_UNKNOW		0
+#define PALATE_STA_OK			0
+#define PALATE_STA_TROUBLE		0
+
 extern const uint8_t gImage_a[];
 uint8_t maxtrixAppGetGameLevel(void);
 showMode_t maxtrixAppGetShowMode(void);
@@ -18,6 +22,7 @@ void maxtrixAppGameLevelIncrease(void);
 uint8_t maxtrixAppSetGameMode(uint8_t cnt);
 uint8_t maxtrixAppSetImage(uint8_t *pImage);
 void maxtrixAppDisplayBootImage(void);
+void maxtrixAppSelfTest(void);
 void maxtrixAppBooting(void);
 uint8_t maxtrixAppGetGameMode(void);
 void maxtrixAppGameStart(void);

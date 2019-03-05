@@ -4,6 +4,7 @@
 #include "stm32f10x_conf.h"
 #include "CanCfg.h"
 #include "stdbool.h"
+#include "sys.h"
 #define CAN_ID_STANDRD (uint8_t)0
 #define CAN_ID_EXTEND (uint8_t)1
 
@@ -97,6 +98,6 @@ typedef struct
 
 void CanInit(CanControllerIdx_t controller, CanBaud_t baud, pHanlderCb cb, const canFIrlterList_t *pFirlter);
 void CanDeinit(CanControllerIdx_t controller);
-bool CanSend_MSG(CanControllerIdx_t controller, const can_frame_t *pFrame);
-bool CanGet_MSG(CanControllerIdx_t controller, can_frame_t *pFrame);
+RET_t CanSend_MSG(CanControllerIdx_t controller, const can_frame_t *pFrame);
+RET_t CanGet_MSG(CanControllerIdx_t controller, can_frame_t *pFrame);
 #endif //__CAN_H__

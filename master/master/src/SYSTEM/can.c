@@ -140,18 +140,19 @@ void CanDeinit(CanControllerIdx_t controller)
 		}
 	}
 }
-bool CanSend_MSG(CanControllerIdx_t controller, const can_frame_t *pFrame)
+RET_t CanSend_MSG(CanControllerIdx_t controller, const can_frame_t *pFrame)
 {
-
+	RET_t ret;
+	uint8_t status;
 	if(controller >= canControllerIdxNum)
 	{
 		ERROR_DEBUG("[CAN] Can controller out of rannge\r\n");
-		return false;
+		return RET_PARAM_ERR;
 	}
 	if(pFrame == NULL)
 	{
 		ERROR_DEBUG("[CAN] Send message is null\r\n");
-		return false;
+		return RET_PARAM_ERR;
 	}
 	else
 	{
@@ -183,30 +184,31 @@ bool CanSend_MSG(CanControllerIdx_t controller, const can_frame_t *pFrame)
 		{
 			TxMessage.RTR = CAN_RTR_Remote;
 		}
-		if(CAN_TxStatus_NoMailBox == CAN_Transmit(CAN1, &TxMessage))
+		status = CAN_Transmit(CAN1, &TxMessage);
+		if(status != CAN_TxStatus_Ok)
 		{
-			ERROR_DEBUG("[CAN] There has no transmit mailbox\r\n");
-			return false;
+			ERROR_DEBUG("[CAN] Transmit fail: %d\r\n", status);
+			return RET_PHY_ERR;
 		}
-		return true;
+		return RET_OK;
 	}
 }
 
-bool CanGet_MSG(CanControllerIdx_t controller, can_frame_t *pFrame)
+RET_t CanGet_MSG(CanControllerIdx_t controller, can_frame_t *pFrame)
 {
 	if(controller >= canControllerIdxNum || pFrame == NULL)
 	{
-		return false;
+		return RET_PARAM_ERR;
 	}
 	if(handler[controller].isHaveMsg)
 	{
 		handler[controller].isHaveMsg = false;
 		memcpy(pFrame, &handler[controller].Frame, sizeof(can_frame_t));
-		return true;
+		return RET_OK;
 	}
 	else
 	{
-		return false;
+		return RET_ERR;
 	}
 }
 

@@ -98,7 +98,11 @@ static void xTask(void *p) {
 /* entry actions                                                     */
 /*********************************************************************/
 static uint8_t ps_entry_root(void) {
-	current_status = PS_BOOT_TEST;
+	if(current_status == PS_ROOT) {
+		current_status = PS_BOOT_TEST;
+	} else {
+		current_status = PS_IDLE;
+	}
 	return 0;
 }
 

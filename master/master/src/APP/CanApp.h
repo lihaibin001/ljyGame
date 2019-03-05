@@ -3,6 +3,12 @@
 
 #include "can.h"
 
+typedef enum {
+	CanApp_Ok,
+	CanApp_bus_err,
+	CanApp_timeout,
+}CanAppRet_t;
+
 void CanAppInit(void);
-void CanAppSendMsg(can_frame_t *pFrame);
+RET_t CanAppSendMsg(can_frame_t *pFrame);
 #endif //__CANAPP_H__
