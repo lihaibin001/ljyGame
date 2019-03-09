@@ -14,6 +14,10 @@ typedef enum
 #define PALATE_STA_OK			0
 #define PALATE_STA_TROUBLE		0
 
+#define PROTOCAL_LED_ON			(uint8_t)0
+#define PROTOCAL_LED_OFF		(uint8_t)1
+#define PROTOCAL_SELF_TESET		(uint8_t)2
+
 extern const uint8_t gImage_a[];
 uint8_t maxtrixAppGetGameLevel(void);
 showMode_t maxtrixAppGetShowMode(void);

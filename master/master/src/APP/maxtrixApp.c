@@ -1462,6 +1462,8 @@ void maxtrixAppSelfTest(void) {
 	for (i = 0; i < PALTE_AMOUNT; i++) {
 		if (palteStatus[i] == PALATE_STA_UNKNOW) {
 			can_frame_t msg;
+			msg.dataByte0 = PROTOCAL_SELF_TESET;
+			msg.dataByte1 = i;
 			memcpy(&drawBuff[4], "...", i / 3);
 			msg.format = CAN_ID_STANDRD;
 			msg.type = CAN_TYPE_DATA;
@@ -1471,6 +1473,31 @@ void maxtrixAppSelfTest(void) {
 			}
 			break;
 		}
+	}
+}
+
+void maxtrixAppDataHandler(uint32_t id, uint8_t data[])
+{
+	can_frame_t frame;
+
+	RET_t status = CanGet_MSG(CAN_APP_CONTROLLER, &frame);
+	if (status == RET_OK) {
+		if (1 == maxtrixAppGetGameMode()) {
+			if (frame.id == maxtriAppGetPlayerSalverId(1)) {
+				maxtriAppScoreIncrease(1);
+				maxtriAppResetPlayerSalverId();
+			}
+		} else {
+			if (frame.id == maxtriAppGetPlayerSalverId(1)) {
+				maxtriAppScoreIncrease(1);
+				maxtriAppResetPlayerSalverId();
+			} else if (frame.id == maxtriAppGetPlayerSalverId(2)) {
+				maxtriAppScoreIncrease(2);
+				maxtriAppResetPlayerSalverId();
+			}
+		}
+	} else {
+		DEBUG("[CanApp] receive error: %d\r\n", status);
 	}
 }
 
