@@ -75,7 +75,7 @@ static void xTask(void *p) {
 	for (;;) {
 
 		// wait until next event in mailbox OR time expired
-		status = xQueueReceive(xQueue, &msg, pdMS_TO_TICKS(100));
+		status = xQueueReceive(xQueue, &msg, pdMS_TO_TICKS(250));
 		// process ALL events in queue first !!!
 		while (pdPASS == status) {
 			// process event
@@ -118,6 +118,7 @@ static uint8_t ps_entry_idle(void) {
 /* cs routines                                                       */
 /*********************************************************************/
 static uint8_t ps_cs_root(void) {
+	maxtrixAppSelfTest();
 	return 0;
 }
 

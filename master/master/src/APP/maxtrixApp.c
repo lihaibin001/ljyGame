@@ -1316,6 +1316,7 @@ const uint8_t num9[] = { 0x7C, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xFE,
 const uint8_t *pNumber[] = { num0, num1, num2, num3, num4, num5, num6, num7,
 		num8, num9, };
 
+
 uint8_t maxtrixAppSetGameLevel(uint8_t level) {
 	if (level <= 20) {
 		uint8_t xoffset = 0, xoffset1 = 0;
@@ -1458,47 +1459,62 @@ void maxtrixAppDisplayBootImage(void) {
 void maxtrixAppSelfTest(void) {
 	uint8_t i;
 	RET_t status;
+	static uint8_t try_cnt;
 	int8_t drawBuff[16] = "init";
-	for (i = 0; i < PALTE_AMOUNT; i++) {
-		if (palteStatus[i] == PALATE_STA_UNKNOW) {
-			can_frame_t msg;
-			msg.dataByte0 = PROTOCAL_SELF_TESET;
-			msg.dataByte1 = i;
-			memcpy(&drawBuff[4], "...", i / 3);
-			msg.format = CAN_ID_STANDRD;
-			msg.type = CAN_TYPE_DATA;
-			status = CanAppSendMsg(&msg);
-			if (status != RET_OK) {
-				APP_ERROR("[App] Send Can message error: %d\r\n", status);
+
+	if(try_cnt == 24)
+	{
+		memcpy(drawBuff, "error", 5);
+	}
+	else
+	{
+		memcpy(&drawBuff[4], "...", try_cnt % 4);
+		try_cnt++;
+		for (i = 0; i < PALTE_AMOUNT; i++) {
+			if (palteStatus[i] == PALATE_STA_UNKNOW) {
+				can_frame_t msg;
+				msg.dataWord0 = PROTOCAL_SELF_TESET << 8 | i;
+
+
+				msg.format = CAN_ID_STANDRD;
+				msg.type = CAN_TYPE_DATA;
+				status = CanAppSendMsg(&msg);
+				if (status != RET_OK) {
+					APP_ERROR("[App] Send Can message error: %d\r\n", status);
+				}
+				break;
 			}
-			break;
 		}
 	}
+	RGBClearBuff();
+	RGBrawString(12, 12, 0x0000FF, drawBuff);
 }
 
-void maxtrixAppDataHandler(uint32_t id, uint8_t data[])
+void maxtrixAppDataHandler(uint8_t id, uint16_t data)
 {
-	can_frame_t frame;
-
-	RET_t status = CanGet_MSG(CAN_APP_CONTROLLER, &frame);
-	if (status == RET_OK) {
-		if (1 == maxtrixAppGetGameMode()) {
-			if (frame.id == maxtriAppGetPlayerSalverId(1)) {
-				maxtriAppScoreIncrease(1);
-				maxtriAppResetPlayerSalverId();
-			}
-		} else {
-			if (frame.id == maxtriAppGetPlayerSalverId(1)) {
-				maxtriAppScoreIncrease(1);
-				maxtriAppResetPlayerSalverId();
-			} else if (frame.id == maxtriAppGetPlayerSalverId(2)) {
-				maxtriAppScoreIncrease(2);
-				maxtriAppResetPlayerSalverId();
-			}
-		}
-	} else {
-		DEBUG("[CanApp] receive error: %d\r\n", status);
-	}
+//	can_frame_t frame;
+//
+//
+//
+//	RET_t status = CanGet_MSG(CAN_APP_CONTROLLER, &frame);
+//	if (status == RET_OK) {
+//		if (1 == maxtrixAppGetGameMode()) {
+//			if (frame.id == maxtriAppGetPlayerSalverId(1)) {
+//				maxtriAppScoreIncrease(1);
+//				maxtriAppResetPlayerSalverId();
+//			}
+//		} else {
+//			if (frame.id == maxtriAppGetPlayerSalverId(1)) {
+//				maxtriAppScoreIncrease(1);
+//				maxtriAppResetPlayerSalverId();
+//			} else if (frame.id == maxtriAppGetPlayerSalverId(2)) {
+//				maxtriAppScoreIncrease(2);
+//				maxtriAppResetPlayerSalverId();
+//			}
+//		}
+//	} else {
+//		DEBUG("[CanApp] receive error: %d\r\n", status);
+//	}
 }
 
 void maxtrixAppBooting(void) {
