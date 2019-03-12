@@ -1495,7 +1495,7 @@ bool maxtrixAppSelfTest(void) {
 	}
 
 	return isAllChannelOk;
-
+}
 
 void maxtrixAppDataHandler(uint8_t id, uint16_t data)
 {
