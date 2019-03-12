@@ -128,7 +128,7 @@ static uint8_t ps_cs_idle(void) {
 }
 
 static uint8_t ps_cs_boot_test(void) {
-	maxtrixAppBooting();
+	maxtrixAppSelfTest();
 	return 0;
 }
 

@@ -26,7 +26,7 @@ void maxtrixAppGameLevelIncrease(void);
 uint8_t maxtrixAppSetGameMode(uint8_t cnt);
 uint8_t maxtrixAppSetImage(uint8_t *pImage);
 void maxtrixAppDisplayBootImage(void);
-void maxtrixAppSelfTest(void);
+bool maxtrixAppSelfTest(void);
 void maxtrixAppBooting(void);
 uint8_t maxtrixAppGetGameMode(void);
 void maxtrixAppGameStart(void);
