@@ -7,6 +7,11 @@
 #include "canApp.h"
 #include "string.h"
 
+typedef struct {
+	uint8_t status:4;
+	uint8_t test_cnt:4;
+}Palte_status_t;
+
 #define PALTE_AMOUNT 8
 
 #ifdef APP_ERR_LOG
@@ -24,7 +29,7 @@ static TimerHandle_t xTimers;
 
 static uint8_t salverId1;
 static uint8_t salverId2;
-static uint8_t palteStatus[PALTE_AMOUNT];
+static Palte_status_t palteStatus[PALTE_AMOUNT];
 const uint8_t IMAGE[] =
 		{ 0X00, 0X00, 0X00, 0X00, 0X00, 0X00, 0X00, 0X00, 0X00, 0X00, 0X00,
 				0X00, 0X00, 0X00, 0X00, 0X00, 0X00, 0X00, 0X00, 0X00, 0X00,
@@ -1456,45 +1461,48 @@ void maxtrixAppDisplayBootImage(void) {
 	}
 }
 
-bool maxtrixAppSelfTest(void) {
+uint8_t maxtrixAppSelfTest(void) {
 	uint8_t i;
 	RET_t status;
+	uint8_t try_time = 3;
+	char drawBuff[16] = "init";
+	static uint8_t loop_cnt;
 
-	uint8_t try_time;
-	can_frame_t frame;
-	int8_t drawBuff[16] = "init";
-	bool isAllChannelOk = false;
-	for(try_time=0; try_time < 24; try_time++)
-	{
-		memcpy(&drawBuff[4], "...", try_time % 4);
-		for (i = 0; i < PALTE_AMOUNT; i++) {
-			if (palteStatus[i] == PALATE_STA_UNKNOW) {
-				can_frame_t msg;
-				msg.dataByte0 = PROTOCAL_SELF_TESET;
-				msg.dataByte1 = i;
+	if(loop_cnt > 20) {
+		RGBClearBuff();
+		RGBrawString(12, 12, 0x0000FF, "ERROR");
+		return ture;
+	}
 
-				msg.format = CAN_ID_STANDRD;
-				msg.type = CAN_TYPE_DATA;
-				status = CanAppSendMsg(&msg);
-				if (status != RET_OK) {
-					APP_ERROR("[App] Send Can message error: %d\r\n", status);
-					ERROR_HANDLER();
-				}
+	memcpy(&drawBuff[4], "...", loop_cnt % 4);
+	RGBClearBuff();
+	RGBrawString(12, 12, 0x0000FF,drawBuff);
+	loop_cnt++;
+	for (i = 0; i < PALTE_AMOUNT; i++) {
+		if (palteStatus[i].status == PALATE_STA_UNKNOW) {
+			if(++palteStatus[i].test_cnt == 3) {
+				palteStatus[i].status = PALATE_STA_FAULT;
+				continue;
 			}
-		}
-		vTaskDelay(600);
-		status = CanGet_MSG(canControllerIdx1, &frame);
-		if(status != RET_OK) {
-			APP_ERROR("[App] Receive Can message error: %d\r\n", status);
-		} else {
-			if(frame.dataByte0 == PROTOCAL_SELF_TESET) {
-				palteStatus[frame.id - 1] = PALATE_STA_OK;
+			can_frame_t msg;
+			msg.dataByte0 = PROTOCAL_SELF_TESET;
+			msg.dataByte1 = i;
+			msg.format = CAN_ID_STANDRD;
+			msg.type = CAN_TYPE_DATA;
+			status = CanAppSendMsg(&msg);
+			if (status != RET_OK) {
+				APP_ERROR("[App] Send Can message error: %d\r\n", status);
+				ERROR_HANDLER();
 			}
 		}
 		break;
 	}
-
-	return isAllChannelOk;
+	for(i = 0; i < PALTE_AMOUNT; i++) {
+		if (palteStatus[i].status == PALATE_STA_UNKNOW) {
+			return false;
+		}
+	}
+	return true;
 }
 
 void maxtrixAppDataHandler(uint8_t id, uint16_t data)

@@ -11,8 +11,8 @@ typedef enum
 }showMode_t;
 
 #define PALATE_STA_UNKNOW		0
-#define PALATE_STA_OK			0
-#define PALATE_STA_TROUBLE		0
+#define PALATE_STA_OK			1
+#define PALATE_STA_FAULT		2
 
 #define PROTOCAL_LED_ON			(uint8_t)0
 #define PROTOCAL_LED_OFF		(uint8_t)1

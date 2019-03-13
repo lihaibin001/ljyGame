@@ -1,7 +1,7 @@
 /*
  * sync.h
  *
- *  Created on: 2019Äê3ÔÂ4ÈÕ
+ *  Created on: 2019ï¿½ï¿½3ï¿½ï¿½4ï¿½ï¿½
  *      Author: ecarx
  */
 
@@ -12,6 +12,7 @@
 
 typedef enum
 {
+	PS_EVT_TEST,
 	PS_EVT_BOOT,
 	PS_EVT_SNATCH_LED,
 	PS_EVT_ROAD_BLOCK,

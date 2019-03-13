@@ -58,20 +58,21 @@ static void CanAppReceiveMsgHandler(void) {
 	can_frame_t frame;
 	RET_t status = CanGet_MSG(CAN_APP_CONTROLLER, &frame);
 	if (status == RET_OK) {
-		if (1 == maxtrixAppGetGameMode()) {
-			if (frame.id == maxtriAppGetPlayerSalverId(1)) {
-				maxtriAppScoreIncrease(1);
-				maxtriAppResetPlayerSalverId();
-			}
-		} else {
-			if (frame.id == maxtriAppGetPlayerSalverId(1)) {
-				maxtriAppScoreIncrease(1);
-				maxtriAppResetPlayerSalverId();
-			} else if (frame.id == maxtriAppGetPlayerSalverId(2)) {
-				maxtriAppScoreIncrease(2);
-				maxtriAppResetPlayerSalverId();
-			}
-		}
+
+//		if (1 == maxtrixAppGetGameMode()) {
+//			if (frame.id == maxtriAppGetPlayerSalverId(1)) {
+//				maxtriAppScoreIncrease(1);
+//				maxtriAppResetPlayerSalverId();
+//			}
+//		} else {
+//			if (frame.id == maxtriAppGetPlayerSalverId(1)) {
+//				maxtriAppScoreIncrease(1);
+//				maxtriAppResetPlayerSalverId();
+//			} else if (frame.id == maxtriAppGetPlayerSalverId(2)) {
+//				maxtriAppScoreIncrease(2);
+//				maxtriAppResetPlayerSalverId();
+//			}
+//		}
 	} else {
 		DEBUG("[CanApp] receive error: %d\r\n", status);
 	}
@@ -155,6 +156,6 @@ void CanAppInit(void) {
 	xQueue = xQueueCreate(3, 1);
 	xSemphore = xSemaphoreCreateBinary();
 	xTaskCreate(xTask, "CanApp", 128, NULL, 3, NULL);
-	CanInit(CanAppHandler[0].controller, CanAppHandler[0].baud, canAppCb,
+	CanInit(CanAppHandler[0].controller, CanAppHandler[0].baud, NULL,
 			&firlterList);
 }

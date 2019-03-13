@@ -1,7 +1,7 @@
 /*
  * gm_stt.h
  *
- *  Created on: 2019Äê3ÔÂ4ÈÕ
+ *  Created on: 2019ï¿½ï¿½3ï¿½ï¿½4ï¿½ï¿½
  *      Author: ecarx
  */
 
@@ -14,6 +14,7 @@ STATE_END
 
 STATE (PS_BOOT_TEST,		PS_ROOT,		ps_cs_boot_test)
 TRANS (ENTRY,				INTERNAL,		ps_entry_boot_test)
+TRANS (PS_EVT_TEST,			INTERNAL,		ps_selftest_check)
 TRANS (PS_EVT_BOOT, 		PS_IDLE,		no_action)
 STATE_END
 

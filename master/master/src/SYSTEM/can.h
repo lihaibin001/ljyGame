@@ -5,6 +5,8 @@
 #include "CanCfg.h"
 #include "stdbool.h"
 #include "sys.h"
+
+#define CAN_MAX_BUFF_AMOUNT 9
 #define CAN_ID_STANDRD (uint8_t)0
 #define CAN_ID_EXTEND (uint8_t)1
 
@@ -52,7 +54,8 @@ typedef struct
         uint32_t length : 4;
         uint32_t type : 1;
         uint32_t format : 1;
-        uint32_t reserve : 10;
+        uint32_t hasData : 1;
+        uint32_t reserve : 9;
     };
     uint32_t id;
     union
@@ -80,8 +83,7 @@ typedef void (*pHanlderCb)(CanControllerIdx_t, uint8_t);
 
 typedef struct
 {
-    uint8_t isHaveMsg;
-    can_frame_t Frame;
+    can_frame_t *pFrame;
     pHanlderCb cb;
 }CanHandler_t;
 

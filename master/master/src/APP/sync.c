@@ -1,7 +1,7 @@
 /*
  * sync.c
  *
- *  Created on: 2019Äê3ÔÂ4ÈÕ
+ *  Created on: 2019ï¿½ï¿½3ï¿½ï¿½4ï¿½ï¿½
  *      Author: ecarx
  */
 
@@ -34,6 +34,8 @@ static uint8_t ps_cs_road_block(void);
 static uint8_t ps_cs_wipe_led(void);
 static uint8_t ps_cs_agility_training(void);
 static uint8_t ps_cs_game_stop(void);
+
+static uint8_t ps_selftest_check(void);
 /********************************/
 /* STATE TRANSITION DESCRIPTION */
 /********************************/
@@ -118,7 +120,6 @@ static uint8_t ps_entry_idle(void) {
 /* cs routines                                                       */
 /*********************************************************************/
 static uint8_t ps_cs_root(void) {
-	maxtrixAppSelfTest();
 	return 0;
 }
 
@@ -128,7 +129,11 @@ static uint8_t ps_cs_idle(void) {
 }
 
 static uint8_t ps_cs_boot_test(void) {
-	maxtrixAppSelfTest();
+	if(maxtrixAppSelfTest()) {
+
+	} else {
+
+	}
 	return 0;
 }
 
@@ -170,3 +175,7 @@ static uint8_t no_action(void) {
 	return (0);
 }
 
+
+static uint8_t ps_selftest_check(void) {
+	return 0;
+}
