@@ -72,8 +72,9 @@ static void xTask(void *p) {
 	(void) p;
 	Data_Message_T msg;
 	BaseType_t status;
-	PS_Current_State_T new_state;
-
+    msg.parts.msg  = START;
+    msg.parts.data = 0;
+	uint8_t new_state = FSM_Process_Evt(msg, PS_ROOT, tree_psync);
 	for (;;) {
 
 		// wait until next event in mailbox OR time expired
