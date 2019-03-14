@@ -1461,17 +1461,17 @@ void maxtrixAppDisplayBootImage(void) {
 	}
 }
 
-uint8_t maxtrixAppSelfTest(void) {
+bool maxtrixAppSelfTest(void) {
 	uint8_t i;
 	RET_t status;
 	uint8_t try_time = 3;
 	char drawBuff[16] = "init";
 	static uint8_t loop_cnt;
 
-	if(loop_cnt > 20) {
+	if(loop_cnt >= PALTE_AMOUNT * 3) {
 		RGBClearBuff();
 		RGBrawString(12, 12, 0x0000FF, "ERROR");
-		return ture;
+		return true;
 	}
 
 	memcpy(&drawBuff[4], "...", loop_cnt % 4);
@@ -1482,27 +1482,35 @@ uint8_t maxtrixAppSelfTest(void) {
 		if (palteStatus[i].status == PALATE_STA_UNKNOW) {
 			if(++palteStatus[i].test_cnt == 3) {
 				palteStatus[i].status = PALATE_STA_FAULT;
-				continue;
-			}
-			can_frame_t msg;
-			msg.dataByte0 = PROTOCAL_SELF_TESET;
-			msg.dataByte1 = i;
-			msg.format = CAN_ID_STANDRD;
-			msg.type = CAN_TYPE_DATA;
-			status = CanAppSendMsg(&msg);
-			if (status != RET_OK) {
-				APP_ERROR("[App] Send Can message error: %d\r\n", status);
-				ERROR_HANDLER();
+			} else {
+				can_frame_t msg;
+				msg.dataByte0 = PROTOCAL_SELF_TESET;
+				msg.dataByte1 = i;
+				msg.format = CAN_ID_STANDRD;
+				msg.type = CAN_TYPE_DATA;
+				status = CanAppSendMsg(&msg);
+				if (status != RET_OK) {
+					APP_ERROR("[App] Send Can message error: %d\r\n", status);
+					ERROR_HANDLER();
+				}
 			}
 		}
-		break;
 	}
-	for(i = 0; i < PALTE_AMOUNT; i++) {
-		if (palteStatus[i].status == PALATE_STA_UNKNOW) {
-			return false;
+	if(i == PALTE_AMOUNT && palteStatus[i].status != PALATE_STA_UNKNOW) {
+		return true; //self test complete
+	}
+	return false;
+}
+
+uint8_t maxtrixAppGetPlateStatue(void)
+{
+	uint8_t i, status = 0;
+	for(i=0; i<PALTE_AMOUNT; i++) {
+		if(palteStatus[i].status != PALATE_STA_OK) {
+			status |= 1 << i;
 		}
 	}
-	return true;
+	return status;
 }
 
 void maxtrixAppDataHandler(uint8_t id, uint16_t data)

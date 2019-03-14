@@ -35,7 +35,6 @@ static uint8_t ps_cs_wipe_led(void);
 static uint8_t ps_cs_agility_training(void);
 static uint8_t ps_cs_game_stop(void);
 
-static uint8_t ps_selftest_check(void);
 /********************************/
 /* STATE TRANSITION DESCRIPTION */
 /********************************/
@@ -49,8 +48,9 @@ static uint8_t ps_selftest_check(void);
 #include "ps_stt.h"
 
 static uint8_t current_status;
-
 static QueueHandle_t xQueue;
+
+static uint8_t ps_send_event(uint16_t event);
 
 void ps_task_create(void) {
 	xQueue = xQueueCreate(3, 1);
@@ -130,9 +130,12 @@ static uint8_t ps_cs_idle(void) {
 
 static uint8_t ps_cs_boot_test(void) {
 	if(maxtrixAppSelfTest()) {
-
-	} else {
-
+		if(maxtrixAppGetPlateStatue()) {
+			//some plate fault, goto fault handler
+			ps_send_event(PS_EVT_FAULT);
+		} else {
+			//all plate OK, goto idle
+		}
 	}
 	return 0;
 }
@@ -176,6 +179,11 @@ static uint8_t no_action(void) {
 }
 
 
-static uint8_t ps_selftest_check(void) {
-	return 0;
+static uint8_t ps_send_event(uint16_t event) {
+	Data_Message_T data;
+	data.parts.msg = event;
+	if(pdPASS == xQueueSend(xQueue, &data, 0)) {
+		return 0;
+	}
+	return 1;
 }

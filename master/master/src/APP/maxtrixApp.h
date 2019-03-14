@@ -10,6 +10,7 @@ typedef enum
     showScores,
 }showMode_t;
 
+
 #define PALATE_STA_UNKNOW		0
 #define PALATE_STA_OK			1
 #define PALATE_STA_FAULT		2
@@ -27,6 +28,7 @@ uint8_t maxtrixAppSetGameMode(uint8_t cnt);
 uint8_t maxtrixAppSetImage(uint8_t *pImage);
 void maxtrixAppDisplayBootImage(void);
 bool maxtrixAppSelfTest(void);
+uint8_t maxtrixAppGetPlateStatue(void);
 void maxtrixAppBooting(void);
 uint8_t maxtrixAppGetGameMode(void);
 void maxtrixAppGameStart(void);

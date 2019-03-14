@@ -78,7 +78,6 @@ typedef struct {
 	uint8_t trans_len;
 } tree_type;
 
-typedef uint32_t Message_Type;              // Generic message
 typedef struct Data_Message_Parts_Tag       // Generic message with data
 {
 	int16_t data;
