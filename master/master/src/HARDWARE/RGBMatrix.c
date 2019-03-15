@@ -12,10 +12,10 @@ bitmap_font *font = (bitmap_font *) &apple3x5;
 const bitmap_font *scrollFont = &apple5x7;
 // Scrolling
 ScrollMode scrollmode = bounceForward;
-uint32_t ScrolColor; //颜色
+uint32_t ScrolColor;
 uint32_t ScrolbgColor;
-uint16_t textlen, textWidth; //字符个数 总移位数
-u8 ScrollPosition = 0; //滚动位置
+uint16_t textlen, textWidth;
+u8 ScrollPosition = 0;
 u8 Scroll_Y;
 const int waits[] = { 5, 10, 20, 40, 80, 160, 320, 640 };
 const int scan = MATRIX_HEIGHT / 2;

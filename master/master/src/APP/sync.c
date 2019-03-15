@@ -16,24 +16,29 @@
 #include "semphr.h"
 
 #include "maxtrixApp.h"
+#include "RGBMatrix.h"
+#include "string.h"
 
 typedef uint8_t PS_Current_State_T;
 typedef uint8_t PS_Flags_T;
 
+/* function declaration */
 static void xTask(void *p);
 static uint8_t ps_start_action(void);
 static uint8_t no_action(void);
 static uint8_t ps_entry_idle(void);
+static uint8_t ps_entery_fault(void);
 static uint8_t ps_entry_root(void);
 static uint8_t ps_entry_boot_test(void);
-static uint8_t ps_cs_root(void);
-static uint8_t ps_cs_idle(void);
+//static uint8_t ps_cs_root(void);
+//static uint8_t ps_cs_idle(void);
 static uint8_t ps_cs_boot_test(void);
 static uint8_t ps_cs_snatch_led(void);
 static uint8_t ps_cs_road_block(void);
 static uint8_t ps_cs_wipe_led(void);
 static uint8_t ps_cs_agility_training(void);
 static uint8_t ps_cs_game_stop(void);
+static uint8_t ps_cs_fault(void);
 
 /********************************/
 /* STATE TRANSITION DESCRIPTION */
@@ -50,13 +55,18 @@ static uint8_t ps_cs_game_stop(void);
 static uint8_t current_status;
 static QueueHandle_t xQueue;
 
-static uint8_t ps_send_event(uint16_t event);
+static uint8_t ps_send_event(uint16_t event, int16_t data);
 
 void ps_task_create(void) {
 	xQueue = xQueueCreate(3, 1);
 	xTaskCreate(xTask, "sync", 128, NULL, 3, NULL);
 }
 
+void ps_plate_data_handler(uint32_t id, uint8_t data, uint8_t type) {
+	switch(type) {
+	case :
+	}
+}
 /**********************************************************************
  *
  *    Function: PS_Task
@@ -110,32 +120,50 @@ static uint8_t ps_entry_root(void) {
 }
 
 static uint8_t ps_entry_boot_test(void) {
+	uint8_t i;
+	for(i = 0; i < PLATE_AMOUNT; i++) {
+		maxtrixAppSetPlateStatus(i, PLATE_STA_UNKNOW);
+	}
 	return 0;
 }
 
 static uint8_t ps_entry_idle(void) {
+	RGBClearBuff();
+	RGBrawString(18, 12, 0x0000FF, "WAN DE");
 	return 0;
 }
 
+static uint8_t ps_entery_fault(void) {
+	char drawBuff[16] = "";
+	uint8_t status;
+	memset(drawBuff, 0, 4);
+	if(maxtrixAppGetPlateStatue(&status)) {
+		sprintf(drawBuff, "ERROR: %x !!!", status);
+	}
+	RGBClearBuff();
+	RGBrawString(12, 12, 0x0000FF, drawBuff);
+	return 0;
+}
 /*********************************************************************/
 /* cs routines                                                       */
 /*********************************************************************/
-static uint8_t ps_cs_root(void) {
-	return 0;
-}
+//static uint8_t ps_cs_root(void) {
+//	return 0;
+//}
 
-static uint8_t ps_cs_idle(void) {
-
-	return 0;
-}
+//static uint8_t ps_cs_idle(void) {
+//	return 0;
+//}
 
 static uint8_t ps_cs_boot_test(void) {
+	uint8_t status;
 	if(maxtrixAppSelfTest()) {
-		if(maxtrixAppGetPlateStatue()) {
-			//some plate fault, goto fault handler
-			ps_send_event(PS_EVT_FAULT);
-		} else {
-			//all plate OK, goto idle
+		if(maxtrixAppGetPlateStatue(&status)) {
+			if(status == 0) {
+				ps_send_event(PS_EVT_FAULT, 0);
+			} else {
+				ps_send_event(PS_EVT_BOOT, 0);
+			}
 		}
 	}
 	return 0;
@@ -161,6 +189,10 @@ static uint8_t ps_cs_game_stop(void) {
 	return 0;
 }
 
+static uint8_t ps_cs_fault(void) {
+
+	return 0;
+}
 /*********************************************************************/
 /* exit actions                                                      */
 /*********************************************************************/
@@ -180,10 +212,11 @@ static uint8_t no_action(void) {
 }
 
 
-static uint8_t ps_send_event(uint16_t event) {
-	Data_Message_T data;
-	data.parts.msg = event;
-	if(pdPASS == xQueueSend(xQueue, &data, 0)) {
+static uint8_t ps_send_event(uint16_t event, int16_t data) {
+	Data_Message_T msg;
+	msg.parts.msg = event;
+	msg.parts.data = data;
+	if(pdPASS == xQueueSend(xQueue, &msg, 0)) {
 		return 0;
 	}
 	return 1;

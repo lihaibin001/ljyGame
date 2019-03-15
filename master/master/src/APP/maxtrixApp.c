@@ -8,11 +8,10 @@
 #include "string.h"
 
 typedef struct {
-	uint8_t status:4;
+	uint8_t lock:1;
+	uint8_t status:3;
 	uint8_t test_cnt:4;
 }Palte_status_t;
-
-#define PALTE_AMOUNT 8
 
 #ifdef APP_ERR_LOG
 #define APP_ERROR(...) printf(...)
@@ -29,7 +28,7 @@ static TimerHandle_t xTimers;
 
 static uint8_t salverId1;
 static uint8_t salverId2;
-static Palte_status_t palteStatus[PALTE_AMOUNT];
+static Palte_status_t palteStatus[PLATE_AMOUNT];
 const uint8_t IMAGE[] =
 		{ 0X00, 0X00, 0X00, 0X00, 0X00, 0X00, 0X00, 0X00, 0X00, 0X00, 0X00,
 				0X00, 0X00, 0X00, 0X00, 0X00, 0X00, 0X00, 0X00, 0X00, 0X00,
@@ -1467,10 +1466,8 @@ bool maxtrixAppSelfTest(void) {
 	char drawBuff[16] = "init";
 	static uint8_t loop_cnt;
 
-	if(loop_cnt >= PALTE_AMOUNT * 3) {
+	if(loop_cnt >= PLATE_AMOUNT * 3) {
 		//self test timeout
-		RGBClearBuff();
-		RGBrawString(12, 12, 0x0000FF, "ERROR");
 		loop_cnt = 0;
 		return true;
 	}
@@ -1479,10 +1476,10 @@ bool maxtrixAppSelfTest(void) {
 	RGBClearBuff();
 	RGBrawString(12, 12, 0x0000FF,drawBuff);
 	loop_cnt++;
-	for (i = 0; i < PALTE_AMOUNT; i++) {
-		if (palteStatus[i].status == PALATE_STA_UNKNOW) {
+	for (i = 0; i < PLATE_AMOUNT; i++) {
+		if (palteStatus[i].status == PLATE_STA_UNKNOW) {
 			if(++palteStatus[i].test_cnt == 3) {
-				palteStatus[i].status = PALATE_STA_FAULT;
+				palteStatus[i].status = PLATE_STA_FAULT;
 			} else {
 				can_frame_t msg;
 				msg.dataByte0 = PROTOCAL_SELF_TESET;
@@ -1498,7 +1495,7 @@ bool maxtrixAppSelfTest(void) {
 		}
 		break;
 	}
-	if(i == PALTE_AMOUNT && palteStatus[i].status != PALATE_STA_UNKNOW) {
+	if(i == PLATE_AMOUNT && palteStatus[i].status != PLATE_STA_UNKNOW) {
 		loop_cnt = 0;
 		return true; //self test complete
 	}
@@ -1507,8 +1504,9 @@ bool maxtrixAppSelfTest(void) {
 
 void maxtrixAppFault(void) {
 	uint8_t i;
-	for (i = 0; i < PALTE_AMOUNT; i++) {
-		if (palteStatus[i].status != PALATE_STA_OK) {
+	RET_t status;
+	for (i = 0; i < PLATE_AMOUNT; i++) {
+		if (palteStatus[i].status != PLATE_STA_OK) {
 			can_frame_t msg;
 			msg.dataByte0 = PROTOCAL_SELF_TESET;
 			msg.dataByte1 = i;
@@ -1524,15 +1522,44 @@ void maxtrixAppFault(void) {
 	}
 }
 
-uint8_t maxtrixAppGetPlateStatue(void)
-{
-	uint8_t i, status = 0;
-	for(i=0; i<PALTE_AMOUNT; i++) {
-		if(palteStatus[i].status != PALATE_STA_OK) {
-			status |= 1 << i;
-		}
+bool maxtrixApplockPlate(uint8_t i, uint32_t timeout) {
+	if(i >= PLATE_AMOUNT) {
+		return false;
 	}
-	return status;
+	while(palteStatus[i].lock && timeout--) {
+		vTaskDelay(1);
+	}
+	return palteStatus[i].lock == 0;
+}
+
+void maxtrixAppUnlockPlate(uint8_t i) {
+	palteStatus[i].lock = 0;
+}
+
+bool maxtrixAppSetPlateStatus(uint8_t i, uint8_t status) {
+	if(maxtrixApplockPlate(i, 250)) {
+		palteStatus[i].status = status;
+		palteStatus[i].lock = 0;
+		return true;
+	}
+	return false;
+}
+
+bool maxtrixAppGetPlateStatue(uint8_t *status)
+{
+	uint8_t i;
+	for(i=0; i<PLATE_AMOUNT; i++) {
+		if(maxtrixApplockPlate(i, 250)) {
+			if(palteStatus[i].status != PLATE_STA_OK) {
+				*status |= 1 << i;
+			}
+			palteStatus[i].lock = 0;
+		} else {
+			ERROR_HANDLER();
+		}
+		return true;
+	}
+	return false;
 }
 
 void maxtrixAppDataHandler(uint8_t id, uint16_t data)

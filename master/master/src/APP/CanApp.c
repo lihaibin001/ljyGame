@@ -58,7 +58,6 @@ static void CanAppReceiveMsgHandler(void) {
 	can_frame_t frame;
 	RET_t status = CanGet_MSG(CAN_APP_CONTROLLER, &frame);
 	if (status == RET_OK) {
-
 //		if (1 == maxtrixAppGetGameMode()) {
 //			if (frame.id == maxtriAppGetPlayerSalverId(1)) {
 //				maxtriAppScoreIncrease(1);

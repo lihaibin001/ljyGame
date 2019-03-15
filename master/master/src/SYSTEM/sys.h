@@ -11,7 +11,7 @@ typedef enum {
 	RET_SOURCE_LOCK,
 }RET_t;
 
-#define ERROR_HANDLER() while(1){}
+#define ERROR_HANDLER() while(1)
 
 #define BITBAND(addr, bitnum) ((addr & 0xF0000000)+0x2000000+((addr &0xFFFFF)<<5)+(bitnum<<2)) 
 #define MEM_ADDR(addr)  *((volatile unsigned long  *)(addr)) 

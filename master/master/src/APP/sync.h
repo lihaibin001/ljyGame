@@ -10,6 +10,10 @@
 
 //#include "fsm.h"
 
+#define PROTOCAL_LED_ON			(uint8_t)0
+#define PROTOCAL_LED_OFF		(uint8_t)1
+#define PROTOCAL_SELF_TESET		(uint8_t)2
+
 typedef enum
 {
 	PS_EVT_TEST,
