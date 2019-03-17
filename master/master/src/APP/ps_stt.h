@@ -7,19 +7,20 @@
 
 TREE (tree_psync)
 
-STATE (PS_ROOT,				0,				no_action)
+STATE (PS_ROOT,				0,				cs_no_action)
 TRANS (ENTRY,				INTERNAL,		ps_entry_root)
 TRANS (START,				PS_ROOT,		ps_start_action)
 STATE_END
 
 STATE (PS_BOOT_TEST,		PS_ROOT,		ps_cs_boot_test)
 TRANS (ENTRY,				INTERNAL,		ps_entry_boot_test)
+TRANS (PS_EVT_TEST,			INTERNAL,		ps_check_selftest)
 TRANS (PS_EVT_BOOT, 		PS_IDLE,		no_action)
 TRANS (PS_EVT_FAULT, 		PS_FAULT,		no_action)
 STATE_END
 
 
-STATE (PS_IDLE,				PS_ROOT,		no_action)
+STATE (PS_IDLE,				PS_ROOT,		cs_no_action)
 TRANS (ENTRY,				INTERNAL,		ps_entry_idle)
 TRANS (PS_EVT_SNATCH_LED,	PS_SNATCH_LED,	no_action)
 TRANS (PS_EVT_ROAD_BLOCK,	PS_ROAD_BLOCK,	no_action)

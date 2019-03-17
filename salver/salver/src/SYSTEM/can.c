@@ -205,7 +205,7 @@ void CAN1_RX0_IRQHandler(void)
 	if(CAN_GetITStatus(CAN1, CAN_IT_FMP0) != RESET)
 	{
 		CanRxMsg RxMessage;
-
+		memset(&RxMessage, 0, sizeof(CanRxMsg));
 		CAN_ClearITPendingBit(CAN1, CAN_IT_FMP0);
 
 		CAN_Receive(CAN1, CAN_FIFO0, &RxMessage);

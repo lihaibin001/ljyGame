@@ -35,7 +35,7 @@
 #define TREE(n)
 #define STATE(s,p,a) const trans_type s##_[] = {
 #define STATE_END };
-#define TRANS(e,n,a) {e,n,(uint8t_fptr)a},
+#define TRANS(e,n,a) {e,n,(action_ptr)a},
 #define TREE_END(n)
 
 /*===========================================================================*\

@@ -6,8 +6,7 @@
  */
 
 #include "sync.h"
-#include <stdint.h>
-#include <stdio.h>
+
 #include "fsm.h"
 
 #include "FreeRTOS.h"
@@ -24,12 +23,14 @@ typedef uint8_t PS_Flags_T;
 
 /* function declaration */
 static void xTask(void *p);
-static uint8_t ps_start_action(void);
-static uint8_t no_action(void);
-static uint8_t ps_entry_idle(void);
-static uint8_t ps_entery_fault(void);
-static uint8_t ps_entry_root(void);
-static uint8_t ps_entry_boot_test(void);
+static uint8_t ps_start_action(uint16_t data);
+static uint8_t no_action(uint16_t data);
+static uint8_t cs_no_action(void);
+static uint8_t ps_check_selftest(uint16_t data);
+static uint8_t ps_entry_idle(uint16_t data);
+static uint8_t ps_entery_fault(uint16_t data);
+static uint8_t ps_entry_root(uint16_t data);
+static uint8_t ps_entry_boot_test(uint16_t data);
 //static uint8_t ps_cs_root(void);
 //static uint8_t ps_cs_idle(void);
 static uint8_t ps_cs_boot_test(void);
@@ -55,17 +56,17 @@ static uint8_t ps_cs_fault(void);
 static uint8_t current_status;
 static QueueHandle_t xQueue;
 
-static uint8_t ps_send_event(uint16_t event, int16_t data);
+
 
 void ps_task_create(void) {
-	xQueue = xQueueCreate(3, 1);
+	xQueue = xQueueCreate(3, sizeof(Data_Message_T));
 	xTaskCreate(xTask, "sync", 128, NULL, 3, NULL);
 }
 
 void ps_plate_data_handler(uint32_t id, uint8_t data, uint8_t type) {
-	switch(type) {
-	case :
-	}
+//	switch(type) {
+//	case :
+//	}
 }
 /**********************************************************************
  *
@@ -110,7 +111,7 @@ static void xTask(void *p) {
 /*********************************************************************/
 /* entry actions                                                     */
 /*********************************************************************/
-static uint8_t ps_entry_root(void) {
+static uint8_t ps_entry_root(uint16_t data) {
 	if(current_status == PS_ROOT) {
 		current_status = PS_BOOT_TEST;
 	} else {
@@ -119,7 +120,7 @@ static uint8_t ps_entry_root(void) {
 	return 0;
 }
 
-static uint8_t ps_entry_boot_test(void) {
+static uint8_t ps_entry_boot_test(uint16_t data) {
 	uint8_t i;
 	for(i = 0; i < PLATE_AMOUNT; i++) {
 		maxtrixAppSetPlateStatus(i, PLATE_STA_UNKNOW);
@@ -127,21 +128,21 @@ static uint8_t ps_entry_boot_test(void) {
 	return 0;
 }
 
-static uint8_t ps_entry_idle(void) {
+static uint8_t ps_entry_idle(uint16_t data) {
 	RGBClearBuff();
 	RGBrawString(18, 12, 0x0000FF, "WAN DE");
 	return 0;
 }
 
-static uint8_t ps_entery_fault(void) {
+static uint8_t ps_entery_fault(uint16_t data) {
 	char drawBuff[16] = "";
 	uint8_t status;
 	memset(drawBuff, 0, 4);
 	if(maxtrixAppGetPlateStatue(&status)) {
-		sprintf(drawBuff, "ERROR: %x !!!", status);
+		sprintf(drawBuff, "ERROR: %X !!!", status);
 	}
 	RGBClearBuff();
-	RGBrawString(12, 12, 0x0000FF, drawBuff);
+	RGBrawString(8, 12, 0x0000FF, drawBuff);
 	return 0;
 }
 /*********************************************************************/
@@ -156,10 +157,10 @@ static uint8_t ps_entery_fault(void) {
 //}
 
 static uint8_t ps_cs_boot_test(void) {
-	uint8_t status;
+	uint8_t status = 0;
 	if(maxtrixAppSelfTest()) {
 		if(maxtrixAppGetPlateStatue(&status)) {
-			if(status == 0) {
+			if(status != 0) {
 				ps_send_event(PS_EVT_FAULT, 0);
 			} else {
 				ps_send_event(PS_EVT_BOOT, 0);
@@ -200,24 +201,33 @@ static uint8_t ps_cs_fault(void) {
 /*********************************************************************/
 /* start actions                                                     */
 /*********************************************************************/
-static uint8_t ps_start_action(void) {
+static uint8_t ps_start_action(uint16_t data) {
 	return 0;
 }
 
 /*********************************************************************/
 /*no actions                                                     */
 /*********************************************************************/
-static uint8_t no_action(void) {
+static uint8_t no_action(uint16_t data) {
 	return (0);
 }
 
+static uint8_t cs_no_action(void) {
+	return 0;
+}
 
-static uint8_t ps_send_event(uint16_t event, int16_t data) {
+static uint8_t ps_check_selftest(uint16_t data) {
+	maxtrixAppSetPlateStatus((uint8_t)(data - 1), PLATE_STA_OK);
+	return 0;
+}
+
+uint8_t ps_send_event(uint16_t event, int16_t data) {
 	Data_Message_T msg;
+	uint8_t ret = 1;
 	msg.parts.msg = event;
 	msg.parts.data = data;
 	if(pdPASS == xQueueSend(xQueue, &msg, 0)) {
-		return 0;
+		ret = 0;
 	}
-	return 1;
+	return ret;
 }

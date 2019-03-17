@@ -1,3 +1,4 @@
+
 #include "maxtrixApp.h"
 #include "RGBMatrix.h"
 #include "rand.h"
@@ -25,6 +26,7 @@ static bool gGameStatus;
 static uint8_t gScore[2] = { 0 };
 static showMode_t showMode;
 static TimerHandle_t xTimers;
+
 
 static uint8_t salverId1;
 static uint8_t salverId2;
@@ -1464,26 +1466,30 @@ bool maxtrixAppSelfTest(void) {
 	uint8_t i;
 	RET_t status;
 	char drawBuff[16] = "init";
-	static uint8_t loop_cnt;
-
-	if(loop_cnt >= PLATE_AMOUNT * 3) {
+	static uint8_t test_loop_cnt;
+	static uint32_t test_pre_tick;
+	if(xTaskGetTickCount() - test_pre_tick <= 250) {
+		return false;
+	}
+	if(test_loop_cnt >= PLATE_AMOUNT * 3) {
 		//self test timeout
-		loop_cnt = 0;
+		test_loop_cnt = 0;
 		return true;
 	}
 
-	memcpy(&drawBuff[4], "...", loop_cnt % 4);
+	memcpy(&drawBuff[4], "...", test_loop_cnt % 4);
 	RGBClearBuff();
 	RGBrawString(12, 12, 0x0000FF,drawBuff);
-	loop_cnt++;
+	test_loop_cnt++;
 	for (i = 0; i < PLATE_AMOUNT; i++) {
 		if (palteStatus[i].status == PLATE_STA_UNKNOW) {
 			if(++palteStatus[i].test_cnt == 3) {
 				palteStatus[i].status = PLATE_STA_FAULT;
 			} else {
 				can_frame_t msg;
+				msg.length = 8;
 				msg.dataByte0 = PROTOCAL_SELF_TESET;
-				msg.dataByte1 = i;
+				msg.dataByte1 = i + 1;
 				msg.format = CAN_ID_STANDRD;
 				msg.type = CAN_TYPE_DATA;
 				status = CanAppSendMsg(&msg);
@@ -1492,13 +1498,16 @@ bool maxtrixAppSelfTest(void) {
 					ERROR_HANDLER();
 				}
 			}
+		} else {
+			continue;
 		}
 		break;
 	}
-	if(i == PLATE_AMOUNT && palteStatus[i].status != PLATE_STA_UNKNOW) {
-		loop_cnt = 0;
+	if(i == PLATE_AMOUNT && palteStatus[i-1].status != PLATE_STA_UNKNOW) {
+		test_loop_cnt = 0;
 		return true; //self test complete
 	}
+	test_pre_tick = xTaskGetTickCount();
 	return false;
 }
 
@@ -1555,11 +1564,11 @@ bool maxtrixAppGetPlateStatue(uint8_t *status)
 			}
 			palteStatus[i].lock = 0;
 		} else {
-			ERROR_HANDLER();
+			break;
+			//ERROR_HANDLER();
 		}
-		return true;
 	}
-	return false;
+	return i == PLATE_AMOUNT;
 }
 
 void maxtrixAppDataHandler(uint8_t id, uint16_t data)

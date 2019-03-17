@@ -63,17 +63,18 @@
  * Exported Type Declarations
  \*===========================================================================*/
 
-typedef uint8_t (*uint8t_fptr)(void);
+typedef uint8_t (*action_ptr)(uint16_t);
+typedef uint8_t (*cs_action_fptr)(void);
 
 typedef struct {
 	uint16_t event;
 	uint8_t next_state;
-	uint8t_fptr action;
+	action_ptr action;
 } trans_type;
 
 typedef struct {
 	uint8_t parent_state;
-	uint8t_fptr cs_action;
+	cs_action_fptr cs_action;
 	const trans_type *trans_tab;
 	uint8_t trans_len;
 } tree_type;

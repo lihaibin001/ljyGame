@@ -9,10 +9,8 @@
 #define APP_SYNC_H_
 
 //#include "fsm.h"
-
-#define PROTOCAL_LED_ON			(uint8_t)0
-#define PROTOCAL_LED_OFF		(uint8_t)1
-#define PROTOCAL_SELF_TESET		(uint8_t)2
+#include <stdint.h>
+#include <stdio.h>
 
 typedef enum
 {
@@ -33,5 +31,5 @@ typedef enum
 #include "ps_stt.h"
 
 void ps_task_create(void);
-
+uint8_t ps_send_event(uint16_t event, int16_t data);
 #endif /* APP_SYNC_H_ */

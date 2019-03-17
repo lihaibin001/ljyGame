@@ -18,6 +18,10 @@
 #define ERROR_DEBUG(...)
 #endif
 
+#define PROTOCAL_LED_ON			(uint8_t)0
+#define PROTOCAL_LED_OFF		(uint8_t)1
+#define PROTOCAL_SELF_TESET		(uint8_t)2
+
 typedef void (*pvoidFunc)(void);
 
 #define CAN_APP_CONTROLLER canControllerIdx1
@@ -75,40 +79,69 @@ static void CanAppReceiveMsgHandler(void)
 {
     can_frame_t frame;
     CanGet_MSG(CAN_APP_CONTROLLER, &frame);
-    uint8_t data;
-    if(frame.id == 0x40)
-    {
-		uint8_t i;
-    	if(selfId & 0x20)
-    	{
-    		data = frame.dataByte1;
-    	}
-    	else
-    	{
-    		data = frame.dataByte0;
-    	}
-		while(!ws2812b_IsReady());  // wait
-    	if(data != (selfId & 0x1F))
-    	{
-    		for(i = 0; i <= NUM_GRB_LEDS; i++)
-    		{
-    			leds[i].b = 0;
-    			leds[i].g = 0;
-    			leds[i].r = 0;
+	uint8_t i;
+    if(frame.id == 0x40) {
+    	switch(frame.dataByte0) {
+    	case PROTOCAL_LED_ON:
+    		break;
+    	case PROTOCAL_LED_OFF:
+    		break;
+    	case PROTOCAL_SELF_TESET:
+    		if(frame.dataByte1 == selfId) {
+    			while(!ws2812b_IsReady())
+    				;
+				for(i = 0; i <= NUM_GRB_LEDS; i++) {
+					leds[i].b = 0;
+					leds[i].g = 0;
+					leds[i].r = 0xFF;
+				}
+    			ws2812b_SendRGB(leds, NUM_GRB_LEDS);
+    		    CanAppSendMsg(&frame);
+    		    vTaskDelay(200);
+    			for(i = 0; i <= NUM_GRB_LEDS; i++) {
+					leds[i].r = 0;
+				}
+				ws2812b_SendRGB(leds, NUM_GRB_LEDS);
     		}
+    		break;
+    	default:
+    		break;
     	}
-    	else
-    	{
-			for(i = 0; i <= NUM_GRB_LEDS; i++)
-			{
-				leds[i].b = 0;
-				leds[i].g = 0;
-				leds[i].r = 0xFF;
-			}
-    	}
-
-		ws2812b_SendRGB(leds, NUM_GRB_LEDS);
     }
+
+//    if(frame.id == 0x40)
+//    {
+//		uint8_t i;
+//    	if(selfId & 0x20)
+//    	{
+//    		data = frame.dataByte1;
+//    	}
+//    	else
+//    	{
+//    		data = frame.dataByte0;
+//    	}
+//		while(!ws2812b_IsReady());  // wait
+//    	if(data != (selfId & 0x1F))
+//    	{
+//    		for(i = 0; i <= NUM_GRB_LEDS; i++)
+//    		{
+//    			leds[i].b = 0;
+//    			leds[i].g = 0;
+//    			leds[i].r = 0;
+//    		}
+//    	}
+//    	else
+//    	{
+//			for(i = 0; i <= NUM_GRB_LEDS; i++)
+//			{
+//				leds[i].b = 0;
+//				leds[i].g = 0;
+//				leds[i].r = 0xFF;
+//			}
+//    	}
+//
+//		ws2812b_SendRGB(leds, NUM_GRB_LEDS);
+//    }
     //CanAppSendMsg(&frame);
 }
 

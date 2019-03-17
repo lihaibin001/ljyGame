@@ -35,7 +35,7 @@
 #undef TREE_END
 
 #define TREE(n) const tree_type n []={
-#define STATE(s,p,cs) {p,(uint8t_fptr)cs,s##_,sizeof(s##_)/sizeof(trans_type)},
+#define STATE(s,p,cs) {p,(cs_action_fptr)cs,s##_,sizeof(s##_)/sizeof(trans_type)},
 #define STATE_END
 #define TRANS(e,n,a)
 #define TREE_END(n) };

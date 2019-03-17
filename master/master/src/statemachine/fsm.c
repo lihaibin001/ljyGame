@@ -143,8 +143,8 @@ uint8_t FSM_Process_Evt (Data_Message_T msg, uint8_t current_state, tree_type co
             #if CONDITION_OPTION_IS
             if (trans_ptr->next_state == CONDITION)   /* condition ? */
             {
-              // condition_offset = (*trans_ptr->action)(msg.parts.data); /*execute the condition check action */
-               condition_offset = (*trans_ptr->action)(); /*execute the condition check action */
+            	condition_offset = (*trans_ptr->action)(msg.parts.data); /*execute the condition check action */
+//               condition_offset = (*trans_ptr->action)(); /*execute the condition check action */
                trans_ptr += condition_offset;
             }
             #endif
@@ -164,8 +164,8 @@ uint8_t FSM_Process_Evt (Data_Message_T msg, uint8_t current_state, tree_type co
          if (trans_ptr->next_state == INTERNAL)
          {
             /********** execute transition action only ************** */
-            (*trans_ptr->action)();        /*execute the desired function */
-            //(*trans_ptr->action)(msg.parts.data);        /*execute the desired function */
+//            (*trans_ptr->action)();        /*execute the desired function */
+        	 (*trans_ptr->action)(msg.parts.data);        /*execute the desired function */
          }
          else /* if (trans_ptr->next_state != INTERNAL) */
          {
@@ -178,14 +178,15 @@ uint8_t FSM_Process_Evt (Data_Message_T msg, uint8_t current_state, tree_type co
                while (i < nr_of_exits)
                {
                   length = tree_ptr[exits[i]].trans_len;
-                  tree_ptr[exits[i]].trans_tab[length-1].action();
+//                  tree_ptr[exits[i]].trans_tab[length-1].action();
+                  (tree_ptr[exits[i]].trans_tab[length-1].action)(msg.parts.data);
                   i++;
                }
             }
             #endif
 
             /********** execute then the transition action **************** */
-            (*trans_ptr->action)();        /* execute the desired function */
+            (*trans_ptr->action)(msg.parts.data);        /* execute the desired function */
 
            // (*trans_ptr->action)(msg.parts.data);        /* execute the desired function */
 
@@ -204,7 +205,8 @@ uint8_t FSM_Process_Evt (Data_Message_T msg, uint8_t current_state, tree_type co
                trans_ptr = tree_ptr[i].trans_tab;
                if (trans_ptr[0].event == ENTRY)
                {
-                  new_current_state = trans_ptr[0].action();
+//                  new_current_state = trans_ptr[0].action();
+                  new_current_state = trans_ptr[0].action(msg.parts.data);
                }
             } while (i != new_current_state); /* cs was set new in entry action                 */
                                               /* so next states entry action has to be checked  */

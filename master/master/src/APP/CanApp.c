@@ -5,6 +5,7 @@
 #include "semphr.h"
 #include "sys.h"
 #include "maxtrixApp.h"
+#include "sync.h"
 #ifdef CAN_APP_DEBUG
 #define DEBUG(...) printf(...)
 #else
@@ -58,6 +59,15 @@ static void CanAppReceiveMsgHandler(void) {
 	can_frame_t frame;
 	RET_t status = CanGet_MSG(CAN_APP_CONTROLLER, &frame);
 	if (status == RET_OK) {
+		switch(frame.dataByte0) {
+		case PROTOCAL_LED_ON:
+			break;
+		case PROTOCAL_LED_OFF:
+			break;
+		case PROTOCAL_SELF_TESET:
+			ps_send_event(PS_EVT_TEST, (int16_t) frame.id);
+			break;
+		}
 //		if (1 == maxtrixAppGetGameMode()) {
 //			if (frame.id == maxtriAppGetPlayerSalverId(1)) {
 //				maxtriAppScoreIncrease(1);
@@ -155,6 +165,6 @@ void CanAppInit(void) {
 	xQueue = xQueueCreate(3, 1);
 	xSemphore = xSemaphoreCreateBinary();
 	xTaskCreate(xTask, "CanApp", 128, NULL, 3, NULL);
-	CanInit(CanAppHandler[0].controller, CanAppHandler[0].baud, NULL,
+	CanInit(CanAppHandler[0].controller, CanAppHandler[0].baud, canAppCb,
 			&firlterList);
 }
