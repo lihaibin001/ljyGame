@@ -120,10 +120,8 @@ static void xTask(void *p) {
 static uint8_t ps_entry_root(uint16_t data) {
 	if(current_status == PS_ROOT) {
 		current_status = PS_BOOT_TEST;
-	} else {
-		current_status = PS_IDLE;
 	}
-	return 0;
+	return PS_ROOT;
 }
 
 static uint8_t ps_entry_boot_test(uint16_t data) {
@@ -131,13 +129,14 @@ static uint8_t ps_entry_boot_test(uint16_t data) {
 	for(i = 0; i < PLATE_AMOUNT; i++) {
 		maxtrixAppSetPlateStatus(i, PLATE_STA_UNKNOW);
 	}
-	return 0;
+	return PS_BOOT_TEST;
 }
 
 static uint8_t ps_entry_idle(uint16_t data) {
 	RGBClearBuff();
-	RGBrawString(18, 12, 0x0000FF, "WAN DE");
-	return 0;
+	RGBrawString(15, 12, 0x0000FF, "WAN DE V1.1");
+	current_status = PS_IDLE;
+	return PS_IDLE;
 }
 
 static uint8_t ps_entery_fault(uint16_t data) {
@@ -149,31 +148,31 @@ static uint8_t ps_entery_fault(uint16_t data) {
 	}
 	RGBClearBuff();
 	RGBrawString(8, 12, 0x0000FF, drawBuff);
-	return 0;
+	return PS_FAULT;
 }
 
 static uint8_t ps_entry_snatch_led(uint16_t data) {
 	RGBClearBuff();
 	RGBdrawImage(12, 8, 0x00FF00, snatch_led);
-	return 0;
+	return PS_SNATCH_LED;
 }
 
 static uint8_t ps_entry_road_block(uint16_t data) {
 	RGBClearBuff();
 	RGBdrawImage(12, 8, 0x00FF00, road_block);
-	return 0;
+	return PS_ROAD_BLOCK;
 }
 
 static uint8_t ps_entry_wipe_led(uint16_t data) {
 	RGBClearBuff();
 	RGBdrawImage(12, 8, 0x00FF00, wipe_led);
-	return 0;
+	return PS_WIPE_LED;
 }
 
 static uint8_t ps_entry_agil_train(uint16_t data) {
 	RGBClearBuff();
 	RGBdrawImage(12, 8, 0x00FF00, agil_train);
-	return 0;
+	return PS_AGIL_TRAIN;
 }
 
 /*********************************************************************/
@@ -192,7 +191,8 @@ static uint8_t ps_cs_boot_test(void) {
 	if(maxtrixAppSelfTest()) {
 		if(maxtrixAppGetPlateStatue(&status)) {
 			if(status != 0) {
-				ps_send_event(PS_EVT_FAULT, 0);
+				//ps_send_event(PS_EVT_FAULT, 0);
+				ps_send_event(PS_EVT_BOOT, 0);
 			} else {
 				ps_send_event(PS_EVT_BOOT, 0);
 			}
@@ -266,7 +266,18 @@ uint8_t ps_send_event(uint16_t event, int16_t data) {
 	uint8_t ret = 1;
 	msg.parts.msg = event;
 	msg.parts.data = data;
-	if(pdPASS == xQueueSend(xQueue, &msg, 0)) {
+	if(pdPASS == xQueueSend(xQueue, &msg, 100)) {
+		ret = 0;
+	}
+	return ret;
+}
+
+uint8_t ps_send_event_from_irq(uint16_t event, int16_t data) {
+	Data_Message_T msg;
+	uint8_t ret = 1;
+	msg.parts.msg = event;
+	msg.parts.data = data;
+	if(pdPASS == xQueueSendFromISR(xQueue, &msg, NULL)) {
 		ret = 0;
 	}
 	return ret;
