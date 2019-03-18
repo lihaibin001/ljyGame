@@ -12,6 +12,7 @@
 #include "displayTask.h"
 #include "keyDetect.h"
 #include "maxtrixApp.h"
+#include "sync.h"
 
 void vApplicationDaemonTaskStartupHook( void )
 {

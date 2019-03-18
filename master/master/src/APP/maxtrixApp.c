@@ -7,6 +7,7 @@
 #include "timers.h"
 #include "canApp.h"
 #include "string.h"
+#include "sync.h"
 
 typedef struct {
 	uint8_t lock:1;
@@ -26,7 +27,7 @@ static bool gGameStatus;
 static uint8_t gScore[2] = { 0 };
 static showMode_t showMode;
 static TimerHandle_t xTimers;
-
+static uint8_t gPlayMode = PS_EVT_SNATCH_LED;
 
 static uint8_t salverId1;
 static uint8_t salverId2;
@@ -1035,6 +1036,11 @@ const uint8_t mulitMode[] = { 0x10, 0x00, 0x02, 0x00, 0x00, 0x00, 0x00, 0x00,
 
 };
 
+const uint8_t snatch_led[] = {0};
+const uint8_t road_block[] = {0};
+const uint8_t wipe_led[] = {0};
+const uint8_t agil_train[] = {0};
+
 const uint8_t gameLevel[] = { 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
 		0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x20, 0x41, 0x84, 0x00,
 		0x00, 0x00, 0x00, 0x00, 0x40, 0x49, 0x84, 0x00, 0x00, 0x00, 0x00, 0x00,
@@ -1433,6 +1439,24 @@ uint8_t maxtrixAppSetGameMode(uint8_t cnt) {
 	return 0;
 }
 
+uint8_t maxtrixAppChangePlayMode(uint8_t dir) {
+	if(dir == 0) { //page up
+		if(gPlayMode == PS_EVT_SNATCH_LED) {
+			gPlayMode = PS_EVT_AGIL_TRAIN;
+		} else {
+			gPlayMode--;
+		}
+	} else { //page down
+		if(gPlayMode == PS_EVT_AGIL_TRAIN) {
+			gPlayMode = PS_EVT_SNATCH_LED;
+		} else {
+			gPlayMode++;
+		}
+	}
+	ps_send_event(gPlayMode, 0);
+	return 0;
+}
+
 uint8_t maxtrixAppSetImage(uint8_t *pImage) {
 	uint32_t i = 0;
 	uint32_t color = 0;
@@ -1468,7 +1492,7 @@ bool maxtrixAppSelfTest(void) {
 	char drawBuff[16] = "init";
 	static uint8_t test_loop_cnt;
 	static uint32_t test_pre_tick;
-	if(xTaskGetTickCount() - test_pre_tick <= 250) {
+	if(xTaskGetTickCount() - test_pre_tick <= 800) {
 		return false;
 	}
 	if(test_loop_cnt >= PLATE_AMOUNT * 3) {

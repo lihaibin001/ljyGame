@@ -30,12 +30,12 @@ typedef enum fontChoices
 
 typedef enum ScrollMode
 {
-	wrapForward,    //ÏòÇ°
-	bounceForward,  //µ¯Õý
-	bounceReverse,  //µ¯·´
+	wrapForward,    //ï¿½ï¿½Ç°
+	bounceForward,  //ï¿½ï¿½ï¿½ï¿½
+	bounceReverse,  //ï¿½ï¿½ï¿½ï¿½
 	showtime,
 	stopped,        //Í£Ö¹
-	off             //¹Ø±Õ
+	off             //ï¿½Ø±ï¿½
 } ScrollMode;
 
 
@@ -52,6 +52,7 @@ void RGBprocessBuffer(uint32_t src[], uint32_t dst[]);
 CellAction RGBAnalyzeCell(int offset, uint32_t buffer[]);
 void RGBDrawChar(uint8_t x, uint8_t y, uint32_t Color, char character);
 void RGBrawString(uint8_t x, uint8_t y, uint32_t Color, char *text);
+void RGBdrawImage(uint8_t x, uint8_t y, uint32_t Color, const uint8_t *addres);
 void RGBDrawPixel(uint8_t x, uint8_t y, uint32_t Color);
 void GRBSetCell(uint32_t cellNum, uint32_t color);
 void RGBClearBuff(void);

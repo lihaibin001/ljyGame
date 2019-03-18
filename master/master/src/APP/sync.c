@@ -27,8 +27,14 @@ static uint8_t ps_start_action(uint16_t data);
 static uint8_t no_action(uint16_t data);
 static uint8_t cs_no_action(void);
 static uint8_t ps_check_selftest(uint16_t data);
+static uint8_t ps_mode_change(uint16_t data);
+static uint8_t ps_page(uint16_t data);
 static uint8_t ps_entry_idle(uint16_t data);
 static uint8_t ps_entery_fault(uint16_t data);
+static uint8_t ps_entry_snatch_led(uint16_t data);
+static uint8_t ps_entry_road_block(uint16_t data);
+static uint8_t ps_entry_wipe_led(uint16_t data);
+static uint8_t ps_entry_agil_train(uint16_t data);
 static uint8_t ps_entry_root(uint16_t data);
 static uint8_t ps_entry_boot_test(uint16_t data);
 //static uint8_t ps_cs_root(void);
@@ -145,6 +151,31 @@ static uint8_t ps_entery_fault(uint16_t data) {
 	RGBrawString(8, 12, 0x0000FF, drawBuff);
 	return 0;
 }
+
+static uint8_t ps_entry_snatch_led(uint16_t data) {
+	RGBClearBuff();
+	RGBdrawImage(12, 8, 0x00FF00, snatch_led);
+	return 0;
+}
+
+static uint8_t ps_entry_road_block(uint16_t data) {
+	RGBClearBuff();
+	RGBdrawImage(12, 8, 0x00FF00, road_block);
+	return 0;
+}
+
+static uint8_t ps_entry_wipe_led(uint16_t data) {
+	RGBClearBuff();
+	RGBdrawImage(12, 8, 0x00FF00, wipe_led);
+	return 0;
+}
+
+static uint8_t ps_entry_agil_train(uint16_t data) {
+	RGBClearBuff();
+	RGBdrawImage(12, 8, 0x00FF00, agil_train);
+	return 0;
+}
+
 /*********************************************************************/
 /* cs routines                                                       */
 /*********************************************************************/
@@ -218,6 +249,15 @@ static uint8_t cs_no_action(void) {
 
 static uint8_t ps_check_selftest(uint16_t data) {
 	maxtrixAppSetPlateStatus((uint8_t)(data - 1), PLATE_STA_OK);
+	return 0;
+}
+
+static uint8_t ps_mode_change(uint16_t data) {
+	maxtrixAppSetGameMode(data);
+	return 0;
+}
+
+static uint8_t ps_page(uint16_t data) {
 	return 0;
 }
 

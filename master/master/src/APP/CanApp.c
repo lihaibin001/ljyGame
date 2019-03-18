@@ -68,20 +68,6 @@ static void CanAppReceiveMsgHandler(void) {
 			ps_send_event(PS_EVT_TEST, (int16_t) frame.id);
 			break;
 		}
-//		if (1 == maxtrixAppGetGameMode()) {
-//			if (frame.id == maxtriAppGetPlayerSalverId(1)) {
-//				maxtriAppScoreIncrease(1);
-//				maxtriAppResetPlayerSalverId();
-//			}
-//		} else {
-//			if (frame.id == maxtriAppGetPlayerSalverId(1)) {
-//				maxtriAppScoreIncrease(1);
-//				maxtriAppResetPlayerSalverId();
-//			} else if (frame.id == maxtriAppGetPlayerSalverId(2)) {
-//				maxtriAppScoreIncrease(2);
-//				maxtriAppResetPlayerSalverId();
-//			}
-//		}
 	} else {
 		DEBUG("[CanApp] receive error: %d\r\n", status);
 	}

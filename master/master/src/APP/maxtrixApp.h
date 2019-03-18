@@ -19,12 +19,18 @@ typedef enum
 #define PROTOCAL_LED_OFF		(uint8_t)1
 #define PROTOCAL_SELF_TESET		(uint8_t)2
 
+extern const uint8_t snatch_led[];
+extern const uint8_t road_block[];
+extern const uint8_t wipe_led[];
+extern const uint8_t agil_train[];
+
 extern const uint8_t gImage_a[];
 uint8_t maxtrixAppGetGameLevel(void);
 showMode_t maxtrixAppGetShowMode(void);
 uint8_t maxtrixAppSetGameLevel(uint8_t level);
 void maxtrixAppGameLevelIncrease(void);
 uint8_t maxtrixAppSetGameMode(uint8_t cnt);
+uint8_t maxtrixAppChangePlayMode(uint8_t dir);
 uint8_t maxtrixAppSetImage(uint8_t *pImage);
 void maxtrixAppDisplayBootImage(void);
 bool maxtrixAppSelfTest(void);
