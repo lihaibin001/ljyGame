@@ -38,12 +38,14 @@ static void mutleModeKeyHandler(void);
 static void pageUpKeyHander(void);
 static void pageDownKeyHandler(void);
 static void startAndStopKeyHandler(void);
+static void pageUpConsecutivePress(void);
+static void pageDownConsecutivePress(void);
 
 static keyStatus_t keyStatus[keyIdxNum] = {
 		{ &key[keyIdx_1], singleModeKeyHander, NULL, 1, 0, 0 },
 		{ &key[keyIdx_2], mutleModeKeyHandler, NULL, 1, 0, 0 },
-		{ &key[keyIdx_3], pageUpKeyHander, NULL, 1, 0, 0 },
-		{ &key[keyIdx_4], pageDownKeyHandler, NULL, 1, 0, 0 },
+		{ &key[keyIdx_3], pageUpKeyHander, pageUpConsecutivePress, 1, 0, 0 },
+		{ &key[keyIdx_4], pageDownKeyHandler, pageDownConsecutivePress, 1, 0, 0 },
 		{ &key[keyIdx_5], startAndStopKeyHandler, NULL, 1, 0, 0 },
 		{ &key[keyIdx_6], NULL, NULL, 1, 0, 0 },
 		{ &key[keyIdx_7], NULL, NULL, 1, 0, 0 },
@@ -105,22 +107,29 @@ static void keyStatusDetect(void) {
 }
 
 static void singleModeKeyHander(void) {
-	ps_send_event(PS_EVT_MODE_CHGE, 1);
+	(void) ps_send_event(PS_EVT_MODE_CHGE, 1);
 }
 
 static void mutleModeKeyHandler(void) {
-	ps_send_event(PS_EVT_MODE_CHGE, 2);
+	(void) ps_send_event(PS_EVT_MODE_CHGE, 2);
 }
 
 static void pageUpKeyHander(void) {
-
+	ps_send_event(PS_EVT_PAGE, 0);
 }
 
 static void pageDownKeyHandler(void) {
-
+	ps_send_event(PS_EVT_PAGE, 1);
 }
 
 static void startAndStopKeyHandler(void) {
+	(void) ps_send_event(PS_START_GAME, 0);
+}
+
+static void pageUpConsecutivePress(void) {
 
 }
 
+static void pageDownConsecutivePress(void) {
+
+}

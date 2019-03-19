@@ -86,6 +86,9 @@ static void CanAppBuffOffHanlder(void) {
 
 RET_t CanAppSendMsg(can_frame_t *pFrame) {
 	uint8_t tryCnt = 3;
+	pFrame->format = CAN_ID_STANDRD;
+	pFrame->length = 8;
+	pFrame->type = CAN_TYPE_DATA;
 	pFrame->id = selfId;
 	RET_t status;
 	while (tryCnt--) {

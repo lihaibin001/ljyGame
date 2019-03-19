@@ -1133,7 +1133,6 @@ const uint8_t gameLevel[] = { 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
 		0x80, 0x08, 0x93, 0x02, 0x00, 0x00, 0x00, 0x00, 0x00, 0x0E, 0x48, 0x04,
 		0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
 		0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-
 };
 
 const uint8_t scoreImage[] = { 0xF4, 0x83, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00,
@@ -1509,24 +1508,6 @@ uint8_t maxtrixAppSetGameMode(uint8_t cnt) {
 	return 0;
 }
 
-uint8_t maxtrixAppChangePlayMode(uint8_t dir) {
-	if(dir == 0) { //page up
-		if(gPlayMode == PS_EVT_SNATCH_LED) {
-			gPlayMode = PS_EVT_AGIL_TRAIN;
-		} else {
-			gPlayMode--;
-		}
-	} else { //page down
-		if(gPlayMode == PS_EVT_AGIL_TRAIN) {
-			gPlayMode = PS_EVT_SNATCH_LED;
-		} else {
-			gPlayMode++;
-		}
-	}
-	ps_send_event(gPlayMode, 0);
-	return 0;
-}
-
 uint8_t maxtrixAppSetImage(uint8_t *pImage) {
 	uint32_t i = 0;
 	uint32_t color = 0;
@@ -1582,11 +1563,11 @@ bool maxtrixAppSelfTest(void) {
 				palteStatus[i].status = PLATE_STA_FAULT;
 			} else {
 				can_frame_t msg;
-				msg.length = 8;
+//				msg.length = 8;
 				msg.dataByte0 = PROTOCAL_SELF_TESET;
 				msg.dataByte1 = i + 1;
-				msg.format = CAN_ID_STANDRD;
-				msg.type = CAN_TYPE_DATA;
+//				msg.format = CAN_ID_STANDRD;
+//				msg.type = CAN_TYPE_DATA;
 				status = CanAppSendMsg(&msg);
 				if (status != RET_OK) {
 					APP_ERROR("[App] Send Can message error: %d\r\n", status);
@@ -1614,8 +1595,8 @@ void maxtrixAppFault(void) {
 			can_frame_t msg;
 			msg.dataByte0 = PROTOCAL_SELF_TESET;
 			msg.dataByte1 = i;
-			msg.format = CAN_ID_STANDRD;
-			msg.type = CAN_TYPE_DATA;
+//			msg.format = CAN_ID_STANDRD;
+//			msg.type = CAN_TYPE_DATA;
 			status = CanAppSendMsg(&msg);
 			if (status != RET_OK) {
 				APP_ERROR("[App] Send Can message error: %d\r\n", status);

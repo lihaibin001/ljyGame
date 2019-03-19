@@ -9,10 +9,8 @@
 #define CAN_MAX_BUFF_AMOUNT 9
 #define CAN_ID_STANDRD (uint8_t)0
 #define CAN_ID_EXTEND (uint8_t)1
-
 #define CAN_TYPE_DATA (uint8_t)0
 #define CAN_TYPE_REMOTE (uint8_t)1
-
 #define CAN_RX_DATA (uint8_t)0
 #define CAN_TX_COMPLETE (uint8_t)1
 #define CAN_WAKEUP (uint8_t)2
