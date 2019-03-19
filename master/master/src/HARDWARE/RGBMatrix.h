@@ -53,6 +53,7 @@ CellAction RGBAnalyzeCell(int offset, uint32_t buffer[]);
 void RGBDrawChar(uint8_t x, uint8_t y, uint32_t Color, char character);
 void RGBrawString(uint8_t x, uint8_t y, uint32_t Color, char *text);
 void RGBdrawImage(uint8_t x, uint8_t y, uint32_t Color, const uint8_t *addres);
+void RGBShowImage(uint32_t color, const uint8_t *image);
 void RGBDrawPixel(uint8_t x, uint8_t y, uint32_t Color);
 void GRBSetCell(uint32_t cellNum, uint32_t color);
 void RGBClearBuff(void);

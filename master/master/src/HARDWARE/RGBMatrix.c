@@ -342,21 +342,40 @@ void RGBrawString(uint8_t x, uint8_t y, uint32_t Color, char *text)
 
 void RGBdrawImage(uint8_t x, uint8_t y, uint32_t Color, const uint8_t *addres)
 {
-	uint8_t b, c, d;
-	//a = a / 8;
+//	uint8_t b, c, d;
+//	//a = a / 8;
+//
+//	for(b = 0; b < addres[1]; b++)
+//	{
+//		for(d = 0; d < addres[0] / 8; d++)
+//		{
+//			uint8_t num = addres[b * (addres[0] / 8) + d + 2];
+//			for(c = 0; c < 8; c++)
+//			{
+//				if((num & 0x80) == 0x80)
+//					RGBDrawPixel(d * 8 + c + x, b + y, Color);
+//				num = num << 1;
+//				//if(num & (1<<c))
+//				//	drawPixel(c+x,b+y,Color);
+//			}
+//		}
+//	}
+	uint32_t i, j;
+	for (i = 0; i < MATRIX_SIZE / 8; i++) {
+		for (j = 0; j < 8; j++) {
+			if ((addres[i]) & (0x01 << j)) {
+				GRBSetCell(8 * i + j + x + y*64, Color);
+			}
+		}
+	}
+}
 
-	for(b = 0; b < addres[1]; b++)
-	{
-		for(d = 0; d < addres[0] / 8; d++)
-		{
-			uint8_t num = addres[b * (addres[0] / 8) + d + 2];
-			for(c = 0; c < 8; c++)
-			{
-				if((num & 0x80) == 0x80)
-					RGBDrawPixel(d * 8 + c + x, b + y, Color);
-				num = num << 1;
-				//if(num & (1<<c))
-				//	drawPixel(c+x,b+y,Color);
+void RGBShowImage(uint32_t color, const uint8_t *image) {
+	uint32_t i, j;
+	for (i = 0; i < MATRIX_SIZE / 8; i++) {
+		for (j = 0; j < 8; j++) {
+			if ((image[i]) & (0x01 << j)) {
+				GRBSetCell(8 * i + j, color);
 			}
 		}
 	}

@@ -29,6 +29,7 @@ static uint8_t cs_no_action(void);
 static uint8_t ps_check_selftest(uint16_t data);
 static uint8_t ps_mode_change(uint16_t data);
 static uint8_t ps_page(uint16_t data);
+static uint8_t ps_start_game(uint16_t data);
 static uint8_t ps_entry_idle(uint16_t data);
 static uint8_t ps_entery_fault(uint16_t data);
 static uint8_t ps_entry_snatch_led(uint16_t data);
@@ -169,8 +170,9 @@ static uint8_t ps_entry_snatch_led(uint16_t data) {
 	RGBClearBuff();
 	uint8_t i;
 	for(i=3; i>=1; i--) {
-		RGBdrawImage(0, 0, 0x00FF00, pNumber[i]);
-		vTaskDelay(500);
+		RGBClearBuff();
+		RGBdrawImage(28, 10, 0xFF, pNumber[i]);
+		vTaskDelay(1000);
 	}
 	return PS_SNATCH_LED;
 }
@@ -179,8 +181,9 @@ static uint8_t ps_entry_road_block(uint16_t data) {
 	RGBClearBuff();
 	uint8_t i;
 	for(i=3; i>=1; i--) {
-		RGBdrawImage(0, 0, 0x00FF00, pNumber[i]);
-		vTaskDelay(500);
+		RGBClearBuff();
+		RGBdrawImage(28, 10, 0xFF, pNumber[i]);
+		vTaskDelay(1000);
 	}
 	return PS_ROAD_BLOCK;
 }
@@ -189,8 +192,9 @@ static uint8_t ps_entry_wipe_led(uint16_t data) {
 	RGBClearBuff();
 	uint8_t i;
 	for(i=3; i>=1; i--) {
-		RGBdrawImage(0, 0, 0x00FF00, pNumber[i]);
-		vTaskDelay(500);
+		RGBClearBuff();
+		RGBdrawImage(28, 10, 0xFF, pNumber[i]);
+		vTaskDelay(1000);
 	}
 	RGBClearBuff();
 	return PS_WIPE_LED;
@@ -200,8 +204,9 @@ static uint8_t ps_entry_agil_train(uint16_t data) {
 	RGBClearBuff();
 	uint8_t i;
 	for(i=3; i>=1; i--) {
-		RGBdrawImage(0, 0, 0x00FF00, pNumber[i]);
-		vTaskDelay(500);
+		RGBClearBuff();
+		RGBdrawImage(28, 10, 0xFF, pNumber[i]);
+		vTaskDelay(1000);
 	}
 	RGBClearBuff();
 	return PS_AGIL_TRAIN;
@@ -234,48 +239,48 @@ static uint8_t ps_cs_boot_test(void) {
 }
 
 static uint8_t ps_cs_snatch_led(void) {
-	uint8_t id, id1, id2 = 0, color;
-	uint32_t rand_num;
-	can_frame_t msg;
-	srand(xTaskGetTickCount());
-
-	if(maxtrixAppGetGameMode() == 1) {
-		do{
-			rand_num = rand();
-		}while(rand_num == 0);
-		id1 = rand_num % 8;
-		do{
-			rand_num = rand();
-		}while(rand_num == 0);
-		color = rand_num % 8;
-		if(color != 0) {
-			if(id1 > 4) {
-				msg.dataByte3 = 1;
-			} else {
-				msg.dataByte2 = 1;
-			}
-		} else {
-			msg.dataByte3 = 0;
-			msg.dataByte2 = 0;
-		}
-	} else {
-		do{
-			rand_num = rand();
-		}while(rand_num == 0);
-		id1 = rand_num % 4;
-		do{
-			rand_num = rand();
-		}while(rand_num == 0);
-		id2 = rand_num % 4;
-	}
-	id = (1 << id1) | (1 << id2);
-	msg.id = id;
-	return 0;
+//	uint8_t id, id1, id2 = 0, color;
+//	uint32_t rand_num;
+//	can_frame_t msg;
+//	srand(xTaskGetTickCount());
+//
+//	if(maxtrixAppGetGameMode() == 1) {
+//		do{
+//			rand_num = rand();
+//		}while(rand_num == 0);
+//		id1 = rand_num % 8;
+//		do{
+//			rand_num = rand();
+//		}while(rand_num == 0);
+//		color = rand_num % 8;
+//		if(color != 0) {
+//			if(id1 > 4) {
+//				msg.dataByte3 = 1;
+//			} else {
+//				msg.dataByte2 = 1;
+//			}
+//		} else {
+//			msg.dataByte3 = 0;
+//			msg.dataByte2 = 0;
+//		}
+//	} else {
+//		do{
+//			rand_num = rand();
+//		}while(rand_num == 0);
+//		id1 = rand_num % 4;
+//		do{
+//			rand_num = rand();
+//		}while(rand_num == 0);
+//		id2 = rand_num % 4;
+//	}
+//	id = (1 << id1) | (1 << id2);
+//	msg.id = id;
+//	return 0;
 }
 
-static uint8_t ps_send_can_msg(can_frame_t *pMsg) {
-
-}
+//static uint8_t ps_send_can_msg(can_frame_t *pMsg) {
+//
+//}
 
 static uint8_t ps_cs_road_block(void) {
 	return 0;
@@ -342,8 +347,12 @@ static uint8_t ps_page(uint16_t data) {
 		}
 	}
 	RGBClearBuff();
-	RGBdrawImage(0, 0, 0x00FF00, play_mode_tbl[play_mode-1]);
+	RGBShowImage(0x00FF00, play_mode_tbl[play_mode-1]);
 	return 0;
+}
+
+static uint8_t ps_start_game(uint16_t data) {
+	return play_mode;
 }
 
 static uint8_t ps_snatch_handler(uint16_t data) {
