@@ -33,7 +33,7 @@ STATE_END
 
 STATE (PS_SNATCH_LED,		PS_ROOT,		ps_cs_snatch_led)
 TRANS (ENTRY,				INTERNAL,		ps_entry_snatch_led)
-//TRANS (PS_EVT_PLATE_EXC,	INTERNAL,		ps_snatch_handler)
+TRANS (PS_EVT_PLATE_EXC,	INTERNAL,		ps_snatch_handler)
 //TRANS (PS_EVT_PRE_START,	INTERNAL,		ps_pre_start)
 TRANS (PS_STOP_GAME,		PS_IDLE,		no_action)
 STATE_END

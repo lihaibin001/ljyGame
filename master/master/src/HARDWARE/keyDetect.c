@@ -107,11 +107,11 @@ static void keyStatusDetect(void) {
 }
 
 static void singleModeKeyHander(void) {
-	(void) ps_send_event(PS_EVT_MODE_CHGE, 1);
+	(void) ps_send_event(PS_EVT_MODE_CHGE, 0);
 }
 
 static void mutleModeKeyHandler(void) {
-	(void) ps_send_event(PS_EVT_MODE_CHGE, 2);
+	(void) ps_send_event(PS_EVT_MODE_CHGE, 1);
 }
 
 static void pageUpKeyHander(void) {
