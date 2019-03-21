@@ -153,7 +153,7 @@ void CanAppInit(void) {
 	selfId = 0x40;
 	xQueue = xQueueCreate(3, 1);
 	xSemphore = xSemaphoreCreateBinary();
-	xTaskCreate(xTask, "CanApp", 128, NULL, 3, NULL);
+	xTaskCreate(xTask, "CanApp", 128, NULL, 1, NULL);
 	CanInit(CanAppHandler[0].controller, CanAppHandler[0].baud, canAppCb,
 			&firlterList);
 }

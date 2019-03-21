@@ -26,7 +26,7 @@ bool CreateDisplayTask(void)
     {
         return false;
     }
-	if(pdPASS !=  xTaskCreate(xTask, "Dispaly", 128, NULL, 2, NULL))
+	if(pdPASS !=  xTaskCreate(xTask, "Dispaly", 128, NULL, 1, NULL))
     {
         return false;
     }
@@ -36,5 +36,5 @@ bool CreateDisplayTask(void)
 void DisplayRefalsh(void)
 {
     uint8_t trash;
-	xQueueSendFromISR(xQueue, &trash, NULL);    
+	xQueueSendFromISR(xQueue, &trash, NULL);
 }

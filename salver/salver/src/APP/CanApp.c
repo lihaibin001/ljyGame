@@ -83,6 +83,7 @@ static void CanAppReceiveMsgHandler(void)
     if(frame.id == 0x40) {
     	switch(frame.dataByte0) {
     	case PROTOCAL_LED_ON:
+    		if(frame.dataByte1)
     		break;
     	case PROTOCAL_LED_OFF:
     		break;

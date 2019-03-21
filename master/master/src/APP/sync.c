@@ -207,7 +207,18 @@ static uint8_t ps_entry_road_block(uint16_t data) {
 		RGBdrawImage(28, 10, 0xFF, pNumber[i]);
 		vTaskDelay(1000);
 	}
+	maxtriAppStartTime();
 	maxtrixAppGameStart();
+	srand(xTaskGetTickCount());
+	if(maxtrixAppGetGameMode() == 0) {
+		salverid[0] = rand() % 8;
+		ps_send_command(salverid[0]);
+	} else {
+		salverid[0] = rand() % 4;
+		ps_send_command(salverid[0]);
+		salverid[1] = rand() % 4 + 4;
+		ps_send_command(salverid[1]);
+	}
 	return PS_ROAD_BLOCK;
 }
 
@@ -219,7 +230,18 @@ static uint8_t ps_entry_wipe_led(uint16_t data) {
 		RGBdrawImage(28, 10, 0xFF, pNumber[i]);
 		vTaskDelay(1000);
 	}
+	maxtriAppStartTime();
 	maxtrixAppGameStart();
+	srand(xTaskGetTickCount());
+	if(maxtrixAppGetGameMode() == 0) {
+		salverid[0] = rand() % 8;
+		ps_send_command(salverid[0]);
+	} else {
+		salverid[0] = rand() % 4;
+		ps_send_command(salverid[0]);
+		salverid[1] = rand() % 4 + 4;
+		ps_send_command(salverid[1]);
+	}
 	return PS_WIPE_LED;
 }
 
@@ -231,7 +253,18 @@ static uint8_t ps_entry_agil_train(uint16_t data) {
 		RGBdrawImage(28, 10, 0xFF, pNumber[i]);
 		vTaskDelay(1000);
 	}
+	maxtriAppStartTime();
 	maxtrixAppGameStart();
+	srand(xTaskGetTickCount());
+	if(maxtrixAppGetGameMode() == 0) {
+		salverid[0] = rand() % 8;
+		ps_send_command(salverid[0]);
+	} else {
+		salverid[0] = rand() % 4;
+		ps_send_command(salverid[0]);
+		salverid[1] = rand() % 4 + 4;
+		ps_send_command(salverid[1]);
+	}
 	return PS_AGIL_TRAIN;
 }
 
@@ -344,6 +377,7 @@ static uint8_t ps_check_selftest(uint16_t data) {
 }
 
 static uint8_t ps_mode_change(uint16_t data) {
+	RGBClearBuff();
 	maxtrixAppSetGameMode(data);
 	return 0;
 }
@@ -368,7 +402,9 @@ static uint8_t ps_page(uint16_t data) {
 }
 
 static uint8_t ps_start_game(uint16_t data) {
-
+	if(play_mode == PLAY_MODE_UNKNOW) {
+		play_mode = SNATCH_LED;
+	}
 	return play_mode;
 }
 
