@@ -22,7 +22,7 @@ typedef struct {
 
 static uint16_t gTime;
 static uint8_t gGameMode;
-static uint8_t gScore[2] = { 0 };
+static volatile uint8_t gScore[2];
 static TimerHandle_t xTimers;
 
 static Palte_status_t palteStatus[PLATE_AMOUNT];
@@ -401,7 +401,6 @@ const uint8_t *pNumber[] = { num0, num1, num2, num3, num4, num5, num6, num7,
 bool maxtrixAppSelfTest(void) {
 	uint8_t i;
 	RET_t status;
-	return true;
 	char drawBuff[16] = "init";
 	static uint8_t test_loop_cnt;
 	static uint32_t test_pre_tick;
@@ -576,13 +575,17 @@ void maxtrixAppGameStart(void) {
 }
 
 void maxtriAppScoreIncrease(uint8_t player) {
-	gScore[player - 1]++;
+	gScore[player]++;
 	maxtrixAppSetGameScoreRefresh();
 }
 
+uint8_t maxtriAppGetScore(uint8_t player) {
+	return gScore[player];
+}
+
 void maxtriAppScoreDecrease(uint8_t player) {
-	if(gScore[player - 1] != 0) {
-		gScore[player - 1]--;
+	if(gScore[player] != 0) {
+		gScore[player] -= 1;
 		maxtrixAppSetGameScoreRefresh();
 	}
 }
@@ -609,3 +612,12 @@ void maxtriAppStartTime(void) {
 			;
 	}
 }
+
+void maxtriAppStopTime(void) {
+	gTime = 0;
+	if(pdPASS != xTimerStop(xTimers, 100)) {
+		while(1)
+			;
+	}
+}
+

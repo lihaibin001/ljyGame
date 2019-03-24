@@ -7,6 +7,8 @@
 #include "stdlib.h"
 #include "matrix_config.h"
 #include "rgbMaxtrixFront.h"
+#include "FreeRTOS.h"
+#include "semphr.h"
 
 bitmap_font *font = (bitmap_font *) &apple3x5;
 const bitmap_font *scrollFont = &apple5x7;
@@ -21,15 +23,19 @@ const int waits[] = { 5, 10, 20, 40, 80, 160, 320, 640 };
 const int scan = MATRIX_HEIGHT / 2;
 uint32_t birthRate;
 uint8_t gammaTable[256];
+RGB_t RGBDisplay[MATRIX_SIZE];
 RGB_t RGB[MATRIX_SIZE];
+SemaphoreHandle_t buffSemer;
 //RGB_t RGBDisplayTmp[MATRIX_SIZE];
 // ----- Timing definitions -------------------------------------------------
 
-
 void RGBProcessor(void)
 {
-	//memcpy(RGBDisplayTmp, RGB, sizeof(RGB_t));
-	RGBDisplayBuffer(RGB);
+	if(xSemaphoreTake(buffSemer, 0) == pdTRUE){
+		memcpy(RGBDisplay, RGB, sizeof(RGB_t));
+		xSemaphoreGive(buffSemer);
+	}
+	RGBDisplayBuffer(RGBDisplay);
 }
 
 /**
@@ -240,6 +246,11 @@ void RGBSetupRGBMatrixPorts()
 	{
 		gammaTable[i] = 255 * pow((i / 256.0), 1.6);
 	}
+	buffSemer = xSemaphoreCreateMutexStatic();
+	if(buffSemer == NULL) {
+		while(1)
+			;
+	}
 
 }
 
@@ -260,9 +271,12 @@ const bitmap_font * fontLookup(fontChoices font)
 
 void RGBDrawPixel(uint8_t x, uint8_t y, uint32_t Color)
 {
-	RGB[x + y * 64].r = gammaTable[(uint8_t)(Color & 0xFF)];
-	RGB[x + y * 64].b = gammaTable[(uint8_t)((Color >> 8) & 0xff)];
-	RGB[x + y * 64].g = gammaTable[(uint8_t)((Color >> 16) & 0xff)];
+	if(xSemaphoreTake(buffSemer, 500) == pdTRUE){
+		RGB[x + y * 64].r = gammaTable[(uint8_t)(Color & 0xFF)];
+		RGB[x + y * 64].b = gammaTable[(uint8_t)((Color >> 8) & 0xff)];
+		RGB[x + y * 64].g = gammaTable[(uint8_t)((Color >> 16) & 0xff)];
+		xSemaphoreGive(buffSemer);
+	}
 	//RGB[x+y*64].b |= gammaTable[Color ];
 	//RGB[x+y*64].g |= Color>>8;
 	//RGB[x+y*64].r |= Color>>16;
@@ -271,13 +285,17 @@ void RGBDrawPixel(uint8_t x, uint8_t y, uint32_t Color)
 
 void RGBClearBuff(void)
 {
-	uint32_t num;
-	for(num = 0; num < MATRIX_SIZE; num++)
-	{
-		RGB[num].r = 0x00;
-		RGB[num].g = 0x00;
-		RGB[num].b = 0x00;
+	if(xSemaphoreTake(buffSemer, 500) == pdTRUE){
+		uint32_t num;
+		for(num = 0; num < MATRIX_SIZE; num++)
+		{
+			RGB[num].r = 0x00;
+			RGB[num].g = 0x00;
+			RGB[num].b = 0x00;
+		}
+		xSemaphoreGive(buffSemer);
 	}
+
 }
 void RGBMaxtrixSetFont(fontChoices newFont)
 {
@@ -388,7 +406,12 @@ void GRBSetCell(uint32_t cellNum, uint32_t color)
 		while(1)
 			;
 	}
-	RGB[cellNum].r = gammaTable[(uint8_t)(color & 0xFF)];
-	RGB[cellNum].b = gammaTable[(uint8_t)((color >> 8) & 0xff)];
-	RGB[cellNum].g = gammaTable[(uint8_t)((color >> 16) & 0xff)];
+	if(xSemaphoreTake(buffSemer, 500) == pdTRUE){
+		RGB[cellNum].r = gammaTable[(uint8_t)(color & 0xFF)];
+		RGB[cellNum].b = gammaTable[(uint8_t)((color >> 8) & 0xff)];
+		RGB[cellNum].g = gammaTable[(uint8_t)((color >> 16) & 0xff)];
+		xSemaphoreGive(buffSemer);
+	}
+
+
 }

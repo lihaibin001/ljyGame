@@ -58,9 +58,18 @@ const canFIrlterList_t firlterList = { canFirlter, sizeof(canFirlter)
 static void CanAppReceiveMsgHandler(void) {
 	can_frame_t frame;
 	RET_t status = CanGet_MSG(CAN_APP_CONTROLLER, &frame);
+	uint16_t data;
+	uint8_t data_low;
 	if (status == RET_OK) {
 		switch(frame.dataByte0) {
 		case PROTOCAL_LED_ON:
+			if(frame.dataByte2 == 0) {
+				data_low = frame.dataByte1;
+			} else {
+				data_low = 0xFF;
+			}
+			data = (uint16_t)(frame.id << 8 | data_low);
+			ps_send_event(PS_EVT_PLATE_EXC, data);
 			break;
 		case PROTOCAL_LED_OFF:
 			break;

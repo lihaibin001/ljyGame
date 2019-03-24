@@ -10,7 +10,7 @@ typedef enum
     showScores,
 }showMode_t;
 
-#define PLATE_AMOUNT 8
+#define PLATE_AMOUNT 4
 #define PLATE_STA_UNKNOW		0
 #define PLATE_STA_OK			1
 #define PLATE_STA_FAULT		2
@@ -42,8 +42,10 @@ void maxtrixAppGameStop(void);
 bool maxtrixAppGetGameStatus(void);
 void maxtriAppInit(void);
 void maxtriAppStartTime(void);
+void maxtriAppStopTime(void);
 uint8_t maxtriAppGetPlayerSalverId(uint8_t player);
 void maxtriAppScoreIncrease(uint8_t player);
+uint8_t maxtriAppGetScore(uint8_t player);
 void maxtriAppScoreDecrease(uint8_t player);
 void maxtriAppResetPlayerSalverId(void);
 #endif

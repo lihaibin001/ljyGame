@@ -29,10 +29,12 @@ void vApplicationDaemonTaskStartupHook( void )
 
 void vApplicationIdleHook( void )
 {
-
+	 RGBProcessor();
+    //DisplayRefalsh();
 }
 
 void vApplicationTickHook( void )
 {
-    DisplayRefalsh();
+	rand();
+    //DisplayRefalsh();
 }
