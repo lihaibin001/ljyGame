@@ -3,7 +3,7 @@
 
 #include <stdio.h>
 #include <stdint.h>
-
+#include <stdbool.h>
 typedef struct
 {
 	uint8_t r;
@@ -57,4 +57,6 @@ void RGBShowImage(uint32_t color, const uint8_t *image);
 void RGBDrawPixel(uint8_t x, uint8_t y, uint32_t Color);
 void GRBSetCell(uint32_t cellNum, uint32_t color);
 void RGBClearBuff(void);
+bool RGBTakeLock(void);
+void RGBReleaseLock(void);
 #endif

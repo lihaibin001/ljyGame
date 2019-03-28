@@ -16,21 +16,22 @@
 
 void vApplicationDaemonTaskStartupHook( void )
 {
-	RGBClearBuff();
+	//RGBClearBuff();
+	NVIC_PriorityGroupConfig(NVIC_PriorityGroup_1);
 	sysclock_init();
 	gpioInit();
-    CreateDisplayTask();
+
     ps_task_create();
     CanAppInit();
     keyDetectInit();
     RGBSetupRGBMatrixPorts();
     maxtriAppInit();
+    CreateDisplayTask();
 }
 
 void vApplicationIdleHook( void )
 {
-	 RGBProcessor();
-    //DisplayRefalsh();
+//	 RGBProcessor();
 }
 
 void vApplicationTickHook( void )

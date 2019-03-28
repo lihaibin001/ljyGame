@@ -12,10 +12,8 @@ static void xTask(void *pPara)
     uint8_t trush;
     for(;;)
     {
-		if(pdPASS == xQueueReceive(xQueue, &trush, pdMS_TO_TICKS(500)))
-		{
-            RGBProcessor();
-		}
+		xQueueReceive(xQueue, &trush, pdMS_TO_TICKS(10));
+        RGBProcessor();
     }
 }
 
@@ -26,7 +24,7 @@ bool CreateDisplayTask(void)
     {
         return false;
     }
-	if(pdPASS !=  xTaskCreate(xTask, "Dispaly", 128, NULL, 1, NULL))
+	if(pdPASS !=  xTaskCreate(xTask, "Dispaly", 128, NULL, 4, NULL))
     {
         return false;
     }
