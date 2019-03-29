@@ -9,6 +9,9 @@ TREE (tree_psync)
 
 STATE (PS_ROOT,				0,				cs_no_action)
 TRANS (ENTRY,				INTERNAL,		ps_entry_root)
+TRANS (PS_EVT_MODE_CHGE,	INTERNAL,		ps_mode_change)
+TRANS (PS_EVT_PAGE,			INTERNAL,		ps_page)
+TRANS (PS_STOP_GAME,		PS_IDLE,		ps_stop_game_handle)
 TRANS (START,				PS_ROOT,		ps_start_action)
 STATE_END
 
@@ -19,11 +22,8 @@ TRANS (PS_EVT_BOOT, 		PS_IDLE,		no_action)
 TRANS (PS_EVT_FAULT, 		PS_FAULT,		no_action)
 STATE_END
 
-
 STATE (PS_IDLE,				PS_ROOT,		cs_no_action)
 TRANS (ENTRY,				INTERNAL,		ps_entry_idle)
-TRANS (PS_EVT_MODE_CHGE,	INTERNAL,		ps_mode_change)
-TRANS (PS_EVT_PAGE,			INTERNAL,		ps_page)
 TRANS (PS_START_GAME,		CONDITION,		ps_start_game)
 TRANS (PS_START_GAME,		PS_SNATCH_LED,	no_action)
 TRANS (PS_START_GAME,		PS_ROAD_BLOCK,	no_action)
@@ -33,27 +33,24 @@ STATE_END
 
 STATE (PS_SNATCH_LED,		PS_ROOT,		ps_cs_snatch_led)
 TRANS (ENTRY,				INTERNAL,		ps_entry_snatch_led)
+TRANS (PS_EVT_SLAVE_EVT,	INTERNAL,		ps_snatch_handle_slave_evt)
 TRANS (PS_EVT_PLATE_EXC,	INTERNAL,		ps_snatch_handler)
-//TRANS (PS_EVT_PRE_START,	INTERNAL,		ps_pre_start)
-TRANS (PS_STOP_GAME,		PS_IDLE,		no_action)
+//TRANS (PS_STOP_GAME,		PS_IDLE,		no_action)
 STATE_END
 
 STATE (PS_ROAD_BLOCK,		PS_ROOT,		ps_cs_road_block)
 TRANS (ENTRY,				INTERNAL,		ps_entry_road_block)
-//TRANS (PS_EVT_PRE_START,	INTERNAL,		ps_pre_start)
-TRANS (PS_STOP_GAME,		PS_IDLE,		no_action)
+//TRANS (PS_STOP_GAME,		PS_IDLE,		no_action)
 STATE_END
 
 STATE (PS_WIPE_LED,			PS_ROOT,		ps_cs_wipe_led)
 TRANS (ENTRY,				INTERNAL,		ps_entry_wipe_led)
-//TRANS (PS_EVT_PRE_START,	INTERNAL,		ps_pre_start)
-TRANS (PS_STOP_GAME,		PS_IDLE,		no_action)
+//TRANS (PS_STOP_GAME,		PS_IDLE,		no_action)
 STATE_END
 
 STATE (PS_AGIL_TRAIN,		PS_ROOT,		ps_cs_agility_training)
 TRANS (ENTRY,				INTERNAL,		ps_entry_agil_train)
-//TRANS (PS_EVT_PRE_START,	INTERNAL,		ps_pre_start)
-TRANS (PS_STOP_GAME,		PS_IDLE,		no_action)
+//TRANS (PS_STOP_GAME,		PS_IDLE,		no_action)
 STATE_END
 
 STATE (PS_FAULT,			PS_ROOT,		ps_cs_fault)

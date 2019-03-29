@@ -30,7 +30,6 @@ uint8_t gammaTable[256];
 RGB_t RGBDisplay[MATRIX_SIZE];
 RGB_t RGB[MATRIX_SIZE];
 SemaphoreHandle_t buffSemer;
-//RGB_t RGBDisplayTmp[MATRIX_SIZE];
 // ----- Timing definitions -------------------------------------------------
 
 void RGBProcessor(void) {
@@ -55,8 +54,6 @@ void RGBDisplayBuffer(RGB_t buffer[]) {
 			for (x = 0; x < MATRIX_WIDTH; x++) {
 				RGBSetRGB(buffer[offset1 + x], buffer[offset2 + x], plane);
 				CLK_TOGGLE
-				;
-
 			}
 			RGBShowLine(waits[plane]);
 		}
@@ -76,119 +73,11 @@ void RGBRandomizeFramebuffer(uint32_t buffer[]) {
 	}
 }
 
-typedef void (*voidfuncptr)(void);
-static void RowSelection0(void) {
-	MTX_PORT_SELSET->BRR = MTX_PA;
-	MTX_PORT_SELSET->BRR = MTX_PB;
-	MTX_PORT_SELSET->BRR = MTX_PC;
-	MTX_PORT_SELSET->BRR = MTX_PD;
-}
-
-static void RowSelection1(void) {
-	MTX_PORT_SELSET->BSRR = MTX_PA;
-	MTX_PORT_SELSET->BRR = MTX_PB;
-	MTX_PORT_SELSET->BRR = MTX_PC;
-	MTX_PORT_SELSET->BRR = MTX_PD;
-}
-static void RowSelection2(void) {
-	MTX_PORT_SELSET->BRR = MTX_PA;
-	MTX_PORT_SELSET->BSRR = MTX_PB;
-	MTX_PORT_SELSET->BRR = MTX_PC;
-	MTX_PORT_SELSET->BRR = MTX_PD;
-}
-static void RowSelection3(void) {
-	MTX_PORT_SELSET->BSRR = MTX_PA;
-	MTX_PORT_SELSET->BSRR = MTX_PB;
-	MTX_PORT_SELSET->BRR = MTX_PC;
-	MTX_PORT_SELSET->BRR = MTX_PD;
-}
-static void RowSelection4(void) {
-	MTX_PORT_SELSET->BRR = MTX_PA;
-	MTX_PORT_SELSET->BRR = MTX_PB;
-	MTX_PORT_SELSET->BSRR = MTX_PC;
-	MTX_PORT_SELSET->BRR = MTX_PD;
-}
-static void RowSelection5(void) {
-	MTX_PORT_SELSET->BSRR = MTX_PA;
-	MTX_PORT_SELSET->BRR = MTX_PB;
-	MTX_PORT_SELSET->BSRR = MTX_PC;
-	MTX_PORT_SELSET->BRR = MTX_PD;
-}
-static void RowSelection6(void) {
-	MTX_PORT_SELSET->BRR = MTX_PA;
-	MTX_PORT_SELSET->BSRR = MTX_PB;
-	MTX_PORT_SELSET->BSRR = MTX_PC;
-	MTX_PORT_SELSET->BRR = MTX_PD;
-}
-static void RowSelection7(void) {
-	MTX_PORT_SELSET->BSRR = MTX_PA;
-	MTX_PORT_SELSET->BSRR = MTX_PB;
-	MTX_PORT_SELSET->BSRR = MTX_PC;
-	MTX_PORT_SELSET->BRR = MTX_PD;
-}
-static void RowSelection8(void) {
-	MTX_PORT_SELSET->BRR = MTX_PA;
-	MTX_PORT_SELSET->BRR = MTX_PB;
-	MTX_PORT_SELSET->BRR = MTX_PC;
-	MTX_PORT_SELSET->BSRR = MTX_PD;
-}
-static void RowSelection9(void) {
-	MTX_PORT_SELSET->BSRR = MTX_PA;
-	MTX_PORT_SELSET->BRR = MTX_PB;
-	MTX_PORT_SELSET->BRR = MTX_PC;
-	MTX_PORT_SELSET->BSRR = MTX_PD;
-}
-static void RowSelection10(void) {
-	MTX_PORT_SELSET->BRR = MTX_PA;
-	MTX_PORT_SELSET->BSRR = MTX_PB;
-	MTX_PORT_SELSET->BRR = MTX_PC;
-	MTX_PORT_SELSET->BSRR = MTX_PD;
-}
-static void RowSelection11(void) {
-	MTX_PORT_SELSET->BSRR = MTX_PA;
-	MTX_PORT_SELSET->BSRR = MTX_PB;
-	MTX_PORT_SELSET->BRR = MTX_PC;
-	MTX_PORT_SELSET->BSRR = MTX_PD;
-}
-static void RowSelection12(void) {
-	MTX_PORT_SELSET->BRR = MTX_PA;
-	MTX_PORT_SELSET->BRR = MTX_PB;
-	MTX_PORT_SELSET->BSRR = MTX_PC;
-	MTX_PORT_SELSET->BSRR = MTX_PD;
-}
-static void RowSelection13(void) {
-	MTX_PORT_SELSET->BSRR = MTX_PA;
-	MTX_PORT_SELSET->BRR = MTX_PB;
-	MTX_PORT_SELSET->BSRR = MTX_PC;
-	MTX_PORT_SELSET->BSRR = MTX_PD;
-}
-static void RowSelection14(void) {
-	MTX_PORT_SELSET->BRR = MTX_PA;
-	MTX_PORT_SELSET->BSRR = MTX_PB;
-	MTX_PORT_SELSET->BSRR = MTX_PC;
-	MTX_PORT_SELSET->BSRR = MTX_PD;
-}
-static void RowSelection15(void) {
-	MTX_PORT_SELSET->BSRR = MTX_PA;
-	MTX_PORT_SELSET->BSRR = MTX_PB;
-	MTX_PORT_SELSET->BSRR = MTX_PC;
-	MTX_PORT_SELSET->BSRR = MTX_PD;
-}
-
-const voidfuncptr RowSelection[] = { RowSelection0, RowSelection1,
-		RowSelection2, RowSelection3, RowSelection4, RowSelection5,
-		RowSelection6, RowSelection7, RowSelection8, RowSelection9,
-		RowSelection10, RowSelection11, RowSelection12, RowSelection13,
-		RowSelection14, RowSelection15 };
-
 /**
  * sets the row on the row gpio ports
  */
 void RGBSetRow(int row) {
 	// todo: perhaps a lookup table could give us a tiny boost here.
-	RowSelection[row]();
-
-#if 0
 	if(row & 0b0001)
 	MTX_PORT_SELSET->BSRR = MTX_PA;
 	else
@@ -208,7 +97,7 @@ void RGBSetRow(int row) {
 	MTX_PORT_SELSET->BSRR = MTX_PD;
 	else
 	MTX_PORT_SELSET->BRR = MTX_PD;
-#endif
+
 }
 
 /**
