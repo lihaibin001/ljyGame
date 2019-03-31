@@ -20,13 +20,12 @@ void vApplicationDaemonTaskStartupHook( void )
 	NVIC_PriorityGroupConfig(NVIC_PriorityGroup_1);
 	sysclock_init();
 	gpioInit();
-
-    ps_task_create();
     CanAppInit();
     keyDetectInit();
     RGBSetupRGBMatrixPorts();
     maxtriAppInit();
     CreateDisplayTask();
+    ps_task_create();
 }
 
 void vApplicationIdleHook( void )

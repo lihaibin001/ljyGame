@@ -16,7 +16,7 @@ typedef enum
 #define PLATE_STA_FAULT		2
 
 #define PROTOCAL_LED_ON			(uint8_t)0
-#define PROTOCAL_LED_OFF		(uint8_t)1
+#define PROTOCAL_GAME_OVER		(uint8_t)1
 #define PROTOCAL_SELF_TESET		(uint8_t)2
 
 extern const uint8_t snatch_led[];

@@ -55,7 +55,7 @@
 #define configIDLE_SHOULD_YIELD		1
 #define configUSE_TIMERS            1
 #define configTIMER_TASK_PRIORITY   3
-#define configTIMER_QUEUE_LENGTH    5
+#define configTIMER_QUEUE_LENGTH    10
 #define configUSE_MUTEXES			1
 #define configTIMER_TASK_STACK_DEPTH 128
 #define configUSE_PORT_OPTIMISED_TASK_SELECTION 1

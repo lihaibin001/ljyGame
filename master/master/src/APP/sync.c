@@ -22,13 +22,16 @@
 typedef uint8_t PS_Current_State_T;
 typedef uint8_t PS_Flags_T;
 
-static TimerHandle_t xTimersPlayer1;
-static TimerHandle_t xTimersPlayer2;
-//static uint32_t perdic1 = 2000;
-//static uint32_t perdic2 = 2000;
-
+static TimerHandle_t xTimersPlayer[2];
+static TimerHandle_t xTimers;
+#define STOP_CNT 100
 static uint8_t plate_on_cnt[2];
-static bool isGameOngoing;
+static uint8_t salverid[2];
+static uint8_t current_status;
+static QueueHandle_t xQueue;
+static uint8_t play_mode;
+const static uint8_t *play_mode_tbl[] = { snatch_led, road_block, wipe_led,
+		agil_train, };
 /* function declaration */
 static void xTask(void *p);
 static uint8_t ps_start_action(uint16_t data);
@@ -37,10 +40,13 @@ static uint8_t cs_no_action(void);
 static uint8_t ps_check_selftest(uint16_t data);
 static uint8_t ps_mode_change(uint16_t data);
 static uint8_t ps_page(uint16_t data);
-static uint8_t ps_start_game(uint16_t data);
+static uint8_t ps_count_down(uint16_t data);
+static uint8_t ps_game_action(uint16_t data);
+static uint8_t ps_game_over_handle(uint16_t data);
 static uint8_t ps_snatch_handle_slave_evt(uint16_t data);
 static uint8_t ps_snatch_handler(uint16_t data);
 static uint8_t ps_entry_idle(uint16_t data);
+static uint8_t ps_entery_running(uint16_t data);
 static uint8_t ps_entery_fault(uint16_t data);
 static uint8_t ps_entry_snatch_led(uint16_t data);
 static uint8_t ps_entry_road_block(uint16_t data);
@@ -48,18 +54,18 @@ static uint8_t ps_entry_wipe_led(uint16_t data);
 static uint8_t ps_entry_agil_train(uint16_t data);
 static uint8_t ps_entry_root(uint16_t data);
 static uint8_t ps_entry_boot_test(uint16_t data);
-//static uint8_t ps_cs_root(void);
-//static uint8_t ps_cs_idle(void);
 static uint8_t ps_cs_boot_test(void);
 static uint8_t ps_cs_snatch_led(void);
 static uint8_t ps_cs_road_block(void);
 static uint8_t ps_cs_wipe_led(void);
 static uint8_t ps_cs_agility_training(void);
-//static uint8_t ps_cs_game_stop(void);
 static uint8_t ps_cs_fault(void);
-
+//timer handler
 static void xTimer1Handler(void *p);
 static void xTimer2Handler(void *p);
+static void xTimerFaultHoldTimeOUt(void *p);
+static void xTimerCountdown(void *p);
+static void xTimerGameoverHold(void *p);
 
 static uint32_t ps_get_game_perdic(uint8_t player);
 
@@ -75,6 +81,8 @@ static uint32_t ps_get_game_perdic(uint8_t player);
 #include "fsm_tree.h"
 #include "ps_stt.h"
 
+#define FATAL_HANDLER() while(1)
+
 enum {
 	PLAY_MODE_UNKNOW,
 	SNATCH_LED,
@@ -83,28 +91,28 @@ enum {
 	AGIL_TRAIN,
 	PLAY_MODE_AMOUNT,
 };
-static uint8_t salverid[2];
-
-static uint8_t current_status;
-static QueueHandle_t xQueue;
-static uint8_t play_mode;
-const static uint8_t *play_mode_tbl[] = { snatch_led, road_block, wipe_led,
-		agil_train, };
 
 void ps_task_create(void) {
-	xQueue = xQueueCreate(5, sizeof(Data_Message_T));
-	xTimersPlayer1 = xTimerCreate("player1timer", 0, pdFALSE, (void*) NULL,
+	xQueue = xQueueCreate(10, sizeof(Data_Message_T));
+	if (xQueue == NULL) {
+		FATAL_HANDLER()
+			;
+	}
+	xTimersPlayer[0] = xTimerCreate("player1timer", 0, pdTRUE, (void*) NULL,
 			xTimer1Handler);
-	xTimersPlayer2 = xTimerCreate("player2timer", 0, pdFALSE, (void*) NULL,
+	if (xTimersPlayer[0] == NULL) {
+		FATAL_HANDLER()
+			;
+	}
+	xTimersPlayer[1] = xTimerCreate("player2timer", 0, pdTRUE, (void*) NULL,
 			xTimer2Handler);
-	xTaskCreate(xTask, "sync", 128, NULL, 3, NULL);
+	if (xTimersPlayer[1] == NULL) {
+		FATAL_HANDLER()
+			;
+	}
+	xTaskCreate(xTask, "sync", 256, NULL, 3, NULL);
 }
 
-void ps_plate_data_handler(uint32_t id, uint8_t data, uint8_t type) {
-//	switch(type) {
-//	case :
-//	}
-}
 /**********************************************************************
  *
  *    Function: PS_Task
@@ -126,7 +134,7 @@ static void xTask(void *p) {
 	for (;;) {
 
 		// wait until next event in mailbox OR time expired
-		status = xQueueReceive(xQueue, &msg, pdMS_TO_TICKS(250));
+		status = xQueueReceive(xQueue, &msg, pdMS_TO_TICKS(100));
 		// process ALL events in queue first !!!
 		while (pdPASS == status) {
 			// process event
@@ -164,15 +172,25 @@ static uint8_t ps_entry_boot_test(uint16_t data) {
 }
 
 static uint8_t ps_entry_idle(uint16_t data) {
+
 	if (RGBTakeLock()) {
 		RGBClearBuff();
-		RGBrawString(6, 12, 0x0000FF, "WAN DE V1.1");
+		if (play_mode == PLAY_MODE_UNKNOW || play_mode == PLAY_MODE_AMOUNT) {
+			RGBrawString(6, 12, 0x0000FF, "WAN DE V1.1");
+		} else {
+			RGBShowImage(0xFF, play_mode_tbl[play_mode - 1]);
+		}
 		RGBReleaseLock();
 	}
-	xTimerStop(xTimersPlayer1, 100);
-	xTimerStop(xTimersPlayer2, 100);
+	xTimerStop(xTimersPlayer[0], 100);
+	xTimerStop(xTimersPlayer[1], 100);
 	maxtriAppStopTime();
 	return PS_IDLE;
+}
+
+static uint8_t ps_entery_running(uint16_t data) {
+	ps_send_event(PS_COUNT_DOWN, 0);
+	return PS_RUNNING;
 }
 
 static uint8_t ps_entery_fault(uint16_t data) {
@@ -184,23 +202,55 @@ static uint8_t ps_entery_fault(uint16_t data) {
 	}
 	if (RGBTakeLock()) {
 		RGBClearBuff();
-		RGBrawString(8, 12, 0x0000FF, drawBuff);
+		RGBrawString(4, 12, 0x0000FF, drawBuff);
 		RGBReleaseLock();
 	}
+	if (xTimers != NULL) {
+		xTimerStop(xTimers, 100);
+		xTimerDelete(xTimers, 100);
+		xTimers = NULL;
+	}
+	xTimers = xTimerCreate("SYNC timer", 3000, pdFALSE, (void*) NULL,
+			xTimerFaultHoldTimeOUt);
+	xTimerStart(xTimers, 100);
 	return PS_FAULT;
 }
 
+/*********************************************************************/
+/* event handler                                                     */
+/*********************************************************************/
 static uint8_t ps_entry_snatch_led(uint16_t data) {
-	msg.dataByte0 = PROTOCAL_LED_ON;
-	for (i = 3; i >= 1; i--) {
-		if (RGBTakeLock()) {
-			RGBClearBuff();
-			RGBdrawImage(28, 10, 0xFF, pNumber[i]);
-			RGBReleaseLock();
-		}
-		vTaskDelay(1000);
+//	ps_send_event(PS_HOLD_EVT, 0);
+	can_frame_t msg;
+	msg.dataByte0 = 0;
+	if (maxtrixAppGetGameMode() == 0) {
+		salverid[0] = rand() % PLATE_AMOUNT + 1;
+		msg.dataByte1 = salverid[0];
+		msg.dataByte2 = rand() % 5;
+		msg.dataByte3 = (uint8_t) (ps_get_game_perdic(0) / 100);
+		CanAppSendMsg(&msg);
+		xTimerChangePeriod(xTimersPlayer[0], ps_get_game_perdic(0) * 2, 100);
+		xTimerReset(xTimersPlayer[0], 100);
+
+	} else {
+
+		salverid[0] = rand() % (PLATE_AMOUNT / 2) + 1;
+		msg.dataByte1 = salverid[0];
+		msg.dataByte2 = rand() % 5;
+		msg.dataByte3 = (uint8_t) (ps_get_game_perdic(data) / 100);
+		CanAppSendMsg(&msg);
+		xTimerChangePeriod(xTimersPlayer[data], ps_get_game_perdic(0) * 2, 100);
+		xTimerReset(xTimersPlayer[0], 100);
+
+		salverid[1] = rand() % (PLATE_AMOUNT / 2) + (PLATE_AMOUNT / 2) + 1;
+		msg.dataByte1 = salverid[1];
+		msg.dataByte2 = rand() % 5;
+		msg.dataByte3 = (uint8_t) (ps_get_game_perdic(1) / 100);
+		CanAppSendMsg(&msg);
+		xTimerChangePeriod(xTimersPlayer[1], ps_get_game_perdic(1) * 2, 100);
+		xTimerReset(xTimersPlayer[1], 100);
 	}
-	ps_send_event(PS_EVT_PLATE_EXC, 0);
+
 	return PS_SNATCH_LED;
 }
 
@@ -232,8 +282,8 @@ static uint8_t ps_cs_boot_test(void) {
 	if (maxtrixAppSelfTest()) {
 		if (maxtrixAppGetPlateStatue(&status)) {
 			if (status != 0) {
-				//ps_send_event(PS_EVT_FAULT, 0);
-				ps_send_event(PS_EVT_BOOT, 0);
+				ps_send_event(PS_EVT_FAULT, 0);
+				//ps_send_event(PS_EVT_BOOT, 0);
 			} else {
 				ps_send_event(PS_EVT_BOOT, 0);
 			}
@@ -298,17 +348,11 @@ static uint8_t ps_check_selftest(uint16_t data) {
 }
 
 static uint8_t ps_mode_change(uint16_t data) {
-	if(isGameOngoing) {
-		return 0;
-	}
 	maxtrixAppSetGameMode(data);
 	return 0;
 }
 
 static uint8_t ps_page(uint16_t data) {
-	if(isGameOngoing) {
-		return 0;
-	}
 	if (data == 0) { //page up
 		if (play_mode == PLAY_MODE_AMOUNT) {
 			play_mode = SNATCH_LED;
@@ -336,12 +380,50 @@ static uint8_t ps_page(uint16_t data) {
 	return 0;
 }
 
-static uint8_t ps_start_game(uint16_t data) {
+static uint8_t ps_count_down(uint16_t data) {
+	static uint8_t count_down = 3;
+	if (count_down == 0) {
+		count_down = 3;
+		ps_send_event(PS_GAME_ACTION, 0);
+
+	} else {
+		if (RGBTakeLock()) {
+			RGBClearBuff();
+			RGBdrawImage(28, 10, 0xFF, pNumber[count_down]);
+			RGBReleaseLock();
+		}
+		count_down--;
+		xTimers = xTimerCreate("count down", 1000, pdTRUE, (void*) NULL,
+				xTimerCountdown);
+		xTimerStart(xTimers, 100);
+	}
+	return 0;
+}
+
+static uint8_t ps_game_action(uint16_t data) {
 	if (play_mode == PLAY_MODE_UNKNOW) {
 		play_mode = SNATCH_LED;
 	}
-	isGameOngoing = true;
+	maxtriAppStartTime();
+	maxtrixAppGameStart();
 	return play_mode;
+}
+
+static uint8_t ps_game_over_handle(uint16_t data) {
+	can_frame_t msg;
+	msg.dataByte0 = 0;
+	CanAppSendMsg(&msg);
+	if (xTimers != NULL) {
+		xTimerStop(xTimers, 100);
+		xTimerDelete(xTimers, 100);
+		xTimers = NULL;
+		xTimers = xTimerCreate("game over", 5000, pdFALSE, (void*) NULL,
+				xTimerGameoverHold);
+	}
+	maxtriAppStopTime();
+	xTimerStop(xTimersPlayer[0], 100);
+	xTimerStop(xTimersPlayer[1], 100);
+	return 0;
 }
 
 static uint32_t ps_get_game_perdic(uint8_t player) {
@@ -359,58 +441,45 @@ static uint32_t ps_get_game_perdic(uint8_t player) {
 static uint8_t ps_snatch_handle_slave_evt(uint16_t data) {
 	uint8_t id = (uint8_t) (data >> 8);
 	uint8_t event = (uint8_t) data;
-
 	if (maxtrixAppGetGameMode() == 0) { //single mode
 		if (id == salverid[0]) {
-			if (event != 0xFF) { //event is not player touch the plate
-				if (event == 0) { //red
-					maxtriAppScoreIncrease(0);
-				} else {
-					maxtriAppScoreDecrease(0);
-				}
+			if (event == 0) { //red
+				maxtriAppScoreIncrease(0);
+			} else {
+				maxtriAppScoreDecrease(0);
 			}
 		}
-		if (xTimerIsTimerActive(xTimersPlayer1)) {
-			xTimerStop(xTimersPlayer1, 100);
-		}
-		xTimerChangePeriod(xTimersPlayer1, ps_get_game_perdic(0), 100);
-		xTimerStart(xTimersPlayer1, 100);
+		xTimerChangePeriod(xTimersPlayer[0], ps_get_game_perdic(0), 100);
+		xTimerReset(xTimersPlayer[0], 100);
 	} else { //double mode
 		if (id == salverid[0]) {
-			if (event != 0xFF) {
-				if (event == 0) {
-					maxtriAppScoreIncrease(0);
-				} else {
-					maxtriAppScoreIncrease(1);
-				}
+			if (event == 0) {
+				maxtriAppScoreIncrease(0);
+			} else {
+				maxtriAppScoreIncrease(1);
 			}
-			xTimerStop(xTimersPlayer1, 100);
-			xTimerChangePeriod(xTimersPlayer1, ps_get_game_perdic(0), 100);
-			xTimerStart(xTimersPlayer1, 100);
+			xTimerChangePeriod(xTimersPlayer[0], ps_get_game_perdic(0), 100);
+			xTimerReset(xTimersPlayer[0], 100);
 		} else if (id == salverid[1]) {
-			if (event != 0xFF) {
-				if (event == 0) { //red
-					maxtriAppScoreIncrease(1);
-				} else {
-					maxtriAppScoreIncrease(0);
-				}
+			if (event == 0) { //red
+				maxtriAppScoreIncrease(1);
+			} else {
+				maxtriAppScoreIncrease(0);
 			}
-			if (xTimerIsTimerActive(xTimersPlayer2)) {
-				xTimerStop(xTimersPlayer2, 100);
-			}
-			xTimerChangePeriod(xTimersPlayer2, ps_get_game_perdic(1), 100);
-			xTimerStart(xTimersPlayer2, 100);
+			xTimerChangePeriod(xTimersPlayer[1], ps_get_game_perdic(1), 100);
+			xTimerReset(xTimersPlayer[1], 100);
 		}
+	}
+	if (plate_on_cnt[0] == STOP_CNT || plate_on_cnt[1] == STOP_CNT) {
+		ps_send_event(PS_EVT_GAME_OVER, 2);
 	}
 	return 0;
 }
 
 static uint8_t ps_snatch_handler(uint16_t data) {
-	uint8_t i;
 	can_frame_t msg;
-	plate_on_cnt[0] = 1;
-	maxtriAppStartTime();
-	maxtrixAppGameStart();
+	plate_on_cnt[data]++;
+	msg.dataByte0 = PROTOCAL_LED_ON;
 	srand(xTaskGetTickCount());
 	if (maxtrixAppGetGameMode() == 0) {
 		salverid[0] = rand() % PLATE_AMOUNT + 1;
@@ -418,94 +487,57 @@ static uint8_t ps_snatch_handler(uint16_t data) {
 		msg.dataByte2 = rand() % PLATE_AMOUNT;
 		msg.dataByte3 = (uint8_t) (ps_get_game_perdic(0) / 100);
 		CanAppSendMsg(&msg);
-		xTimerStart(xTimersPlayer1, 100);
 
 	} else {
-		salverid[0] = rand() % (PLATE_AMOUNT / 2) + 1;
-		msg.dataByte1 = salverid[0];
-		msg.dataByte2 = rand() % (PLATE_AMOUNT / 2);
-		msg.dataByte3 = (uint8_t) (ps_get_game_perdic(0) / 100);
+		if (data == 0) {
+			salverid[0] = rand() % (PLATE_AMOUNT / 2) + 1;
+			msg.dataByte1 = salverid[0];
+		} else {
+			salverid[1] = rand() % (PLATE_AMOUNT / 2) + (PLATE_AMOUNT / 2) + 1;
+			msg.dataByte1 = salverid[1];
+		}
+		msg.dataByte2 = rand() % 5;
+		msg.dataByte3 = (uint8_t) (ps_get_game_perdic(data) / 100);
 		CanAppSendMsg(&msg);
-		xTimerStart(xTimersPlayer1, 100);
-
-		salverid[1] = rand() % (PLATE_AMOUNT / 2) + (PLATE_AMOUNT / 2) + 1;
-		msg.dataByte1 = salverid[1];
-		msg.dataByte2 = rand() % (PLATE_AMOUNT / 2);
-		msg.dataByte3 = (uint8_t) (ps_get_game_perdic(1) / 100);
-		CanAppSendMsg(&msg);
-		xTimerStart(xTimersPlayer2, 100);
-		plate_on_cnt[1] = 1;
 	}
 	return 0;
 }
 
 static void xTimer1Handler(void *p) {
-//	ps_send_event(PS_EVT_PLATE_EXC, 0);
-	can_frame_t msg;
-	msg.dataByte0 = PROTOCAL_LED_ON;
-	switch (current_status) {
-	case PS_SNATCH_LED:
-		if (++plate_on_cnt[0] == 100) {
-			ps_send_event(PS_STOP_GAME, 0);
-			return;
-		}
-		if (maxtrixAppGetGameMode() == 0) {
-			salverid[0] = rand() % PLATE_AMOUNT + 1;
-			msg.dataByte2 = rand() % PLATE_AMOUNT;
-			msg.dataByte1 = salverid[0];
-			msg.dataByte3 = ps_get_game_perdic(0) / 100;
-		} else {
-
-			salverid[0] = rand() % (PLATE_AMOUNT / 2) + 1;
-
-			msg.dataByte2 = rand() % (PLATE_AMOUNT / 2);
-			msg.dataByte1 = salverid[0];
-			msg.dataByte3 = ps_get_game_perdic(0) / 100;
-		}
-		CanAppSendMsg(&msg);
-		xTimerChangePeriod(xTimersPlayer1, 4000 /* perdic1 * 2 */+ 50, 100);
-		xTimerStart(xTimersPlayer1, 0);
-
-		break;
-	case PS_ROAD_BLOCK:
-		break;
-	case PS_WIPE_LED:
-		break;
-	case PS_AGIL_TRAIN:
-		break;
+	ps_send_event(PS_EVT_PLATE_EXC, 0);
+	xTimerChangePeriod(xTimersPlayer[0], ps_get_game_perdic(0) * 2, 100);
+	if (plate_on_cnt[0] == STOP_CNT) {
+		ps_send_event(PS_EVT_GAME_OVER, 2);
 	}
 }
 
 static void xTimer2Handler(void *p) {
-	//	ps_send_event(PS_EVT_PLATE_EXC, 0);
-	can_frame_t msg;
-	msg.dataByte0 = PROTOCAL_LED_ON;
-	switch (current_status) {
-	case PS_SNATCH_LED:
-		if (++plate_on_cnt[1] == 100) {
-			ps_send_event(PS_STOP_GAME, 0);
-			return;
-		}
-		if (maxtrixAppGetGameMode() == 0) {
-
-		} else {
-			salverid[1] = rand() % (PLATE_AMOUNT / 2) + 1 + (PLATE_AMOUNT / 2);
-			msg.dataByte2 = rand() % (PLATE_AMOUNT / 2);
-			msg.dataByte1 = salverid[1];
-			msg.dataByte3 = ps_get_game_perdic(1) / 100;
-			CanAppSendMsg(&msg);
-			xTimerChangePeriod(xTimersPlayer2, 4000 /* perdic1 * 2 */+ 50, 100);
-			xTimerStart(xTimersPlayer2, 0);
-		}
-
-		break;
-	case PS_ROAD_BLOCK:
-		break;
-	case PS_WIPE_LED:
-		break;
-	case PS_AGIL_TRAIN:
-		break;
+	ps_send_event(PS_EVT_PLATE_EXC, 1);
+	xTimerChangePeriod(xTimersPlayer[1], ps_get_game_perdic(1) * 2, 100);
+	if (plate_on_cnt[1] == STOP_CNT) {
+		ps_send_event(PS_EVT_GAME_OVER, 2);
 	}
+}
+
+static void xTimerFaultHoldTimeOUt(void *p) {
+	ps_send_event(PS_HOLD_EVT, 0);
+	if (xTimers != NULL) {
+		xTimerDelete(xTimers, 100);
+		xTimers = NULL;
+	}
+}
+
+static void xTimerCountdown(void *p) {
+	ps_send_event(PS_COUNT_DOWN, 0);
+	xTimerDelete(xTimers, 100);
+	xTimers = NULL;
+}
+
+static void xTimerGameoverHold(void *p) {
+	ps_send_event(PS_START_STOP_GAME, 1);
+	xTimerDelete(xTimers, 100);
+	xTimers = NULL;
+
 }
 
 uint8_t ps_send_event(uint16_t event, int16_t data) {

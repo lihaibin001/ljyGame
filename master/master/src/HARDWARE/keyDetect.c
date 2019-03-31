@@ -123,7 +123,7 @@ static void pageDownKeyHandler(void) {
 }
 
 static void startAndStopKeyHandler(void) {
-	(void) ps_send_event(PS_START_GAME, 0);
+	(void) ps_send_event(PS_START_STOP_GAME, 1);
 }
 
 static void pageUpConsecutivePress(void) {

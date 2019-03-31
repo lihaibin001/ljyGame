@@ -20,7 +20,7 @@
 #endif
 
 #define PROTOCAL_LED_ON			(uint8_t)0
-#define PROTOCAL_LED_OFF		(uint8_t)1
+#define PROTOCAL_GAME_OVER		(uint8_t)1
 #define PROTOCAL_SELF_TESET		(uint8_t)2
 
 typedef void (*pvoidFunc)(void);
@@ -61,6 +61,7 @@ static void CanAppReceiveMsgHandler(void) {
 	can_frame_t frame;
 	CanGet_MSG(CAN_APP_CONTROLLER, &frame);
 	uint8_t i;
+	uint8_t idx;
 	if (frame.id == 0x40) {
 		switch (frame.dataByte0) {
 		case PROTOCAL_LED_ON :
@@ -91,19 +92,27 @@ static void CanAppReceiveMsgHandler(void) {
 				}
 			}
 			break;
-		case PROTOCAL_LED_OFF :
-			if (frame.dataByte1 == selfId) {
-				if (frame.dataByte2 == 1) {
-					for (i = 0; i <= NUM_GRB_LEDS; i++) {
-						leds[i].b = 0;
-						leds[i].g = 0;
-						leds[i].r = 0;
-					}
+		case PROTOCAL_GAME_OVER :
 
+			for(idx = 0; idx < 3; idx++) {
+				for (i = 0; i <= NUM_GRB_LEDS; i++) {
+					leds[i].b = 0;
+					leds[i].g = 0;
+					leds[i].r = 0xFF;
 				}
 				while (!ws2812b_IsReady())
 					;
 				ws2812b_SendRGB(leds, NUM_GRB_LEDS);
+				vTaskDelay(500);
+				for (i = 0; i <= NUM_GRB_LEDS; i++) {
+					leds[i].b = 0;
+					leds[i].g = 0;
+					leds[i].r = 0;
+				}
+				while (!ws2812b_IsReady())
+					;
+				ws2812b_SendRGB(leds, NUM_GRB_LEDS);
+				vTaskDelay(500);
 			}
 			break;
 		case PROTOCAL_SELF_TESET :
@@ -223,7 +232,7 @@ static void xTask(void *pParamter) {
 }
 
 void xTimerHandler(void *p) {
-	can_frame_t frame;
+//	can_frame_t frame;
 	uint8_t i;
 	if (plate_status == 1) {
 		plate_status = 0;
@@ -239,11 +248,11 @@ void xTimerHandler(void *p) {
 //				leds[i].r = rand() / 255;
 		}
 		ws2812b_SendRGB(leds, NUM_GRB_LEDS);
-		can_frame_t frame;
-		frame.dataByte0 = 0;
-		frame.dataByte1 = 0xff;
-		frame.dataByte2 = 1;
-		CanAppSendMsg(&frame);
+//		can_frame_t frame;
+//		frame.dataByte0 = 0;
+//		frame.dataByte1 = 0xff;
+//		frame.dataByte2 = 1;
+//		CanAppSendMsg(&frame);
 
 	}
 }

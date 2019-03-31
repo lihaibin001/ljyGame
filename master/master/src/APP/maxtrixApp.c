@@ -543,18 +543,18 @@ void maxtrixAppSetGameScoreRefresh(void) {
 			hundreds = gTime / 100;
 			tens = (gTime - hundreds * 100) / 10;
 			units = gTime % 10;
-			RGBdrawImage(1, 10, 0xFF, pNumber[hundreds]);
-			RGBdrawImage(11, 10, 0xFF, pNumber[tens]);
-			RGBdrawImage(21, 10, 0xFF, pNumber[units]);
+			RGBdrawImage(1, 10, 0xFF00FF, pNumber[hundreds]);
+			RGBdrawImage(11, 10, 0xFF00FF, pNumber[tens]);
+			RGBdrawImage(21, 10, 0xFF00FF, pNumber[units]);
 
 		} else {
 			//draw score
 			hundreds = gScore[0] / 100;
 			tens = (gScore[0] - hundreds * 100) / 10;
 			units = gScore[0] % 10;
-			RGBdrawImage(33, 2, 0xFF, pNumber[hundreds]);
-			RGBdrawImage(43, 2, 0xFF, pNumber[tens]);
-			RGBdrawImage(53, 2, 0xFF, pNumber[units]);
+			RGBdrawImage(1, 18, 0xFF, pNumber[hundreds]);
+			RGBdrawImage(11, 18, 0xFF, pNumber[tens]);
+			RGBdrawImage(21, 18, 0xFF, pNumber[units]);
 
 			hundreds = gScore[1] / 100;
 			tens = (gScore[1] - hundreds * 100) / 10;
@@ -567,12 +567,9 @@ void maxtrixAppSetGameScoreRefresh(void) {
 			hundreds = gTime / 100;
 			tens = (gTime - hundreds * 100) / 10;
 			units = gTime % 10;
-			RGBdrawImage(1, 2, 0xFF, pNumber[hundreds]);
-			RGBdrawImage(11, 2, 0xFF, pNumber[tens]);
-			RGBdrawImage(21, 2, 0xFF, pNumber[units]);
-			RGBdrawImage(1, 18, 0xFF0000, pNumber[hundreds]);
-			RGBdrawImage(11, 18, 0xFF0000, pNumber[tens]);
-			RGBdrawImage(21, 18, 0xFF0000, pNumber[units]);
+			RGBdrawImage(18, 2, 0xFF00FF, pNumber[hundreds]);
+			RGBdrawImage(28, 2, 0xFF00FF, pNumber[tens]);
+			RGBdrawImage(38, 2, 0xFF00FF, pNumber[units]);
 		}
 	}
 	RGBReleaseLock();

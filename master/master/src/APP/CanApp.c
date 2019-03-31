@@ -69,9 +69,9 @@ static void CanAppReceiveMsgHandler(void) {
 				data_low = 0xFF;
 			}
 			data = (uint16_t)(frame.id << 8 | data_low);
-			ps_send_event(PS_EVT_PLATE_EXC, data);
+			ps_send_event(PS_EVT_SLAVE_EVT, data);
 			break;
-		case PROTOCAL_LED_OFF:
+		case PROTOCAL_GAME_OVER:
 			break;
 		case PROTOCAL_SELF_TESET:
 			ps_send_event(PS_EVT_TEST, (int16_t) frame.id);
@@ -84,7 +84,7 @@ static void CanAppReceiveMsgHandler(void) {
 }
 
 static void CanAppTxCompleteHalder(void) {
-	xSemaphoreGiveFromISR(xSemphore, NULL);
+	xSemaphoreGive(xSemphore);
 }
 
 static void CanAppBuffOffHanlder(void) {
@@ -99,7 +99,7 @@ RET_t CanAppSendMsg(can_frame_t *pFrame) {
 	pFrame->length = 8;
 	pFrame->type = CAN_TYPE_DATA;
 	pFrame->id = selfId;
-	RET_t status;
+	RET_t status = RET_TIMEOUT;
 	while (tryCnt--) {
 		status = CanSend_MSG(CAN_APP_CONTROLLER, pFrame);
 		if (status == RET_OK) {
@@ -121,8 +121,8 @@ static void canAppCb(CanControllerIdx_t controller, uint8_t it_flag) {
 		evt = CanAppEvtGetMsg;
 		break;
 	case CAN_TX_COMPLETE :
-		evt = CanAppTransComplete;
-		break;
+		xSemaphoreGiveFromISR(xSemphore, NULL);
+		return;
 	case CAN_WAKEUP :
 		break;
 	case CAN_BUSSOFF_ERR :
@@ -143,7 +143,9 @@ static void xTask(void *pParamter) {
 			if (event >= CanAppEvtNum) {
 				continue;
 			}
-			CanAppEvtHandler[event]();
+			if(CanAppEvtHandler[event]) {
+				CanAppEvtHandler[event]();
+			}
 		} else {
 //            can_frame_t heartbeat =
 //            {
