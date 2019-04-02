@@ -11,6 +11,7 @@ typedef enum
 }showMode_t;
 
 #define PLATE_AMOUNT 4
+#define PLATE_AMOUNT_BIT 0x0F
 #define PLATE_STA_UNKNOW		0
 #define PLATE_STA_OK			1
 #define PLATE_STA_FAULT		2
