@@ -41,14 +41,20 @@ STATE_END
 
 STATE (PS_ROAD_BLOCK,		PS_RUNNING,		ps_cs_road_block)
 TRANS (ENTRY,				INTERNAL,		ps_entry_road_block)
+TRANS (PS_EVT_SLAVE_EVT,	INTERNAL,		ps_road_block_handle_slave_evt)
+TRANS (PS_EVT_PLATE_EXC,	INTERNAL,		ps_road_block_handler)
 STATE_END
 
 STATE (PS_WIPE_LED,			PS_RUNNING,		ps_cs_wipe_led)
 TRANS (ENTRY,				INTERNAL,		ps_entry_wipe_led)
+TRANS (PS_EVT_SLAVE_EVT,	INTERNAL,		ps_wipe_led_handle_slave_evt)
+TRANS (PS_EVT_PLATE_EXC,	INTERNAL,		ps_wipe_led_handler)
 STATE_END
 
 STATE (PS_AGIL_TRAIN,		PS_RUNNING,		ps_cs_agility_training)
 TRANS (ENTRY,				INTERNAL,		ps_entry_agil_train)
+TRANS (PS_EVT_SLAVE_EVT,	INTERNAL,		ps_agil_traning_handle_slave_evt)
+TRANS (PS_EVT_PLATE_EXC,	INTERNAL,		ps_agil_traning_handler)
 STATE_END
 
 STATE (PS_FAULT,			PS_RUNNING,		ps_cs_fault)

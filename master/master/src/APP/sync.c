@@ -22,9 +22,13 @@
 typedef uint8_t PS_Current_State_T;
 typedef uint8_t PS_Flags_T;
 
-static TimerHandle_t xTimersPlayer[2];
-static TimerHandle_t xTimers;
+/* macro */
 #define STOP_CNT 100
+
+/* variable */
+static TimerHandle_t xTimersPlayer[2];
+static uint8_t plate_status;
+static TimerHandle_t xTimers;
 static uint8_t plate_on_cnt[2];
 static uint8_t salverid[2];
 static uint8_t current_status;
@@ -32,6 +36,7 @@ static QueueHandle_t xQueue;
 static uint8_t play_mode;
 const static uint8_t *play_mode_tbl[] = { snatch_led, road_block, wipe_led,
 		agil_train, };
+
 /* function declaration */
 static void xTask(void *p);
 static uint8_t ps_start_action(uint16_t data);
@@ -45,6 +50,12 @@ static uint8_t ps_game_action(uint16_t data);
 static uint8_t ps_game_over_handle(uint16_t data);
 static uint8_t ps_snatch_handle_slave_evt(uint16_t data);
 static uint8_t ps_snatch_handler(uint16_t data);
+static uint8_t ps_road_block_handle_slave_evt(uint16_t data);
+static uint8_t ps_road_block_handler(uint16_t data);
+static uint8_t ps_wipe_led_handle_slave_evt(uint16_t data);
+static uint8_t ps_wipe_led_handler(uint16_t data);
+static uint8_t ps_agil_traning_handle_slave_evt(uint16_t data);
+static uint8_t ps_agil_traning_handler(uint16_t data);
 static uint8_t ps_entry_idle(uint16_t data);
 static uint8_t ps_entery_running(uint16_t data);
 static uint8_t ps_entery_fault(uint16_t data);
@@ -60,7 +71,6 @@ static uint8_t ps_cs_road_block(void);
 static uint8_t ps_cs_wipe_led(void);
 static uint8_t ps_cs_agility_training(void);
 static uint8_t ps_cs_fault(void);
-//timer handler
 static void xTimer1Handler(void *p);
 static void xTimer2Handler(void *p);
 static void xTimerFaultHoldTimeOUt(void *p);
@@ -260,7 +270,29 @@ static uint8_t ps_entry_road_block(uint16_t data) {
 }
 
 static uint8_t ps_entry_wipe_led(uint16_t data) {
+	can_frame_t msg;
+	msg.dataByte0 = 0;
+	if (maxtrixAppGetGameMode() == 0) {
+		salverid[0] = rand() % PLATE_AMOUNT + 1;
+		msg.dataByte1 = salverid[0];
+		msg.dataByte2 = rand() % 5;
+		msg.dataByte3 = 0xFF;
+		CanAppSendMsg(&msg);
 
+	} else {
+
+		salverid[0] = rand() % (PLATE_AMOUNT / 2) + 1;
+		msg.dataByte1 = salverid[0];
+		msg.dataByte2 = rand() % 5;
+		msg.dataByte3 = 0xFF;
+		CanAppSendMsg(&msg);
+
+		salverid[1] = rand() % (PLATE_AMOUNT / 2) + (PLATE_AMOUNT / 2) + 1;
+		msg.dataByte1 = salverid[1];
+		msg.dataByte2 = rand() % 5;
+		msg.dataByte3 = 0xFF;
+		CanAppSendMsg(&msg);
+	}
 	return PS_WIPE_LED;
 }
 
@@ -411,15 +443,15 @@ static uint8_t ps_game_action(uint16_t data) {
 
 static uint8_t ps_game_over_handle(uint16_t data) {
 	can_frame_t msg;
-	msg.dataByte0 = 0;
+	msg.dataByte0 = PROTOCAL_GAME_OVER;
 	CanAppSendMsg(&msg);
 	if (xTimers != NULL) {
 		xTimerStop(xTimers, 100);
 		xTimerDelete(xTimers, 100);
 		xTimers = NULL;
-		xTimers = xTimerCreate("game over", 5000, pdFALSE, (void*) NULL,
-				xTimerGameoverHold);
 	}
+	xTimers = xTimerCreate("game over", 5000, pdFALSE, (void*) NULL,
+			xTimerGameoverHold);
 	maxtriAppStopTime();
 	xTimerStop(xTimersPlayer[0], 100);
 	xTimerStop(xTimersPlayer[1], 100);
@@ -502,6 +534,55 @@ static uint8_t ps_snatch_handler(uint16_t data) {
 	}
 	return 0;
 }
+
+static uint8_t ps_road_block_handle_slave_evt(uint16_t data) {
+	return 0;
+}
+
+static uint8_t ps_road_block_handler(uint16_t data) {
+	return 0;
+}
+
+static uint8_t ps_wipe_led_handle_slave_evt(uint16_t data) {
+
+	return 0;
+}
+
+static uint8_t ps_wipe_led_handler(uint16_t data) {
+	can_frame_t msg;
+	msg.dataByte0 = 0;
+	if (maxtrixAppGetGameMode() == 0) {
+		salverid[0] = rand() % PLATE_AMOUNT + 1;
+		msg.dataByte1 = salverid[0];
+		msg.dataByte2 = rand() % 5;
+		msg.dataByte3 = 0xFF;
+		CanAppSendMsg(&msg);
+
+	} else {
+
+		salverid[0] = rand() % (PLATE_AMOUNT / 2) + 1;
+		msg.dataByte1 = salverid[0];
+		msg.dataByte2 = rand() % 5;
+		msg.dataByte3 = 0xFF;
+		CanAppSendMsg(&msg);
+
+		salverid[1] = rand() % (PLATE_AMOUNT / 2) + (PLATE_AMOUNT / 2) + 1;
+		msg.dataByte1 = salverid[1];
+		msg.dataByte2 = rand() % 5;
+		msg.dataByte3 = 0xFF;
+		CanAppSendMsg(&msg);
+	}
+	return 0;
+}
+
+static uint8_t ps_agil_traning_handle_slave_evt(uint16_t data) {
+	return 0;
+}
+
+static uint8_t ps_agil_traning_handler(uint16_t data) {
+	return 0;
+}
+
 
 static void xTimer1Handler(void *p) {
 	ps_send_event(PS_EVT_PLATE_EXC, 0);
