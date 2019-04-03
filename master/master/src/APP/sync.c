@@ -260,6 +260,11 @@ static uint8_t ps_entry_snatch_led(uint16_t data) {
 		salverid[1] = rand() % (PLATE_AMOUNT / 2) + (PLATE_AMOUNT / 2) + 1;
 		msg.dataByte1 = salverid[1];
 		msg.dataByte2 = rand() % 5;
+		if(msg.dataByte2 == 0) {
+			msg.dataByte2 = 1;
+		} else {
+			msg.dataByte2 = 0;
+		}
 		msg.dataByte3 = (uint8_t) (ps_get_game_perdic(1) / 100);
 		CanAppSendMsg(&msg);
 		xTimerChangePeriod(xTimersPlayer[1], ps_get_game_perdic(1) * 2, 100);
@@ -453,8 +458,19 @@ static uint8_t ps_game_over_handle(uint16_t data) {
 	can_frame_t msg;
 	msg.dataByte0 = PROTOCAL_GAME_OVER;
 	if(maxtrixAppGetGameMode() == 0) {
-		msg.dataByte1 = 0xFF;
-		msg.dataByte2 = 0xFF;
+		msg.dataByte1 = PLATE_AMOUNT_BIT;
+		msg.dataByte2 = 1;
+	} else {
+		if(maxtriAppGetScore(0) == maxtriAppGetScore(1)) {
+			msg.dataByte1 = PLATE_AMOUNT_BIT;
+			msg.dataByte2 = 3;
+		} else if(maxtriAppGetScore(0) > maxtriAppGetScore(1)) {
+			msg.dataByte1 = PLATE_PLAYER1_BIT;
+			msg.dataByte2 = 1;
+		} else {
+			msg.dataByte1 = PLATE_PLAYER2_BIT;
+			msg.dataByte2 = 2;
+		}
 	}
 	CanAppSendMsg(&msg);
 	if (xTimers != NULL) {
@@ -511,9 +527,9 @@ static uint8_t ps_snatch_handle_slave_evt(uint16_t data) {
 			xTimerReset(xTimersPlayer[0], 100);
 		} else if (id == salverid[1]) {
 			if (event == 0) { //red
-				maxtriAppScoreIncrease(1);
-			} else {
 				maxtriAppScoreIncrease(0);
+			} else {
+				maxtriAppScoreIncrease(1);
 			}
 			xTimerChangePeriod(xTimersPlayer[1], ps_get_game_perdic(1), 100);
 			xTimerReset(xTimersPlayer[1], 100);
@@ -545,11 +561,18 @@ static uint8_t ps_snatch_handler(uint16_t data) {
 		if (data == 0) {
 			salverid[0] = rand() % (PLATE_AMOUNT / 2) + 1;
 			msg.dataByte1 = salverid[0];
+			msg.dataByte2 = rand() % 5;
 		} else {
 			salverid[1] = rand() % (PLATE_AMOUNT / 2) + (PLATE_AMOUNT / 2) + 1;
 			msg.dataByte1 = salverid[1];
+			msg.dataByte2 = rand() % 5;
+			if(msg.dataByte2 == 0) {
+				msg.dataByte2 = 1;
+			} else {
+				msg.dataByte2 = 0;
+			}
 		}
-		msg.dataByte2 = rand() % 5;
+
 		msg.dataByte3 = (uint8_t) (ps_get_game_perdic(data) / 100);
 		CanAppSendMsg(&msg);
 	}
@@ -573,22 +596,13 @@ static uint8_t ps_wipe_led_handle_slave_evt(uint16_t data) {
 			maxtriAppScoreIncrease(0);
 		}
 	} else { //double mode
-		if (id == salverid[0]) {
-			if (event == 0) {
-				maxtriAppScoreIncrease(0);
-			} else {
-				maxtriAppScoreIncrease(1);
-			}
-			xTimerChangePeriod(xTimersPlayer[0], ps_get_game_perdic(0), 100);
-			xTimerReset(xTimersPlayer[0], 100);
-		} else if (id == salverid[1]) {
-			if (event == 0) { //red
-				maxtriAppScoreIncrease(1);
-			} else {
-				maxtriAppScoreIncrease(0);
-			}
-			xTimerChangePeriod(xTimersPlayer[1], ps_get_game_perdic(1), 100);
-			xTimerReset(xTimersPlayer[1], 100);
+		if ((1 << (id - 1)) & plate_status) {
+			plate_status &= ~(1 << (id - 1));
+		}
+		if (id < PLATE_AMOUNT / 2) {
+			maxtriAppScoreIncrease(0);
+		} else {
+			maxtriAppScoreIncrease(1);
 		}
 	}
 	return 0;
@@ -631,8 +645,7 @@ static uint8_t ps_wipe_led_handler(uint16_t data) {
 			ps_send_event(PS_EVT_GAME_OVER, 0);
 			return 0;
 		}
-		msg.dataByte1 = salverid[1];
-		msg.dataByte2 = 1;
+		msg.dataByte2 = 0;
 		msg.dataByte3 = 0xFF;
 		CanAppSendMsg(&msg);
 	}

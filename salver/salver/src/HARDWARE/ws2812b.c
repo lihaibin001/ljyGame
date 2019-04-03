@@ -33,7 +33,7 @@
 //------------------------------------------------------------
 
 RGB_t leds[NUM_GRB_LEDS];
-
+RGB_t leds2[NUM_GRB_LEDS];
 #define MIN(a, b)   ({ typeof(a) a1 = a; typeof(b) b1 = b; a1 < b1 ? a1 : b1; })
 
 #if defined(__ICCARM__)

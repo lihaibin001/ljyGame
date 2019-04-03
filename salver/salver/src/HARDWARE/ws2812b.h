@@ -27,7 +27,7 @@
 #include "bitmap.h"
 
 extern RGB_t leds[];
-
+extern RGB_t leds2[];
 void ws2812b_Init(void);
 
 int ws2812b_IsReady(void);

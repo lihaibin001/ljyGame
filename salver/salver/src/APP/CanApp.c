@@ -93,26 +93,46 @@ static void CanAppReceiveMsgHandler(void) {
 			}
 			break;
 		case PROTOCAL_GAME_OVER :
+			if (frame.dataByte1 & (1 << (selfId - 1))) {
+				switch(frame.dataByte2) {
+				case 1:
+					for (i = 0; i <= NUM_GRB_LEDS; i++) {
+						leds[i].b = 0;
+						leds[i].g = 0;
+						leds[i].r = 0xFF;
+					}
+					break;
+				case 2:
+					for (i = 0; i <= NUM_GRB_LEDS; i++) {
+						leds[i].b = 0;
+						leds[i].g = 0xFF;
+						leds[i].r = 0;
+					}
+					break;
+				case 3:
+					for (i = 0; i <= NUM_GRB_LEDS; i++) {
+						leds[i].b = 0;
+						leds[i].g = 0xFF;
+						leds[i].r = 0xFF;
+					}
+					break;
+				}
+				for (i = 0; i <= NUM_GRB_LEDS; i++) {
+					leds2[i].b = 0;
+					leds2[i].g = 0;
+					leds2[i].r = 0;
+				}
+				for(idx = 0; idx < 3; idx++) {
 
-			for(idx = 0; idx < 3; idx++) {
-				for (i = 0; i <= NUM_GRB_LEDS; i++) {
-					leds[i].b = 0;
-					leds[i].g = 0;
-					leds[i].r = 0xFF;
+					while (!ws2812b_IsReady())
+						;
+					ws2812b_SendRGB(leds, NUM_GRB_LEDS);
+					vTaskDelay(500);
+					while (!ws2812b_IsReady())
+						;
+					ws2812b_SendRGB(leds2, NUM_GRB_LEDS);
+					vTaskDelay(500);
 				}
-				while (!ws2812b_IsReady())
-					;
-				ws2812b_SendRGB(leds, NUM_GRB_LEDS);
-				vTaskDelay(500);
-				for (i = 0; i <= NUM_GRB_LEDS; i++) {
-					leds[i].b = 0;
-					leds[i].g = 0;
-					leds[i].r = 0;
-				}
-				while (!ws2812b_IsReady())
-					;
-				ws2812b_SendRGB(leds, NUM_GRB_LEDS);
-				vTaskDelay(500);
 			}
 			break;
 		case PROTOCAL_SELF_TESET :
