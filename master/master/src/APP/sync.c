@@ -452,6 +452,10 @@ static uint8_t ps_game_action(uint16_t data) {
 static uint8_t ps_game_over_handle(uint16_t data) {
 	can_frame_t msg;
 	msg.dataByte0 = PROTOCAL_GAME_OVER;
+	if(maxtrixAppGetGameMode() == 0) {
+		msg.dataByte1 = 0xFF;
+		msg.dataByte2 = 0xFF;
+	}
 	CanAppSendMsg(&msg);
 	if (xTimers != NULL) {
 		xTimerStop(xTimers, 100);
