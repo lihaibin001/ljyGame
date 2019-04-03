@@ -288,15 +288,12 @@ static uint8_t ps_entry_wipe_led(uint16_t data) {
 		xTimerReset(xTimersPlayer[0], 100);
 
 	} else {
-
-		salverid[0] = rand() % (PLATE_AMOUNT / 2) + 1;
-		msg.dataByte1 = salverid[0];
+		msg.dataByte1 = rand() % (PLATE_AMOUNT / 2) + 1;
 		msg.dataByte2 = 1;
 		msg.dataByte3 = 0xFF;
 		CanAppSendMsg(&msg);
 
-		salverid[1] = rand() % (PLATE_AMOUNT / 2) + (PLATE_AMOUNT / 2) + 1;
-		msg.dataByte1 = salverid[1];
+		msg.dataByte1 = rand() % (PLATE_AMOUNT / 2) + (PLATE_AMOUNT / 2) + 1;
 		msg.dataByte2 = 1;
 		msg.dataByte3 = 0xFF;
 		CanAppSendMsg(&msg);
@@ -612,16 +609,26 @@ static uint8_t ps_wipe_led_handler(uint16_t data) {
 		xTimerReset(xTimersPlayer[0], 100);
 
 	} else {
-
-		salverid[0] = rand() % (PLATE_AMOUNT / 2) + 1;
-		msg.dataByte1 = salverid[0];
+		do {
+			msg.dataByte1 = rand() % (PLATE_AMOUNT / 2) + 1;
+		}while((1 << (msg.dataByte1 - 1)) & plate_status);
+		if((plate_status & PLATE_PLAYER1_BIT) == PLATE_PLAYER1_BIT) {
+			ps_send_event(PS_EVT_GAME_OVER, 0);
+			return 0;
+		}
 		msg.dataByte2 = 1;
 		msg.dataByte3 = 0xFF;
 		CanAppSendMsg(&msg);
 
-		salverid[1] = rand() % (PLATE_AMOUNT / 2) + (PLATE_AMOUNT / 2) + 1;
+		do {
+			msg.dataByte1 = rand() % (PLATE_AMOUNT / 2) + (PLATE_AMOUNT / 2) + 1;
+		}while((1 << (msg.dataByte1 - 1)) & plate_status);
+		if((plate_status & PLATE_PLAYER2_BIT) == PLATE_PLAYER2_BIT) {
+			ps_send_event(PS_EVT_GAME_OVER, 0);
+			return 0;
+		}
 		msg.dataByte1 = salverid[1];
-		msg.dataByte2 = rand() % 5;
+		msg.dataByte2 = 1;
 		msg.dataByte3 = 0xFF;
 		CanAppSendMsg(&msg);
 	}
