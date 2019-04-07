@@ -17,7 +17,7 @@ STATE (PS_IDLE,				PS_ROOT,		cs_no_action)
 TRANS (ENTRY,				INTERNAL,		ps_entry_idle)
 TRANS (PS_EVT_PAGE,			INTERNAL,		ps_page)
 TRANS (PS_EVT_MODE_CHGE,	INTERNAL,		ps_mode_change)
-TRANS (PS_START_STOP_GAME,	PS_RUNNING,		no_action)
+TRANS (PS_START_STOP_GAME,	PS_RUNNING,		ps_start_game)
 STATE_END
 
 STATE (PS_RUNNING,			PS_ROOT,		cs_no_action)
@@ -30,7 +30,7 @@ TRANS (PS_GAME_ACTION,		PS_WIPE_LED,	no_action)
 TRANS (PS_GAME_ACTION,		PS_AGIL_TRAIN,	no_action)
 TRANS (PS_GAME_ACTION,		INTERNAL,		no_action)
 TRANS (PS_EVT_GAME_OVER,	INTERNAL,		ps_game_over_handle)
-TRANS (PS_START_STOP_GAME,  PS_IDLE,		no_action)
+TRANS (PS_START_STOP_GAME,  PS_IDLE,		ps_stop_game)
 STATE_END
 
 STATE (PS_SNATCH_LED,		PS_RUNNING,		ps_cs_snatch_led)

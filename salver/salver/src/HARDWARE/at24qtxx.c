@@ -35,7 +35,9 @@ static void vTimerCallback(TimerHandle_t xTimer) {
 		if (count++ == 10) {
 			count = 0;
 			if (plate_status == 1) {
-				xTimerStop(g_led_off_timer, 10);
+				if(xTimerIsTimerActive(g_led_off_timer) == pdFALSE) {
+					xTimerStop(g_led_off_timer, 100);
+				}
 				plate_status = 0;
 
 				while (!ws2812b_IsReady())
@@ -52,7 +54,6 @@ static void vTimerCallback(TimerHandle_t xTimer) {
 				can_frame_t frame;
 				frame.dataByte0 = 0;
 				frame.dataByte1 = plate_color;
-				frame.dataByte2 = 0;
 				CanAppSendMsg(&frame);
 
 			}

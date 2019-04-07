@@ -63,12 +63,7 @@ static void CanAppReceiveMsgHandler(void) {
 	if (status == RET_OK) {
 		switch(frame.dataByte0) {
 		case PROTOCAL_LED_ON:
-			if(frame.dataByte2 == 0) {
-				data_low = frame.dataByte1;
-			} else {
-				data_low = 0xFF;
-			}
-			data = (uint16_t)(frame.id << 8 | data_low);
+			data = (uint16_t)(frame.id << 8 | frame.dataByte1);
 			ps_send_event(PS_EVT_SLAVE_EVT, data);
 			break;
 		case PROTOCAL_GAME_OVER:

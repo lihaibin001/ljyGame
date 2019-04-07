@@ -7,6 +7,7 @@
 #include "canApp.h"
 #include "string.h"
 #include "sync.h"
+#include "mp3.h"
 
 typedef struct {
 	uint8_t lock :1;
@@ -24,7 +25,7 @@ static uint16_t gTime;
 static uint8_t gGameMode;
 static volatile uint8_t gScore[2];
 static TimerHandle_t xTimers;
-
+static TimerHandle_t xTimers2;
 static Palte_status_t palteStatus[PLATE_AMOUNT];
 
 const uint8_t singleMode[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,
@@ -582,8 +583,12 @@ void maxtrixAppGameStart(void) {
 }
 
 void maxtriAppScoreIncrease(uint8_t player) {
+	mp3_send_command(0x25, 0x0101);
 	gScore[player]++;
 	maxtrixAppSetGameScoreRefresh();
+	vTaskDelay(200);
+	mp3_send_command(0x15, 0x0);
+//	xTimerStart(xTimers2, 100);
 }
 
 uint8_t maxtriAppGetScore(uint8_t player) {
@@ -592,8 +597,12 @@ uint8_t maxtriAppGetScore(uint8_t player) {
 
 void maxtriAppScoreDecrease(uint8_t player) {
 	if(gScore[player] != 0) {
+		mp3_send_command(0x25, 0x0102);
 		gScore[player] -= 1;
 		maxtrixAppSetGameScoreRefresh();
+		vTaskDelay(200);
+		mp3_send_command(0x15, 0x0);
+//		xTimerStart(xTimers2, 100);
 	}
 }
 
@@ -628,3 +637,6 @@ void maxtriAppStopTime(void) {
 	}
 }
 
+uint16_t maxtriAppGetTime(void) {
+	return gTime;
+}
