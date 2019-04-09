@@ -290,7 +290,7 @@ static void xTask(void *pParamter) {
 }
 
 void xTimerHandler(void *p) {
-	can_frame_t frame;
+//	can_frame_t frame;
 	uint8_t i;
 	if (plate_status == 1) {
 		plate_status = 0;

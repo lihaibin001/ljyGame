@@ -579,15 +579,17 @@ void maxtrixAppSetGameScoreRefresh(void) {
 void maxtrixAppGameStart(void) {
 	gScore[0] = 0;
 	gScore[1] = 0;
-	maxtrixAppSetGameScoreRefresh();
+//	maxtrixAppSetGameScoreRefresh();
 }
 
-void maxtriAppScoreIncrease(uint8_t player) {
-	mp3_send_command(0x25, 0x0101);
+void maxtriAppScoreIncrease(uint8_t player, uint16_t sound) {
+	mp3_send_command(0x15, 0x0);
+	vTaskDelay(50);
+	mp3_send_command(0x25, sound);
 	gScore[player]++;
 	maxtrixAppSetGameScoreRefresh();
-	vTaskDelay(200);
-	mp3_send_command(0x15, 0x0);
+//	vTaskDelay(200);
+//	mp3_send_command(0x15, 0x0);
 //	xTimerStart(xTimers2, 100);
 }
 
@@ -595,13 +597,15 @@ uint8_t maxtriAppGetScore(uint8_t player) {
 	return gScore[player];
 }
 
-void maxtriAppScoreDecrease(uint8_t player) {
+void maxtriAppScoreDecrease(uint8_t player, uint16_t sound) {
 	if(gScore[player] != 0) {
-		mp3_send_command(0x25, 0x0102);
+		mp3_send_command(0x15, 0x0);
+		vTaskDelay(50);
+		mp3_send_command(0x25, sound);
 		gScore[player] -= 1;
 		maxtrixAppSetGameScoreRefresh();
-		vTaskDelay(200);
-		mp3_send_command(0x15, 0x0);
+//		vTaskDelay(200);
+//		mp3_send_command(0x15, 0x0);
 //		xTimerStart(xTimers2, 100);
 	}
 }

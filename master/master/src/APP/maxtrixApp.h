@@ -49,8 +49,8 @@ void maxtriAppStartTime(void);
 void maxtriAppStopTime(void);
 uint16_t maxtriAppGetTime(void);
 uint8_t maxtriAppGetPlayerSalverId(uint8_t player);
-void maxtriAppScoreIncrease(uint8_t player);
+void maxtriAppScoreIncrease(uint8_t player, uint16_t sound);
 uint8_t maxtriAppGetScore(uint8_t player);
-void maxtriAppScoreDecrease(uint8_t player);
+void maxtriAppScoreDecrease(uint8_t player, uint16_t sound);
 void maxtriAppResetPlayerSalverId(void);
 #endif
