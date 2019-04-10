@@ -25,17 +25,6 @@
 typedef void (*pvoidFunc)(void);
 
 #define CAN_APP_CONTROLLER canControllerIdx1
-#define MSG_STATUS_EMPTY 0
-#define MSG_STATUS_SETUP 1
-#define MSG_STATUS_TRANSFERING 2
-#define MSG_STATUS_TRANSFER_1 3
-#define MSG_SATTUS_TRANSFER_2 4
-
-typedef struct {
-	can_frame_t frame;
-	uint32_t timestamp;
-	uint8_t status;
-} CanMsgBuf_t;
 
 typedef struct {
 	CanControllerIdx_t controller;
@@ -46,8 +35,20 @@ typedef enum {
 	CanAppEvtGetMsg = 0, CanAppTransComplete, CanAppBusOff, CanAppEvtNum,
 } CanAppEvt_t;
 
-static uint8_t msgSeq;
-static CanMsgBuf_t msgBuf[MSG_BUFF_AMOUT];
+typedef struct {
+	can_frame_t *pFrame;
+	uint8_t in;
+	uint8_t out;
+	bool isTransfering;
+}MsgBuf_t;
+
+static can_frame_t msgBuf[MSG_BUFF_AMOUT];
+static MsgBuf_t msgList = {
+		msgBuf,
+		0,
+		0,
+		false,
+};
 static QueueHandle_t xQueue;
 static SemaphoreHandle_t xSemphore;
 static uint32_t selfId;
@@ -107,43 +108,25 @@ static void CanAppBuffOffHanlder(void) {
 }
 
 RET_t CanAppSendMsg(can_frame_t *pFrame) {
-	uint8_t i;
-	if (pFrame == NULL) {
-		return RET_PARAM_ERR;
-	}
+	RET_t status;
+	uint8_t tryCnt = 3;
+	pFrame->format = CAN_ID_STANDRD;
+	pFrame->length = 8;
+	pFrame->type = CAN_TYPE_DATA;
+	pFrame->id = selfId;
 
-	for (i = 0; i < MSG_BUFF_AMOUT; i++) {
-		if (msgBuf[i].status == MSG_STATUS_EMPTY) {
-			memcpy(&msgBuf[i].frame, pFrame, sizeof(can_frame_t));
-			msgBuf[i].frame.dataByte7 = msgSeq++;
-			msgBuf[i].timestamp = xTaskGetTickCount();
-			if (RET_OK == CanSend_MSG(CAN_APP_CONTROLLER, pFrame)) {
-				msgBuf[i].status = MSG_STATUS_TRANSFERING;
-			} else {
-				msgBuf[i].status = MSG_STATUS_SETUP;
+	while (tryCnt--) {
+		status = CanSend_MSG(CAN_APP_CONTROLLER, pFrame);
+		if (status == RET_OK) {
+			if (xSemaphoreTake(xSemphore, pdMS_TO_TICKS(100)) == pdPASS) {
+				return RET_OK;
 			}
-			return RET_OK;
+		} else {
+			ERROR_DEBUG("[CanApp] Send message error: %d\r\n", status);
+			vTaskDelay(pdMS_TO_TICKS(10));
 		}
 	}
-	return RET_ERR;
-//	uint8_t tryCnt = 3;
-//	pFrame->format = CAN_ID_STANDRD;
-//	pFrame->length = 8;
-//	pFrame->type = CAN_TYPE_DATA;
-//	pFrame->id = selfId;
-
-//	while (tryCnt--) {
-//		status = CanSend_MSG(CAN_APP_CONTROLLER, pFrame);
-//		if (status == RET_OK) {
-//			if (xSemaphoreTake(xSemphore, pdMS_TO_TICKS(100)) == pdPASS) {
-//				return RET_OK;
-//			}
-//		} else {
-//			ERROR_DEBUG("[CanApp] Send message error: %d\r\n", status);
-//			vTaskDelay(pdMS_TO_TICKS(10));
-//		}
-//	}
-//	return status;
+	return status;
 }
 
 static void canAppCb(CanControllerIdx_t controller, uint8_t it_flag) {
@@ -152,19 +135,9 @@ static void canAppCb(CanControllerIdx_t controller, uint8_t it_flag) {
 	case CAN_RX_DATA :
 		evt = CanAppEvtGetMsg;
 		break;
-	case CAN_TX_COMPLETE : {
-		uint i;
-		for (i = 0; i < MSG_STATUS_SETUP; i++) {
-			if (msgBuf[i].status == MSG_STATUS_SETUP) {
-				if (RET_OK == CanSend_MSG(CAN_APP_CONTROLLER, &msgBuf[i].frame)) {
-//					msgBuf[i].status = MSG_STATUS_TRANSFERING;
-					msgBuf[i].status = MSG_STATUS_EMPTY;
-				}
-				break;
-			}
-		}
+	case CAN_TX_COMPLETE :
+		xSemaphoreGiveFromISR(xSemphore, NULL);
 		return;
-	}
 	case CAN_WAKEUP :
 		break;
 	case CAN_BUSSOFF_ERR :

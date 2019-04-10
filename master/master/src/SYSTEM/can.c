@@ -47,23 +47,24 @@ static void filterConfig(const canFIrlterList_t *pFirlterList)
 		//CAN_FilterInitStructure.CAN_FilterFIFOAssignment = i / 2;
 		CAN_FilterInit(&CAN_FilterInitStructure);
 	}
-	CAN_FilterInitStructure.CAN_FilterFIFOAssignment = 1;
-	for(i = 0; i < pFirlterList->num; i++)
-	{
-		if(pFirlterList->pFilter[i].type == CAN_ID_STANDRD)
-		{
-			CAN_FilterInitStructure.CAN_FilterIdHigh = pFirlterList->pFilter[i].id << 5;
-			CAN_FilterInitStructure.CAN_FilterIdLow = 0;
-		}
-		else
-		{
-			CAN_FilterInitStructure.CAN_FilterIdHigh = (pFirlterList->pFilter[i].id >> 16) & 0x1FFF;
-			CAN_FilterInitStructure.CAN_FilterIdLow = pFirlterList->pFilter[i].id;
-		}
-		CAN_FilterInitStructure.CAN_FilterNumber = i;
-		//CAN_FilterInitStructure.CAN_FilterFIFOAssignment = i / 2;
-		CAN_FilterInit(&CAN_FilterInitStructure);
-	}
+
+//	CAN_FilterInitStructure.CAN_FilterFIFOAssignment = 1;
+//	for(i = 0; i < pFirlterList->num; i++)
+//	{
+//		if(pFirlterList->pFilter[i].type == CAN_ID_STANDRD)
+//		{
+//			CAN_FilterInitStructure.CAN_FilterIdHigh = pFirlterList->pFilter[i].id << 5;
+//			CAN_FilterInitStructure.CAN_FilterIdLow = 0;
+//		}
+//		else
+//		{
+//			CAN_FilterInitStructure.CAN_FilterIdHigh = (pFirlterList->pFilter[i].id >> 16) & 0x1FFF;
+//			CAN_FilterInitStructure.CAN_FilterIdLow = pFirlterList->pFilter[i].id;
+//		}
+//		CAN_FilterInitStructure.CAN_FilterNumber = i;
+//		//CAN_FilterInitStructure.CAN_FilterFIFOAssignment = i / 2;
+//		CAN_FilterInit(&CAN_FilterInitStructure);
+//	}
 //	CAN_FilterInit(&CAN_FilterInitStructure);
 }
 
@@ -94,9 +95,9 @@ void CanInit(CanControllerIdx_t controller, CanBaud_t baud, pHanlderCb cb, const
 	NVIC_InitTypeDef  NVIC_InitStructure;
 
 	CAN_InitStructure.CAN_TTCM = DISABLE;
-	CAN_InitStructure.CAN_ABOM = DISABLE;
+	CAN_InitStructure.CAN_ABOM = ENABLE;
 	CAN_InitStructure.CAN_AWUM = DISABLE;
-	CAN_InitStructure.CAN_NART = ENABLE;
+	CAN_InitStructure.CAN_NART = DISABLE;
 	CAN_InitStructure.CAN_RFLM = DISABLE;
 	CAN_InitStructure.CAN_TXFP = ENABLE;
 	CAN_InitStructure.CAN_Mode = CAN_Mode_Normal;
@@ -134,7 +135,7 @@ void CanInit(CanControllerIdx_t controller, CanBaud_t baud, pHanlderCb cb, const
 
 	CAN_ITConfig(pCan, CAN_IT_TME, ENABLE);
 	CAN_ITConfig(pCan, CAN_IT_FMP0, ENABLE);
-	CAN_ITConfig(pCan, CAN_IT_FMP1, ENABLE);
+//	CAN_ITConfig(pCan, CAN_IT_FMP1, ENABLE);
 	CAN_ITConfig(pCan, CAN_IT_BOF, ENABLE);
 	handler[controller].cb = cb;
 }
