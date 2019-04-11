@@ -4,12 +4,13 @@
 #include "stm32f10x_conf.h"
 #include "CanCfg.h"
 #include "stdbool.h"
+#include "sys.h"
+
+#define CAN_MAX_BUFF_AMOUNT 9
 #define CAN_ID_STANDRD (uint8_t)0
 #define CAN_ID_EXTEND (uint8_t)1
-
 #define CAN_TYPE_DATA (uint8_t)0
 #define CAN_TYPE_REMOTE (uint8_t)1
-
 #define CAN_RX_DATA (uint8_t)0
 #define CAN_TX_COMPLETE (uint8_t)1
 #define CAN_WAKEUP (uint8_t)2
@@ -51,7 +52,8 @@ typedef struct
         uint32_t length : 4;
         uint32_t type : 1;
         uint32_t format : 1;
-        uint32_t reserve : 10;
+        uint32_t hasData : 1;
+        uint32_t reserve : 9;
     };
     uint32_t id;
     union
@@ -79,8 +81,7 @@ typedef void (*pHanlderCb)(CanControllerIdx_t, uint8_t);
 
 typedef struct
 {
-    uint8_t isHaveMsg;
-    can_frame_t Frame;
+    can_frame_t *pFrame;
     pHanlderCb cb;
 }CanHandler_t;
 
@@ -97,6 +98,6 @@ typedef struct
 
 void CanInit(CanControllerIdx_t controller, CanBaud_t baud, pHanlderCb cb, const canFIrlterList_t *pFirlter);
 void CanDeinit(CanControllerIdx_t controller);
-bool CanSend_MSG(CanControllerIdx_t controller, const can_frame_t *pFrame);
-bool CanGet_MSG(CanControllerIdx_t controller, can_frame_t *pFrame);
+RET_t CanSend_MSG(CanControllerIdx_t controller, const can_frame_t *pFrame);
+RET_t CanGet_MSG(CanControllerIdx_t controller, can_frame_t *pFrame);
 #endif //__CAN_H__

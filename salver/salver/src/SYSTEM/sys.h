@@ -1,7 +1,18 @@
 #ifndef __SYS_H
 #define __SYS_H	
 #include "stm32f10x.h"
-																	    
+
+typedef enum {
+	RET_OK,
+	RET_ERR,
+	RET_PHY_ERR,
+	RET_PARAM_ERR,
+	RET_TIMEOUT,
+	RET_SOURCE_LOCK,
+}RET_t;
+
+#define ERROR_HANDLER() while(1)
+
 #define BITBAND(addr, bitnum) ((addr & 0xF0000000)+0x2000000+((addr &0xFFFFF)<<5)+(bitnum<<2)) 
 #define MEM_ADDR(addr)  *((volatile unsigned long  *)(addr)) 
 #define BIT_ADDR(addr, bitnum)   MEM_ADDR(BITBAND(addr, bitnum)) 

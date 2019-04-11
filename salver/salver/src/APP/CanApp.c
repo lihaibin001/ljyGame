@@ -260,9 +260,8 @@ static void canAppCb(CanControllerIdx_t controller, uint8_t it_flag) {
 		evt = CanAppBusOff;
 		break;
 	case CAN_PASSIVE_ERR :
-		break;
 	default:
-		break;
+		return;
 	}
 	xQueueSendFromISR(xQueue, &evt, NULL);
 }

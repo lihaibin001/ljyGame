@@ -8,7 +8,7 @@
 #include "sync.h"
 
 #include <string.h>
-#define MSG_BUFF_AMOUT 8
+#define MSG_BUFF_AMOUT 10
 
 #ifdef CAN_APP_DEBUG
 #define DEBUG(...) printf(...)
@@ -37,9 +37,10 @@ typedef enum {
 
 typedef struct {
 	can_frame_t *pFrame;
-	uint8_t in;
-	uint8_t out;
-	bool isTransfering;
+	volatile uint8_t in;
+	volatile uint8_t out;
+	volatile bool isTransfering;
+	bool isFull;
 }MsgBuf_t;
 
 static can_frame_t msgBuf[MSG_BUFF_AMOUT];
@@ -47,6 +48,7 @@ static MsgBuf_t msgList = {
 		msgBuf,
 		0,
 		0,
+		false,
 		false,
 };
 static QueueHandle_t xQueue;
@@ -108,25 +110,50 @@ static void CanAppBuffOffHanlder(void) {
 }
 
 RET_t CanAppSendMsg(can_frame_t *pFrame) {
-	RET_t status;
 	uint8_t tryCnt = 3;
 	pFrame->format = CAN_ID_STANDRD;
 	pFrame->length = 8;
 	pFrame->type = CAN_TYPE_DATA;
 	pFrame->id = selfId;
-
-	while (tryCnt--) {
-		status = CanSend_MSG(CAN_APP_CONTROLLER, pFrame);
-		if (status == RET_OK) {
-			if (xSemaphoreTake(xSemphore, pdMS_TO_TICKS(100)) == pdPASS) {
-				return RET_OK;
-			}
-		} else {
-			ERROR_DEBUG("[CanApp] Send message error: %d\r\n", status);
-			vTaskDelay(pdMS_TO_TICKS(10));
-		}
+	if(msgList.isFull) {
+		return RET_ERR;
 	}
-	return status;
+	memcpy(&msgList.pFrame[msgList.in++], pFrame, sizeof(can_frame_t));
+	if(msgList.in == MSG_BUFF_AMOUT) {
+		msgList.in = 0;
+	}
+
+	if(!msgList.isTransfering) {
+		 CanSend_MSG(CAN_APP_CONTROLLER, pFrame);
+		 msgList.isTransfering = true;
+		 msgList.out++;
+		 if(msgList.out == MSG_BUFF_AMOUT) {
+			 msgList.out = 0;
+		 }
+	} else if(msgList.in + 1 == msgList.out) {
+		msgList.isFull = true;
+	}
+	return RET_OK;
+
+//	RET_t status;
+//	uint8_t tryCnt = 3;
+//	pFrame->format = CAN_ID_STANDRD;
+//	pFrame->length = 8;
+//	pFrame->type = CAN_TYPE_DATA;
+//	pFrame->id = selfId;
+//
+//	while (tryCnt--) {
+//		status = CanSend_MSG(CAN_APP_CONTROLLER, pFrame);
+//		if (status == RET_OK) {
+//			if (xSemaphoreTake(xSemphore, pdMS_TO_TICKS(100)) == pdPASS) {
+//				return RET_OK;
+//			}
+//		} else {
+//			ERROR_DEBUG("[CanApp] Send message error: %d\r\n", status);
+//			vTaskDelay(pdMS_TO_TICKS(10));
+//		}
+//	}
+//	return status;
 }
 
 static void canAppCb(CanControllerIdx_t controller, uint8_t it_flag) {
@@ -136,7 +163,16 @@ static void canAppCb(CanControllerIdx_t controller, uint8_t it_flag) {
 		evt = CanAppEvtGetMsg;
 		break;
 	case CAN_TX_COMPLETE :
-		xSemaphoreGiveFromISR(xSemphore, NULL);
+		if(msgList.in != msgList.out) {
+			CanSend_MSG(CAN_APP_CONTROLLER, &msgList.pFrame[msgList.out++]);
+			if(msgList.out == MSG_BUFF_AMOUT) {
+				msgList.out = 0;
+			}
+			msgList.isFull = false;
+		} else {
+			msgList.isTransfering = false;
+		}
+		//xSemaphoreGiveFromISR(xSemphore, NULL);
 		return;
 	case CAN_WAKEUP :
 		break;

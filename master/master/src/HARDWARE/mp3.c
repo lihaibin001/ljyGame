@@ -13,9 +13,9 @@ static void mp3_doSum(uint8_t *pStr, uint8_t len) ;
 
 void mp3_init(void) {
 	Uart_Initialize(UART_MP3_CHANNEL);
-	vTaskDelay(500);
+	vTaskDelay(50);
 	mp3_send_command(0x25, 0x0101);
-	vTaskDelay(100);
+	vTaskDelay(500);
  	mp3_send_command(0x16, 0x0000);
 	vTaskDelay(100);
 	mp3_send_command(0x06, 0x000F);
