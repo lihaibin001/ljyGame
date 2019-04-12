@@ -13,13 +13,13 @@
 #define ERROR_DEBUG(...)
 #endif
 
+#define RX_BUFF_AMOUT 10
 
-
+static RxBuff_t rxBuff;
 static const CAN_TypeDef *pCanController[canControllerIdxNum] = {CAN1};
 static const uint8_t baudList[CAN_Baud_Num] = {6, 12, 24, 48};
-can_frame_t frame_buf[CAN_MAX_BUFF_AMOUNT];
 static CanHandler_t handler[canControllerIdxNum] = {
-		{.pFrame = frame_buf}
+		{.pRxBuff = &rxBuff}
 };
 
 static void filterConfig(const canFIrlterList_t *pFirlterList)
@@ -47,25 +47,6 @@ static void filterConfig(const canFIrlterList_t *pFirlterList)
 		//CAN_FilterInitStructure.CAN_FilterFIFOAssignment = i / 2;
 		CAN_FilterInit(&CAN_FilterInitStructure);
 	}
-
-//	CAN_FilterInitStructure.CAN_FilterFIFOAssignment = 1;
-//	for(i = 0; i < pFirlterList->num; i++)
-//	{
-//		if(pFirlterList->pFilter[i].type == CAN_ID_STANDRD)
-//		{
-//			CAN_FilterInitStructure.CAN_FilterIdHigh = pFirlterList->pFilter[i].id << 5;
-//			CAN_FilterInitStructure.CAN_FilterIdLow = 0;
-//		}
-//		else
-//		{
-//			CAN_FilterInitStructure.CAN_FilterIdHigh = (pFirlterList->pFilter[i].id >> 16) & 0x1FFF;
-//			CAN_FilterInitStructure.CAN_FilterIdLow = pFirlterList->pFilter[i].id;
-//		}
-//		CAN_FilterInitStructure.CAN_FilterNumber = i;
-//		//CAN_FilterInitStructure.CAN_FilterFIFOAssignment = i / 2;
-//		CAN_FilterInit(&CAN_FilterInitStructure);
-//	}
-//	CAN_FilterInit(&CAN_FilterInitStructure);
 }
 
 static void filterDisbale(void)
@@ -135,7 +116,6 @@ void CanInit(CanControllerIdx_t controller, CanBaud_t baud, pHanlderCb cb, const
 
 	CAN_ITConfig(pCan, CAN_IT_TME, ENABLE);
 	CAN_ITConfig(pCan, CAN_IT_FMP0, ENABLE);
-//	CAN_ITConfig(pCan, CAN_IT_FMP1, ENABLE);
 	CAN_ITConfig(pCan, CAN_IT_BOF, ENABLE);
 	handler[controller].cb = cb;
 }
@@ -218,19 +198,22 @@ RET_t CanSend_MSG(CanControllerIdx_t controller, const can_frame_t *pFrame)
 
 RET_t CanGet_MSG(CanControllerIdx_t controller, can_frame_t *pFrame)
 {
-	uint8_t i;
 	if(controller >= canControllerIdxNum || pFrame == NULL)
 	{
 		return RET_PARAM_ERR;
 	}
-	for(i=0; i<CAN_MAX_BUFF_AMOUNT; i++) {
-		if(handler[controller].pFrame[i].hasData) {
-			handler[controller].pFrame[i].hasData = 0;
-			memcpy(pFrame, &handler[controller].pFrame[i], sizeof(can_frame_t));
-			return RET_OK;
-		}
+
+	if(handler[controller].pRxBuff->out == handler[controller].pRxBuff->in) {
+		return RET_ERR;
 	}
-	return RET_ERR;
+
+	memcpy(pFrame, &handler[controller].pRxBuff->frame[handler[controller].pRxBuff->out], sizeof(can_frame_t));
+	handler[controller].pRxBuff->out++;
+	if(handler[controller].pRxBuff->out == CAN_MAX_BUFF_AMOUNT) {
+		handler[controller].pRxBuff->out = 0;
+	}
+	handler[0].pRxBuff->isFull = false;
+	return RET_OK;
 }
 
 void CAN1_RX0_IRQHandler(void)
@@ -239,81 +222,42 @@ void CAN1_RX0_IRQHandler(void)
 	if(CAN_GetITStatus(CAN1, CAN_IT_FMP0) != RESET)
 	{
 		CAN_ClearITPendingBit(CAN1, CAN_IT_FMP0);
-		CanRxMsg RxMessage;
-		uint8_t i;
-		for(i=0; i<CAN_MAX_BUFF_AMOUNT; i++) {
-			if(handler[0].pFrame[i].hasData == 0) {
-				handler[0].pFrame[i].hasData = 1;
-
-				CAN_Receive(CAN1, CAN_FIFO0, &RxMessage);
-				handler[0].pFrame[i].dataByte0 = RxMessage.Data[0];
-				handler[0].pFrame[i].dataByte1 = RxMessage.Data[1];
-				handler[0].pFrame[i].dataByte2 = RxMessage.Data[2];
-				handler[0].pFrame[i].dataByte3 = RxMessage.Data[3];
-				handler[0].pFrame[i].dataByte4 = RxMessage.Data[4];
-				handler[0].pFrame[i].dataByte5 = RxMessage.Data[5];
-				handler[0].pFrame[i].dataByte6 = RxMessage.Data[6];
-				handler[0].pFrame[i].dataByte7 = RxMessage.Data[7];
-				if(RxMessage.IDE == CAN_Id_Extended)
-				{
-					handler[0].pFrame[i].format = CAN_ID_EXTEND;
-					handler[0].pFrame[i].id = RxMessage.ExtId;
-				}
-				else
-				{
-					handler[0].pFrame[i].id = RxMessage.StdId;
-				}
-				if(RxMessage.RTR == CAN_RTR_Remote)
-				{
-					handler[0].pFrame[i].type = CAN_TYPE_REMOTE;
-				}
-				handler[0].pFrame[i].length = RxMessage.DLC;
-				if(handler[0].cb)
-				{
-					handler[0].cb(canControllerIdx1, CAN_RX_DATA);
-				}
-				break;
-			}
+		if(handler[0].pRxBuff->isFull == true) {
+			return ;
 		}
-	}
-	if(CAN_GetITStatus(CAN1, CAN_IT_FMP1) != RESET)
-	{
-		CAN_ClearITPendingBit(CAN1, CAN_IT_FMP1);
 		CanRxMsg RxMessage;
-		uint8_t i;
-		for(i=0; i<CAN_MAX_BUFF_AMOUNT; i++) {
-			if(handler[0].pFrame[i].hasData == 0) {
-				handler[0].pFrame[i].hasData = 1;
-
-				CAN_Receive(CAN1, CAN_FIFO0, &RxMessage);
-				handler[0].pFrame[i].dataByte0 = RxMessage.Data[0];
-				handler[0].pFrame[i].dataByte1 = RxMessage.Data[1];
-				handler[0].pFrame[i].dataByte2 = RxMessage.Data[2];
-				handler[0].pFrame[i].dataByte3 = RxMessage.Data[3];
-				handler[0].pFrame[i].dataByte4 = RxMessage.Data[4];
-				handler[0].pFrame[i].dataByte5 = RxMessage.Data[5];
-				handler[0].pFrame[i].dataByte6 = RxMessage.Data[6];
-				handler[0].pFrame[i].dataByte7 = RxMessage.Data[7];
-				if(RxMessage.IDE == CAN_Id_Extended)
-				{
-					handler[0].pFrame[i].format = CAN_ID_EXTEND;
-					handler[0].pFrame[i].id = RxMessage.ExtId;
-				}
-				else
-				{
-					handler[0].pFrame[i].id = RxMessage.StdId;
-				}
-				if(RxMessage.RTR == CAN_RTR_Remote)
-				{
-					handler[0].pFrame[i].type = CAN_TYPE_REMOTE;
-				}
-				handler[0].pFrame[i].length = RxMessage.DLC;
-				if(handler[0].cb)
-				{
-					handler[0].cb(canControllerIdx1, CAN_RX_DATA);
-				}
-				break;
-			}
+		CAN_Receive(CAN1, CAN_FIFO0, &RxMessage);
+		handler[0].pRxBuff->frame[handler[0].pRxBuff->in].dataByte0 = RxMessage.Data[0];
+		handler[0].pRxBuff->frame[handler[0].pRxBuff->in].dataByte1 = RxMessage.Data[1];
+		handler[0].pRxBuff->frame[handler[0].pRxBuff->in].dataByte2 = RxMessage.Data[2];
+		handler[0].pRxBuff->frame[handler[0].pRxBuff->in].dataByte3 = RxMessage.Data[3];
+		handler[0].pRxBuff->frame[handler[0].pRxBuff->in].dataByte4 = RxMessage.Data[4];
+		handler[0].pRxBuff->frame[handler[0].pRxBuff->in].dataByte5 = RxMessage.Data[5];
+		handler[0].pRxBuff->frame[handler[0].pRxBuff->in].dataByte6 = RxMessage.Data[6];
+		handler[0].pRxBuff->frame[handler[0].pRxBuff->in].dataByte7 = RxMessage.Data[7];
+		if(RxMessage.IDE == CAN_Id_Extended)
+		{
+			handler[0].pRxBuff->frame[handler[0].pRxBuff->in].format = CAN_ID_EXTEND;
+			handler[0].pRxBuff->frame[handler[0].pRxBuff->in].id = RxMessage.ExtId;
+		}
+		else
+		{
+			handler[0].pRxBuff->frame[handler[0].pRxBuff->in].id = RxMessage.StdId;
+		}
+		if(RxMessage.RTR == CAN_RTR_Remote)
+		{
+			handler[0].pRxBuff->frame[handler[0].pRxBuff->in].type = CAN_TYPE_REMOTE;
+		}
+		handler[0].pRxBuff->frame[handler[0].pRxBuff->in].length = RxMessage.DLC;
+		if(handler[0].cb)
+		{
+			handler[0].cb(canControllerIdx1, CAN_RX_DATA);
+		}
+		if(++handler[0].pRxBuff->in) {
+			handler[0].pRxBuff->in = 0;
+		}
+		if(handler[0].pRxBuff->in + 1 == handler[0].pRxBuff->out) {
+			handler[0].pRxBuff->isFull = true;
 		}
 	}
 }
@@ -327,9 +271,7 @@ void CAN1_TX_IRQHandler(void)
 		{
 			handler[canControllerIdx1].cb(canControllerIdx1, CAN_TX_COMPLETE);
 		}
-
 	}
-
 }
 
 void CAN1_RX1_IRQHandler(void)

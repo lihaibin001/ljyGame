@@ -18,6 +18,13 @@ TRANS (ENTRY,				INTERNAL,		ps_entry_idle)
 TRANS (PS_EVT_PAGE,			INTERNAL,		ps_page)
 TRANS (PS_EVT_MODE_CHGE,	INTERNAL,		ps_mode_change)
 TRANS (PS_START_STOP_GAME,	PS_RUNNING,		ps_start_game)
+TRANS (PS_SWITCH_VOLUME, 	PS_VOLUME,		no_action)
+STATE_END
+
+STATE (PS_VOLUME,			PS_ROOT,		cs_no_action)
+TRANS (ENTRY,				INTERNAL,		ps_entry_volume)
+TRANS (PS_EVT_PAGE,			INTERNAL,		ps_adjust_volume)
+TRANS (PS_START_STOP_GAME,	PS_IDLE,		no_action)
 STATE_END
 
 STATE (PS_RUNNING,			PS_ROOT,		cs_no_action)

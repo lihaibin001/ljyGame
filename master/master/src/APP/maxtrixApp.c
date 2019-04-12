@@ -23,10 +23,13 @@ typedef struct {
 
 static uint16_t gTime;
 static uint8_t gGameMode;
+static uint8_t gVolume = 15;
 static volatile uint8_t gScore[2];
 static TimerHandle_t xTimers;
 static TimerHandle_t xTimers2;
 static Palte_status_t palteStatus[PLATE_AMOUNT];
+
+const uint8_t volume_image[] = {};
 
 const uint8_t singleMode[] = { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,
 		0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,
@@ -572,8 +575,8 @@ void maxtrixAppSetGameScoreRefresh(void) {
 			RGBdrawImage(28, 2, 0xFF00FF, pNumber[tens]);
 			RGBdrawImage(38, 2, 0xFF00FF, pNumber[units]);
 		}
+		RGBReleaseLock();
 	}
-	RGBReleaseLock();
 }
 
 void maxtrixAppGameStart(void) {
@@ -643,4 +646,37 @@ void maxtriAppStopTime(void) {
 
 uint16_t maxtriAppGetTime(void) {
 	return gTime;
+}
+
+void maxtriAppVolumeIncreae(void) {
+	if(gVolume == 30) {
+		return;
+	}
+	gVolume++;
+}
+
+void maxtriAPpVolumeDecreae(void) {
+	if(gVolume == 0) {
+		return;
+	}
+	gVolume--;
+}
+void maxtriAppVolumeRefresh(void) {
+	uint8_t tens, units;
+	if(RGBTakeLock()) {
+
+		RGBClearBuff();
+		tens = gVolume / 10;
+		units = gVolume % 10;
+		//draw score
+		RGBdrawImage(40, 10, 0xFF, pNumber[tens]);
+		RGBdrawImage(50, 10, 0xFF, pNumber[units]);
+
+		RGBdrawImage(53, 10, 0xFF, volume_image);
+		RGBReleaseLock();
+	}
+}
+
+uint8_t maxtriAppGetVolume(void) {
+	return gVolume;
 }

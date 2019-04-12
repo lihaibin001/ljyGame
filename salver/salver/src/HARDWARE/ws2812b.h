@@ -25,7 +25,7 @@
 
 #include <stdint.h>
 #include "bitmap.h"
-
+#include "stdbool.h"
 extern RGB_t leds[];
 extern RGB_t leds2[];
 void ws2812b_Init(void);
@@ -34,5 +34,5 @@ int ws2812b_IsReady(void);
 
 void ws2812b_SendRGB(RGB_t *rgb, unsigned count);
 void ws2812b_SendHSV(HSV_t *hsv, unsigned count);
-
+bool ws2612b_waitReady(uint32_t timeout);
 #endif //__WS2812B_H

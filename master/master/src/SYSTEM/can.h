@@ -6,7 +6,7 @@
 #include "stdbool.h"
 #include "sys.h"
 
-#define CAN_MAX_BUFF_AMOUNT 9
+#define CAN_MAX_BUFF_AMOUNT 16
 #define CAN_ID_STANDRD (uint8_t)0
 #define CAN_ID_EXTEND (uint8_t)1
 #define CAN_TYPE_DATA (uint8_t)0
@@ -79,9 +79,15 @@ typedef struct
 
 typedef void (*pHanlderCb)(CanControllerIdx_t, uint8_t);
 
+typedef struct {
+	can_frame_t frame[CAN_MAX_BUFF_AMOUNT];
+	uint8_t in;
+	uint8_t out;
+	bool isFull;
+}RxBuff_t;
 typedef struct
 {
-    can_frame_t *pFrame;
+	RxBuff_t *pRxBuff;
     pHanlderCb cb;
 }CanHandler_t;
 

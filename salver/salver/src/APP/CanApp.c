@@ -53,6 +53,7 @@ const canFIrlterList_t firlterList = { canFirlter, sizeof(canFirlter)
 
 static void CanAppReceiveMsgHandler(void) {
 	can_frame_t frame;
+	uint32_t timeout;
 	CanGet_MSG(CAN_APP_CONTROLLER, &frame);
 	uint8_t i;
 	uint8_t idx;
@@ -76,8 +77,7 @@ static void CanAppReceiveMsgHandler(void) {
 						plate_color = 0;
 					}
 				}
-				while (!ws2812b_IsReady())
-					;
+				ws2612b_waitReady(500);
 				ws2812b_SendRGB(leds, NUM_GRB_LEDS);
 				plate_status = 1;
 				if (frame.dataByte3 != 0xFF) {
@@ -120,12 +120,10 @@ static void CanAppReceiveMsgHandler(void) {
 				}
 				for (idx = 0; idx < 3; idx++) {
 
-					while (!ws2812b_IsReady())
-						;
+					ws2612b_waitReady(500);
 					ws2812b_SendRGB(leds, NUM_GRB_LEDS);
 					vTaskDelay(500);
-					while (!ws2812b_IsReady())
-						;
+					ws2612b_waitReady(500);
 					ws2812b_SendRGB(leds2, NUM_GRB_LEDS);
 					vTaskDelay(500);
 				}
@@ -135,8 +133,7 @@ static void CanAppReceiveMsgHandler(void) {
 					leds[i].g = 0;
 					leds[i].r = 0;
 				}
-				while (!ws2812b_IsReady())
-					;
+				ws2612b_waitReady(500);
 				ws2812b_SendRGB(leds, NUM_GRB_LEDS);
 			}
 			break;
@@ -148,8 +145,7 @@ static void CanAppReceiveMsgHandler(void) {
 					leds[i].g = 0;
 					leds[i].r = 0xFF;
 				}
-				while (!ws2812b_IsReady())
-					;
+				ws2612b_waitReady(500);
 				ws2812b_SendRGB(leds, NUM_GRB_LEDS);
 				vTaskDelay(200);
 				for (i = 0; i <= NUM_GRB_LEDS; i++) {
@@ -157,8 +153,7 @@ static void CanAppReceiveMsgHandler(void) {
 					leds[i].g = 0xFF;
 					leds[i].r = 0;
 				}
-				while (!ws2812b_IsReady())
-					;
+				ws2612b_waitReady(500);
 				ws2812b_SendRGB(leds, NUM_GRB_LEDS);
 				vTaskDelay(200);
 				for (i = 0; i <= NUM_GRB_LEDS; i++) {
@@ -166,16 +161,14 @@ static void CanAppReceiveMsgHandler(void) {
 					leds[i].g = 0;
 					leds[i].r = 0;
 				}
-				while (!ws2812b_IsReady())
-					;
+				ws2612b_waitReady(500);
 				ws2812b_SendRGB(leds, NUM_GRB_LEDS);
 				vTaskDelay(200);
 				CanAppSendMsg(&frame);
 				for (i = 0; i <= NUM_GRB_LEDS; i++) {
 					leds[i].b = 0;
 				}
-				while (!ws2812b_IsReady())
-					;
+				ws2612b_waitReady(500);
 				ws2812b_SendRGB(leds, NUM_GRB_LEDS);
 			}
 			break;
@@ -201,12 +194,10 @@ static void CanAppReceiveMsgHandler(void) {
 					leds2[i].r = 0;
 				}
 				for(i = 0; i<2; i++) {
-					while (!ws2812b_IsReady())
-						;
+					ws2612b_waitReady(500);
 					ws2812b_SendRGB(leds, NUM_GRB_LEDS);
 					vTaskDelay(500);
-					while (!ws2812b_IsReady())
-						;
+					ws2612b_waitReady(500);
 					ws2812b_SendRGB(leds2, NUM_GRB_LEDS);
 					vTaskDelay(500);
 				}
@@ -294,8 +285,7 @@ void xTimerHandler(void *p) {
 	if (plate_status == 1) {
 		plate_status = 0;
 
-		while (!ws2812b_IsReady())
-			;  // wait
+		ws2612b_waitReady(500); // wait
 		for (i = 0; i <= NUM_GRB_LEDS; i++) {
 			leds[i].b = 0;
 			leds[i].g = 0;

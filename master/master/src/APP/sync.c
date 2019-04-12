@@ -48,6 +48,7 @@ static uint8_t ps_mode_change(uint16_t data);
 static uint8_t ps_start_game(uint16_t data);
 static uint8_t ps_page(uint16_t data);
 static uint8_t ps_count_down(uint16_t data);
+static uint8_t ps_adjust_volume(uint16_t data);
 static uint8_t ps_game_action(uint16_t data);
 static uint8_t ps_game_over_handle(uint16_t data);
 static uint8_t ps_stop_game(uint16_t data);
@@ -60,6 +61,7 @@ static uint8_t ps_wipe_led_handler(uint16_t data);
 static uint8_t ps_agil_traning_handle_slave_evt(uint16_t data);
 static uint8_t ps_agil_traning_handler(uint16_t data);
 static uint8_t ps_entry_idle(uint16_t data);
+static uint8_t ps_entry_volume(uint16_t data);
 static uint8_t ps_entery_running(uint16_t data);
 static uint8_t ps_entery_fault(uint16_t data);
 static uint8_t ps_entry_snatch_led(uint16_t data);
@@ -204,6 +206,15 @@ static uint8_t ps_entry_idle(uint16_t data) {
 	xTimerStop(xTimersPlayer[1], 100);
 	maxtriAppStopTime();
 	return PS_IDLE;
+}
+
+static uint8_t ps_entry_volume(uint16_t data) {
+	if (RGBTakeLock()) {
+		RGBClearBuff();
+		maxtriAppVolumeRefresh();
+		RGBReleaseLock();
+	}
+	return PS_VOLUME;
 }
 
 static uint8_t ps_entery_running(uint16_t data) {
@@ -513,6 +524,17 @@ static uint8_t ps_page(uint16_t data) {
 	return 0;
 }
 
+static uint8_t ps_adjust_volume(uint16_t data) {
+	if (data == 0) { //page up
+		maxtriAppVolumeIncreae();
+	} else { //page down
+		maxtriAPpVolumeDecreae();
+	}
+	mp3_send_command(0x06, (uint16_t)maxtriAppGetVolume());
+	maxtriAppVolumeRefresh();
+	return 0;
+}
+
 static uint8_t ps_count_down(uint16_t data) {
 	static uint8_t count_down = 3;
 	if (count_down == 0) {
@@ -701,6 +723,7 @@ static uint8_t ps_snatch_handler(uint16_t data) {
 }
 
 static uint8_t ps_road_block_handle_slave_evt(uint16_t data) {
+#define GAME_OVER_CNT 60
 	can_frame_t msg;
 	uint8_t id = (uint8_t) (data >> 8);
 //	uint8_t event = (uint8_t) data;
@@ -732,6 +755,9 @@ static uint8_t ps_road_block_handle_slave_evt(uint16_t data) {
 		}
 		if(plate_status == 0) {
 			maxtriAppScoreIncrease(0, 0x0101);
+			if(plate_on_cnt[0] == GAME_OVER_CNT) {
+				ps_send_event(PS_EVT_GAME_OVER, 0);
+			}
 //			vTaskDelay(10);
 			for (i = 0; i < PLATE_AMOUNT; i += 2) {
 				msg.dataByte1 = rand() % 2 + i + 1;
@@ -740,6 +766,7 @@ static uint8_t ps_road_block_handle_slave_evt(uint16_t data) {
 				msg.dataByte3 = (uint8_t) 0xFF;
 //				msg.dataByte3 = (uint8_t) (ps_get_game_perdic(0) / 100);
 				CanAppSendMsg(&msg);
+				plate_on_cnt[0]++;
 			}
 			xTimerChangePeriod(xTimersPlayer[0], ps_get_game_perdic(0), 100);
 			xTimerReset(xTimersPlayer[0], 100);
@@ -751,7 +778,9 @@ static uint8_t ps_road_block_handle_slave_evt(uint16_t data) {
 		if (id <= PLATE_AMOUNT / 2) {
 			if((plate_status & PLATE_PLAYER1_BIT) == 0) {
 				maxtriAppScoreIncrease(0, 0x0101);
-//				vTaskDelay(10);
+				if(plate_on_cnt[0] == GAME_OVER_CNT) {
+					ps_send_event(PS_EVT_GAME_OVER, 0);
+				}
 				for (i = 0; i < PLATE_AMOUNT / 2; i += 2) {
 					msg.dataByte1 = rand() % 2 + i + 1;
 					plate_status |= 1 << (msg.dataByte1 - 1);
@@ -759,14 +788,17 @@ static uint8_t ps_road_block_handle_slave_evt(uint16_t data) {
 					msg.dataByte3 = (uint8_t) 0xFF;
 //					msg.dataByte3 = (uint8_t) (ps_get_game_perdic(0) / 100);
 					CanAppSendMsg(&msg);
+					plate_on_cnt[0]++;
 				}
-				xTimerChangePeriod(xTimersPlayer[0], ps_get_game_perdic(0), 100);
-				xTimerReset(xTimersPlayer[0], 100);
+//				xTimerChangePeriod(xTimersPlayer[0], ps_get_game_perdic(0), 100);
+//				xTimerReset(xTimersPlayer[0], 100);
 			}
 		} else {
 			if((plate_status & PLATE_PLAYER2_BIT) == 0) {
 				maxtriAppScoreIncrease(0, 0x0101);
-				vTaskDelay(10);
+				if(plate_on_cnt[1] == GAME_OVER_CNT) {
+					ps_send_event(PS_EVT_GAME_OVER, 0);
+				}
 				for (i = PLATE_AMOUNT / 2; i < PLATE_AMOUNT; i += 2) {
 					msg.dataByte1 = rand() % 2 + i + 1;
 					plate_status |= 1 << (msg.dataByte1 - 1);
@@ -774,9 +806,10 @@ static uint8_t ps_road_block_handle_slave_evt(uint16_t data) {
 					msg.dataByte3 = (uint8_t) 0xFF;
 //					msg.dataByte3 = (uint8_t) (ps_get_game_perdic(0) / 100);
 					CanAppSendMsg(&msg);
+					plate_on_cnt[1]++;
 				}
-				xTimerChangePeriod(xTimersPlayer[0], ps_get_game_perdic(0), 100);
-				xTimerReset(xTimersPlayer[0], 100);
+//				xTimerChangePeriod(xTimersPlayer[0], ps_get_game_perdic(0), 100);
+//				xTimerReset(xTimersPlayer[0], 100);
 			}
 		}
 	}

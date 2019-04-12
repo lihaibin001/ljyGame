@@ -15,6 +15,7 @@ typedef struct {
 	Key_t const *pKey;
 	const pfKeyPressHandler perssHandler;
 	const pfKeyConsecutivePressHandler consetcutivePressHandler;
+	const uint16_t consecutiveTimeout;
 	uint16_t consecutiveTime;
 	uint8_t status;
 	uint8_t time;
@@ -42,13 +43,13 @@ static void pageUpConsecutivePress(void);
 static void pageDownConsecutivePress(void);
 
 static keyStatus_t keyStatus[keyIdxNum] = {
-		{ &key[keyIdx_1], singleModeKeyHander, NULL, 1, 0, 0 },
-		{ &key[keyIdx_2], mutleModeKeyHandler, NULL, 1, 0, 0 },
-		{ &key[keyIdx_3], pageUpKeyHander, pageUpConsecutivePress, 1, 0, 0 },
-		{ &key[keyIdx_4], pageDownKeyHandler, pageDownConsecutivePress, 1, 0, 0 },
-		{ &key[keyIdx_5], startAndStopKeyHandler, NULL, 1, 0, 0 },
-		{ &key[keyIdx_6], NULL, NULL, 1, 0, 0 },
-		{ &key[keyIdx_7], NULL, NULL, 1, 0, 0 },
+		{ &key[keyIdx_1], singleModeKeyHander, NULL, 0, 1, 0, 0 },
+		{ &key[keyIdx_2], mutleModeKeyHandler, NULL, 0, 1, 0, 0 },
+		{ &key[keyIdx_3], pageUpKeyHander, pageUpConsecutivePress, 5000, 1, 0, 0 },
+		{ &key[keyIdx_4], pageDownKeyHandler, pageDownConsecutivePress, 5000, 1, 0, 0 },
+		{ &key[keyIdx_5], startAndStopKeyHandler, NULL, 0, 1, 0, 0 },
+		{ &key[keyIdx_6], NULL, NULL, 0, 1, 0, 0 },
+		{ &key[keyIdx_7], NULL, NULL, 0, 1, 0, 0 },
 };
 
 static TimerHandle_t xTimers;
@@ -95,9 +96,9 @@ static void keyStatusDetect(void) {
 			if (keyStatus[keyNum].status == 0) {
 				keyStatus[keyNum].time = 0;
 				keyStatus[keyNum].consecutiveTime += TIME_PERIDIC;
-				if (keyStatus[keyNum].consecutiveTime >= 1000) {
-					keyStatus[keyNum].consecutiveTime = 0;
-					if (keyStatus[keyNum].consetcutivePressHandler) {
+				if (keyStatus[keyNum].consetcutivePressHandler) {
+					if (keyStatus[keyNum].consecutiveTime >= keyStatus[keyNum].consecutiveTimeout) {
+						keyStatus[keyNum].consecutiveTime = 0;
 						keyStatus[keyNum].consetcutivePressHandler();
 					}
 				}
@@ -123,13 +124,18 @@ static void pageDownKeyHandler(void) {
 }
 
 static void startAndStopKeyHandler(void) {
-	(void) ps_send_event(PS_START_STOP_GAME, 1);
+	ps_send_event(PS_START_STOP_GAME, 1);
 }
 
 static void pageUpConsecutivePress(void) {
-
+	if(keyStatus[keyIdx_4].status == 0) {
+		//TODO switch to volume
+//		ps_send_event();
+	}
 }
 
 static void pageDownConsecutivePress(void) {
-
+	if(keyStatus[keyIdx_3].status == 0) {
+		//TODO switch to volume
+	}
 }
