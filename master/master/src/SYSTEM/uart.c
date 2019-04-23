@@ -30,15 +30,15 @@
 /******************************************************************************/
 // Information for each UART channel is stored in variables of this type:
 typedef struct uart_chan_tag {
-	uint16_t rx_in;                  // Rx buffer input index
-	uint16_t rx_out;                 // Rx buffer output index
-	uint16_t rx_count;               // Rx buffer byte count
+	volatile uint16_t rx_in;                  // Rx buffer input index
+	volatile uint16_t rx_out;                 // Rx buffer output index
+	volatile uint16_t rx_count;               // Rx buffer byte count
 	uint16_t rx_size;                // Rx buffer size
 	uint8_t* rx_buf;                 // Rx ring buffer
 	// uart_rx_func_ptr rx_func;        // Rx callback function pointer
-	uint16_t tx_in;                  // Tx buffer input index
-	uint16_t tx_out;                 // Tx buffer output index
-	uint16_t tx_count;               // Tx buffer byte counter
+	volatile uint16_t tx_in;                  // Tx buffer input index
+	volatile uint16_t tx_out;                 // Tx buffer output index
+	volatile uint16_t tx_count;               // Tx buffer byte counter
 	uint16_t tx_size;                // Tx buffer size
 	uint8_t* tx_buf;                 // Tx ring buffer
 	bool tx_progress;            // Tx in progress
@@ -105,6 +105,7 @@ void Uart_InitIO(uint8_t chan) {
 		USART_InitStructure.USART_Mode = USART_Mode_Rx | USART_Mode_Tx;
 
 		USART_Init( USART1, &USART_InitStructure);
+		USART_ClearITPendingBit(USART1, USART_IT_RXNE);
 		USART_ITConfig(USART1, USART_IT_RXNE, ENABLE);
 		USART_ITConfig(USART1, USART_IT_TC, DISABLE);
 		/* Enable the USART1 */
@@ -131,6 +132,7 @@ void Uart_InitIO(uint8_t chan) {
 		USART_InitStructure.USART_Mode = USART_Mode_Rx | USART_Mode_Tx;
 
 		USART_Init( USART2, &USART_InitStructure);
+		USART_ClearITPendingBit(USART2, USART_IT_RXNE);
 		USART_ITConfig(USART2, USART_IT_RXNE, ENABLE);
 		USART_ITConfig(USART2, USART_IT_TC, DISABLE);
 		/* Enable the USART2 */
@@ -157,6 +159,7 @@ void Uart_InitIO(uint8_t chan) {
 		USART_InitStructure.USART_Mode = USART_Mode_Rx | USART_Mode_Tx;
 
 		USART_Init( USART3, &USART_InitStructure);
+		USART_ClearITPendingBit(USART3, USART_IT_RXNE);
 		USART_ITConfig(USART3, USART_IT_RXNE, ENABLE);
 		USART_ITConfig(USART3, USART_IT_TC, DISABLE);
 		/* Enable the USART3 */
@@ -184,6 +187,7 @@ void Uart_InitIO(uint8_t chan) {
 		USART_Init(UART4, &USART_InitStructure);
 
 		/* Enable UART4 Receive and Transmit interrupts */
+		USART_ClearITPendingBit(UART4, USART_IT_RXNE);
 		USART_ITConfig(UART4, USART_IT_RXNE, ENABLE);
 		USART_ITConfig(UART4, USART_IT_TC, DISABLE);
 
@@ -308,20 +312,18 @@ bool Uart_Get_Char(uint8_t chan, uint8_t* ptr) {
 	if (!ptr)
 		return false;    // Do not accept NULL pointers!
 
-	__disable_irq();
+//	__disable_irq();
 
-	if (uart_chan[chan].rx_in != uart_chan[chan].rx_out)  // Rx buffer not empty
+	if (uart_chan[chan].rx_count != 0)  // Rx buffer not empty
 			{
-		//uart_chan[chan].rx_count--;   // Decrement rx buffer byte count
-		uart_chan[chan].rx_out++;     // Increment rx buffe output index
+		*ptr = uart_chan[chan].rx_buf[uart_chan[chan].rx_out++]; // Store read data
 		if ((uart_chan[chan].rx_out) >= (uart_chan[chan].rx_size)) {
 			uart_chan[chan].rx_out = 0; // Wrap index
 		}
-		*ptr = uart_chan[chan].rx_buf[uart_chan[chan].rx_out]; // Store read data
-
+		uart_chan[chan].rx_count--;
 		ret = true;
 	}
-	__enable_irq();
+//	__enable_irq();
 
 	return (ret);
 }
@@ -340,40 +342,44 @@ bool Uart_Put_Char(uint8_t chan, uint8_t data) {
 		return false; // Invalid channel!
 
 	/** Enter Critical Section can not restart during this time ***/
-	__disable_irq();
+//	__disable_irq();
 
 	// Tx buffer not full
 	if (uart_chan[chan].tx_count < (uart_chan[chan].tx_size)) {
+		uart_chan[chan].tx_buf[uart_chan[chan].tx_in] = data; // Copy byte to tx buffer
 		uart_chan[chan].tx_count++;   // Increment tx buffer byte count
 		uart_chan[chan].tx_in++;      // Increment tx buffer input index
 		if ((uart_chan[chan].tx_in) >= (uart_chan[chan].tx_size)) {
 			uart_chan[chan].tx_in = 0; // Wrap index
 		}
-		uart_chan[chan].tx_buf[uart_chan[chan].tx_in] = data; // Copy byte to tx buffer
 		ret = true;
 	}
 
 	if (false == uart_chan[chan].tx_progress) // Send first byte. Interrupts do the rest.
 			{
-		u_do_tx(chan);          // Send to hardware
 		uart_chan[chan].tx_progress = true;    // Flag tx in progress
 		switch (chan) {
 		case 0:
+			USART_ClearITPendingBit(USART1, USART_IT_TC);
 			USART_ITConfig(USART1, USART_IT_TC, ENABLE);
 			break;
 		case 1:
+			USART_ClearITPendingBit(USART2, USART_IT_TC);
 			USART_ITConfig(USART2, USART_IT_TC, ENABLE);
 			break;
 		case 2:
+			USART_ClearITPendingBit(USART3, USART_IT_TC);
 			USART_ITConfig(USART3, USART_IT_TC, ENABLE);
 			break;
 		case 3:
+			USART_ClearITPendingBit(UART4, USART_IT_TC);
 			USART_ITConfig(UART4, USART_IT_TC, ENABLE);
 			break;
 		}
+		u_do_tx(chan);          // Send to hardware
 	}
 
-	__enable_irq();
+//	__enable_irq();
 	return (ret);
 }
 
@@ -408,17 +414,12 @@ static void u_do_tx(uint8_t chan) {
 		break;
 	}
 
+	// Write to hardware transmit register
+	USART_SendData(tmp_USARTx, uart_chan[chan].tx_buf[uart_chan[chan].tx_out++]);
 	uart_chan[chan].tx_count--;      // Decrement tx buffer byte count
-	uart_chan[chan].tx_out++;        // Increment index
 	if ((uart_chan[chan].tx_out) >= (uart_chan[chan].tx_size)) {
 		uart_chan[chan].tx_out = 0; // Wrap index
-	}
-
-	// Write to hardware transmit register
-	USART_SendData(tmp_USARTx, uart_chan[chan].tx_buf[uart_chan[chan].tx_out]);
-
-	//if(chan == UART_3G_CHANNEL)
-	//DEBUG_PRINT1( DEBUG_MEDIUM, "%c\r\n", uart_chan[chan].tx_buf[uart_chan[chan].tx_out]);
+	}     // Increment index
 }
 
 /*******************************************************************************
@@ -496,20 +497,18 @@ void UART_RX_ISR(uint8_t chan) {
 	data = (uint16_t) (tmp_USARTx->DR & (uint16_t) 0x01FF);
 
 	if (0 == ((UART_ERR_FRAME | UART_ERR_PARITY) & err)) {
-		//uart_chan[chan].rx_count++;
-		uart_chan[chan].rx_in++;
-		if ((uart_chan[chan].rx_in) >= (uart_chan[chan].rx_size)) {
-			uart_chan[chan].rx_in = 0; // Wrap index
-		}
-		if (uart_chan[chan].rx_in != uart_chan[chan].rx_out) {
-			uart_chan[chan].rx_buf[uart_chan[chan].rx_in] = data; // Copy data to receive buffer
+		if (uart_chan[chan].rx_count != uart_chan[chan].rx_size) {
+			uart_chan[chan].rx_buf[uart_chan[chan].rx_in++] = data; // Copy data to receive buffer
+			if ((uart_chan[chan].rx_in) >= (uart_chan[chan].rx_size)) {
+				uart_chan[chan].rx_in = 0; // Wrap index
+			}
+			uart_chan[chan].rx_count++;
 		} else                                    // Rx buffer full
 		{
 			//TODO over flow...
 		}
+
 	}
-	//if(chan == UART_KLINE_CHANNEL)
-	//DEBUG_PRINT1( DEBUG_MEDIUM, "%c\r\n", uart_chan[chan].rx_buf[uart_chan[chan].rx_in]);
 }
 /*******************************************************************************
  *    Function: UART_ERR_ISR
@@ -636,10 +635,12 @@ void USART1_IRQHandler(void)
 {
     if(USART_GetITStatus(USART1, USART_IT_RXNE) != RESET)
     {
+		USART_ClearITPendingBit(USART1, USART_IT_RXNE);
         UART_RX_ISR(UART_DEBUG_CHANNEL);
     }
     else if(USART_GetITStatus(USART1, USART_IT_TC) != RESET)
     {
+		USART_ClearITPendingBit(USART1, USART_IT_TC);
         UART_TX_ISR(UART_DEBUG_CHANNEL);
     }
 }
@@ -648,10 +649,12 @@ void USART2_IRQHandler(void)
 {
     if(USART_GetITStatus(USART2, USART_IT_RXNE) != RESET)
     {
+		USART_ClearITPendingBit(USART2, USART_IT_RXNE);
         UART_RX_ISR(UART_RESERVED_CHANNEL1);
     }
     else if(USART_GetITStatus(USART2, USART_IT_TC) != RESET)
     {
+		USART_ClearITPendingBit(USART2, USART_IT_TC);
         UART_TX_ISR(UART_RESERVED_CHANNEL1);
     }
 }
@@ -660,10 +663,12 @@ void USART3_IRQHandler(void)
 {
     if(USART_GetITStatus(USART3, USART_IT_RXNE) != RESET)
     {
+		USART_ClearITPendingBit(USART3, USART_IT_RXNE);
         UART_RX_ISR(UART_RESERVED_CHANNEL2);
     }
     else if(USART_GetITStatus(USART3, USART_IT_TC) != RESET)
     {
+		USART_ClearITPendingBit(USART3, USART_IT_TC);
         UART_TX_ISR(UART_RESERVED_CHANNEL2);
     }
 }
@@ -672,10 +677,12 @@ void UART4_IRQHandler(void)
 {
     if(USART_GetITStatus(UART4, USART_IT_RXNE) != RESET)
     {
+		USART_ClearITPendingBit(UART4, USART_IT_RXNE);
         UART_RX_ISR(UART_MP3_CHANNEL);
     }
     else if(USART_GetITStatus(UART4, USART_IT_TC) != RESET)
     {
+		USART_ClearITPendingBit(UART4, USART_IT_TC);
         UART_TX_ISR(UART_MP3_CHANNEL);
     }
 }

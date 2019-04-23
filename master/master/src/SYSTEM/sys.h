@@ -9,6 +9,7 @@ typedef enum {
 	RET_PARAM_ERR,
 	RET_TIMEOUT,
 	RET_SOURCE_LOCK,
+	RET_OVERFLOW,
 }RET_t;
 
 #define ERROR_HANDLER() while(1)

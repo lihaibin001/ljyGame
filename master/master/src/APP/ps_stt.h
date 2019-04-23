@@ -3,6 +3,7 @@ TREE (tree_psync)
 
 STATE (PS_ROOT,				0,				cs_no_action)
 TRANS (ENTRY,				INTERNAL,		ps_entry_root)
+TRANS (PS_EVT_START,		PS_BOOT_TEST,	no_action)
 TRANS (START,				PS_ROOT,		ps_start_action)
 STATE_END
 

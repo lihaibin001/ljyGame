@@ -14,6 +14,7 @@
 
 typedef enum
 {
+	PS_EVT_START,
 	PS_EVT_TEST,
 	PS_EVT_BOOT,
 	PS_EVT_FAULT,

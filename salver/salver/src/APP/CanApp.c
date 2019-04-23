@@ -210,7 +210,8 @@ static void CanAppReceiveMsgHandler(void) {
 }
 
 static void CanAppTxCompleteHalder(void) {
-	xSemaphoreGiveFromISR(xSemphore, NULL);
+//	 static BaseType_t xHigherPriorityTaskWoken = pdFALSE;
+//	xSemaphoreGiveFromISR(xSemphore, &xHigherPriorityTaskWoken);
 }
 
 static void CanAppBuffOffHanlder(void) {
@@ -226,10 +227,10 @@ void CanAppSendMsg(can_frame_t *pFrame) {
 	pFrame->type = 0;
 	pFrame->format = 0;
 	while (tryCnt--) {
-		if (CanSend_MSG(CAN_APP_CONTROLLER, pFrame)) {
-			if (xSemaphoreTake(xSemphore, pdMS_TO_TICKS(100)) == pdPASS) {
+		if (CanSend_MSG(CAN_APP_CONTROLLER, pFrame) == RET_OK) {
+//			if (xSemaphoreTake(xSemphore, pdMS_TO_TICKS(100)) == pdPASS) {
 				return;
-			}
+//			}
 		} else {
 			vTaskDelay(pdMS_TO_TICKS(10));
 		}
@@ -307,7 +308,7 @@ void xTimerHandler(void *p) {
 void CanAppInit(void) {
 	selfId = PDin(8) | (PDin(9) << 1) | (PDin(10) << 2) | (PDin(11) << 3)
 			| (PDin(12) << 4) | (PDin(13) << 5);
-	xQueue = xQueueCreate(3, 1);
+	xQueue = xQueueCreate(10, 1);
 	xSemphore = xSemaphoreCreateBinary();
 	xTaskCreate(xTask, "CanApp", 128, NULL, 3, NULL);
 	CanInit(CanAppHandler[0].controller, CanAppHandler[0].baud, canAppCb,

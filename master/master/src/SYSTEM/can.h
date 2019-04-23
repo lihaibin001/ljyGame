@@ -81,9 +81,9 @@ typedef void (*pHanlderCb)(CanControllerIdx_t, uint8_t);
 
 typedef struct {
 	can_frame_t frame[CAN_MAX_BUFF_AMOUNT];
-	uint8_t in;
-	uint8_t out;
-	bool isFull;
+	volatile uint8_t in;
+	volatile uint8_t out;
+	volatile uint8_t data_cnt;
 }RxBuff_t;
 typedef struct
 {

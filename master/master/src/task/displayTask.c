@@ -19,7 +19,7 @@ static void xTask(void *pPara)
 
 bool CreateDisplayTask(void)
 {
-	xQueue = xQueueCreate(5, 1);
+	xQueue = xQueueCreate(1, 1);
     if(xQueue == NULL)
     {
         return false;
@@ -36,3 +36,4 @@ void DisplayRefalsh(void)
     uint8_t trash;
 	xQueueSendFromISR(xQueue, &trash, NULL);
 }
+

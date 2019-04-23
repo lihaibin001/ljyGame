@@ -1,6 +1,6 @@
 #include "FreeRTOS.h"
 #include "task.h"
-#include "peridic.h"
+//#include "peridic.h"
 #include "eeprom.h"
 #include "iic.h"
 #include "gpioInit.h"
@@ -39,22 +39,22 @@ void mn_nvic_config(void)
 
     /* Enable the USART1 Interrupt */
     NVIC_InitStructure.NVIC_IRQChannel = USART1_IRQn;
-    NVIC_InitStructure.NVIC_IRQChannelSubPriority = 0x2;
+    NVIC_InitStructure.NVIC_IRQChannelSubPriority = 0x6;
     NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;
     NVIC_Init(&NVIC_InitStructure);
     /* Enable the USART2 Interrupt */
     NVIC_InitStructure.NVIC_IRQChannel = USART2_IRQn;
-    NVIC_InitStructure.NVIC_IRQChannelSubPriority = 0x2;
+    NVIC_InitStructure.NVIC_IRQChannelSubPriority = 0x6;
     NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;
     NVIC_Init(&NVIC_InitStructure);
     /* Enable the USART3 Interrupt */
     NVIC_InitStructure.NVIC_IRQChannel = USART3_IRQn;
-    NVIC_InitStructure.NVIC_IRQChannelSubPriority = 0x2;
+    NVIC_InitStructure.NVIC_IRQChannelSubPriority = 0x6;
     NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;
     NVIC_Init(&NVIC_InitStructure);
     /* Enable the UART4 Interrupt */
     NVIC_InitStructure.NVIC_IRQChannel = UART4_IRQn;
-    NVIC_InitStructure.NVIC_IRQChannelSubPriority = 0x2;
+    NVIC_InitStructure.NVIC_IRQChannelSubPriority = 0x6;
     NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;
     NVIC_Init(&NVIC_InitStructure);
 
@@ -84,6 +84,7 @@ void vApplicationDaemonTaskStartupHook( void )
 	sysclock_init();
 	mn_nvic_config();
 	gpioInit();
+	debug_init();
 	mp3_init();
     CanAppInit();
     keyDetectInit();

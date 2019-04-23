@@ -130,12 +130,13 @@ static void startAndStopKeyHandler(void) {
 static void pageUpConsecutivePress(void) {
 	if(keyStatus[keyIdx_4].status == 0) {
 		//TODO switch to volume
-//		ps_send_event();
+		ps_send_event(PS_SWITCH_VOLUME, 0);
 	}
 }
 
 static void pageDownConsecutivePress(void) {
 	if(keyStatus[keyIdx_3].status == 0) {
 		//TODO switch to volume
+		ps_send_event(PS_SWITCH_VOLUME, 0);
 	}
 }
