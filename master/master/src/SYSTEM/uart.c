@@ -720,7 +720,6 @@ void UART_DMA_TC_ISR(uint8_t chan) {
 		if(uart_chan[chan].tx_count != 0)
 		{
 			uart_dma_tag[chan].buf[i] = uart_chan[chan].tx_buf[uart_chan[chan].tx_out++];
-			uart_chan[chan].tx_count--;
 			if(uart_chan[chan].tx_out == uart_chan[chan].tx_size)
 			{
 				uart_chan[chan].tx_out = 0;
@@ -731,8 +730,10 @@ void UART_DMA_TC_ISR(uint8_t chan) {
 			break;
 		}
 	}
+	uart_chan[chan].tx_count -= i;
 	DMA_InitStructure.DMA_BufferSize = i;
 	DMA_Init(DMAy_Channelx, &DMA_InitStructure);
+	DMA_ClearITPendingBit(DMAy_Channelx, DMA_IT_TC);
 	DMA_Cmd(DMAy_Channelx, ENABLE);
 }
 
