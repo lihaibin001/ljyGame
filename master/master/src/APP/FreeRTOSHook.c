@@ -13,7 +13,7 @@
 #include "maxtrixApp.h"
 #include "sync.h"
 
-#define RCC_AHBPeriphClock (RCC_AHBPeriph_DMA1)
+#define RCC_AHBPeriphClock (RCC_AHBPeriph_DMA1 | RCC_AHBPeriph_DMA2)
 
 #define RCC_APB2PeriphClock ( RCC_APB2Periph_AFIO \
                               | RCC_APB2Periph_GPIOA \
@@ -45,17 +45,30 @@ void mn_nvic_config(void)
     /* Enable the USART2 Interrupt */
     NVIC_InitStructure.NVIC_IRQChannel = USART2_IRQn;
     NVIC_InitStructure.NVIC_IRQChannelSubPriority = 0x6;
-    NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;
     NVIC_Init(&NVIC_InitStructure);
     /* Enable the USART3 Interrupt */
     NVIC_InitStructure.NVIC_IRQChannel = USART3_IRQn;
     NVIC_InitStructure.NVIC_IRQChannelSubPriority = 0x6;
-    NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;
     NVIC_Init(&NVIC_InitStructure);
     /* Enable the UART4 Interrupt */
     NVIC_InitStructure.NVIC_IRQChannel = UART4_IRQn;
     NVIC_InitStructure.NVIC_IRQChannelSubPriority = 0x6;
-    NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;
+    NVIC_Init(&NVIC_InitStructure);
+
+    NVIC_InitStructure.NVIC_IRQChannel = DMA1_Channel4_IRQn;
+    NVIC_InitStructure.NVIC_IRQChannelSubPriority = 0x6;
+    NVIC_Init(&NVIC_InitStructure);
+
+    NVIC_InitStructure.NVIC_IRQChannel = DMA1_Channel7_IRQn;
+    NVIC_InitStructure.NVIC_IRQChannelSubPriority = 0x6;
+    NVIC_Init(&NVIC_InitStructure);
+
+    NVIC_InitStructure.NVIC_IRQChannel = DMA1_Channel2_IRQn;
+    NVIC_InitStructure.NVIC_IRQChannelSubPriority = 0x6;
+    NVIC_Init(&NVIC_InitStructure);
+
+    NVIC_InitStructure.NVIC_IRQChannel = DMA1_Channel5_IRQn;
+    NVIC_InitStructure.NVIC_IRQChannelSubPriority = 0x6;
     NVIC_Init(&NVIC_InitStructure);
 
 }

@@ -98,29 +98,34 @@ static void mp3_rx_check(void) {
 }
 
 static void mp3_tx_check(void) {
-	if (tx_buff_remained == 0) {
-		return;
-	}
+	static unsigned int i;
 	if (command_timeout < xTaskGetTickCount()) {
-		DEBUG_INFO(
-				"MP3 Tx:%02X %02X %02X %02X %02X %02X %02X %02X %02X %02X\r\n",
-				tx_buff[tx_buff_out][0], tx_buff[tx_buff_out][1],
-				tx_buff[tx_buff_out][2], tx_buff[tx_buff_out][3],
-				tx_buff[tx_buff_out][4], tx_buff[tx_buff_out][5],
-				tx_buff[tx_buff_out][6], tx_buff[tx_buff_out][7],
-				tx_buff[tx_buff_out][8], tx_buff[tx_buff_out][9]);
-		UART_Transmit(UART_MP3_CHANNEL, tx_buff[tx_buff_out], 10);
+		DEBUG_INFO("uart dma test data: %x \r\n", i++);
 		command_timeout = xTaskGetTickCount() + 100;
-		command_try_cnt++;
-		if (command_try_cnt == 3) {
-			tx_buff_out++;
-			tx_buff_remained--;
-			if (tx_buff_out == TX_BUF_SZIE) {
-				tx_buff_out = 0;
-			}
-		}
-
 	}
+//	if (tx_buff_remained == 0) {
+//		return;
+//	}
+//	if (command_timeout < xTaskGetTickCount()) {
+//		DEBUG_INFO(
+//				"MP3 Tx:%02X %02X %02X %02X %02X %02X %02X %02X %02X %02X\r\n",
+//				tx_buff[tx_buff_out][0], tx_buff[tx_buff_out][1],
+//				tx_buff[tx_buff_out][2], tx_buff[tx_buff_out][3],
+//				tx_buff[tx_buff_out][4], tx_buff[tx_buff_out][5],
+//				tx_buff[tx_buff_out][6], tx_buff[tx_buff_out][7],
+//				tx_buff[tx_buff_out][8], tx_buff[tx_buff_out][9]);
+//		UART_Transmit(UART_MP3_CHANNEL, tx_buff[tx_buff_out], 10);
+//		command_timeout = xTaskGetTickCount() + 100;
+//		command_try_cnt++;
+//		if (command_try_cnt == 3) {
+//			tx_buff_out++;
+//			tx_buff_remained--;
+//			if (tx_buff_out == TX_BUF_SZIE) {
+//				tx_buff_out = 0;
+//			}
+//		}
+//
+//	}
 }
 
 static void xTask(void *pPara) {

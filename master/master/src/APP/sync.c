@@ -19,7 +19,7 @@
 
 #include <string.h>
 #include <rand.h>
-
+#include "debug.h"
 typedef uint8_t PS_Current_State_T;
 typedef uint8_t PS_Flags_T;
 
@@ -174,6 +174,7 @@ static void xTask(void *p) {
 /* entry actions                                                     */
 /*********************************************************************/
 static uint8_t ps_entry_root(uint16_t data) {
+	DEBUG_INFO("ps_entry_root\r\n");
 	ps_send_event(PS_EVT_START, 0);
 	return PS_ROOT;
 }

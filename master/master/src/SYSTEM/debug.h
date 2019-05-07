@@ -13,10 +13,10 @@
 #define DEBUG_LVL_WARNING 2
 #define DEBUG_LVL_INFO 3
 
-#define DEBUG_LEVEL DEBUG_LVL_NONE
+#define DEBUG_LEVEL DEBUG_LVL_INFO
 
 #if DEBUG_LEVEL == DEBUG_LVL_INFO
-#define DEBUG_INFO(format, ...) printf("[INFO] " format,##__VA_ARGS__)
+#define DEBUG_INFO(format, ...) printf("[INFO] " format, ##__VA_ARGS__)
 #define DEBUG_WARNING(format, ...) printf("[WARNING] " format, ##__VA_ARGS__)
 #define DEBUG_ERROR(format, ...) printf(f"[ERROR] " ormat, ##__VA_ARGS__)
 

@@ -93,7 +93,7 @@ extern void UART_ERR_ISR(uint8_t chan);
 /******************************************************************************/
 /* Function Prototypes for Private Functions with File Level Scope            */
 /******************************************************************************/
-extern uint8_t UART_Transmit(uint8_t channel, const uint8_t* tx_buf, uint8_t bytes);
+extern uint8_t UART_Transmit(uint8_t channel, const uint8_t* tx_buf, uint16_t bytes);
 extern void UART_ReConfig(uint32_t baudrate,uint16_t len,uint16_t stopbit,uint16_t parity);
 /*=======================================================================================*\
  * File Revision History
