@@ -50,6 +50,7 @@ void maxtriAppStopTime(void);
 uint16_t maxtriAppGetTime(void);
 void maxtriAppVolumeIncreae(void);
 void maxtriAPpVolumeDecreae(void);
+void maxtriAppSaveVolume(void);
 void maxtriAppVolumeRefresh(void) ;
 uint8_t maxtriAppGetVolume(void);
 uint8_t maxtriAppGetPlayerSalverId(uint8_t player);

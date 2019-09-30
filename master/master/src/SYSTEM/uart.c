@@ -30,9 +30,11 @@ typedef struct uart_chan_tag {
     bool tx_progress;            // Tx in progress
 } uart_chan_T;
 
-typedef struct uart_dma_tag {
-	uint16_t buf_size;
-	uint8_t *buf;
+typedef struct  {
+	uint16_t tx_buf_size;
+	uint16_t rx_buf_size;
+	uint8_t *tx_buf;
+	uint8_t *rx_buff;
 	bool lock;
 } uart_dma_t;
 
@@ -56,20 +58,29 @@ static uint8_t uart3_rx_buf[UART3_RX_BUF_SIZE];
 static uint8_t uart3_tx_buf[UART3_TX_BUF_SIZE];
 
 #define UART0_DMA_TX_SIZE 128
-#define UART1_DMA_TX_SIZE 1
-#define UART2_DMA_TX_SIZE 1
+#define UART0_DMA_RX_SIZE 128
+#define UART1_DMA_TX_SIZE 32
+#define UART1_DMA_RX_SIZE 32
+#define UART2_DMA_TX_SIZE 32
+#define UART2_DMA_RX_SIZE 32
 #define UART3_DMA_TX_SIZE 32
+#define UART3_DMA_RX_SIZE 32
 static uint8_t uart0_tx_dma_buff[UART0_DMA_TX_SIZE];
+static uint8_t uart0_rx_dma_buff[UART0_DMA_RX_SIZE];
 static uint8_t uart1_tx_dma_buff[UART1_DMA_TX_SIZE];
+static uint8_t uart1_rx_dma_buff[UART1_DMA_RX_SIZE];
 static uint8_t uart2_tx_dma_buff[UART2_DMA_TX_SIZE];
+static uint8_t uart2_rx_dma_buff[UART2_DMA_RX_SIZE];
 static uint8_t uart3_tx_dma_buff[UART3_DMA_TX_SIZE];
-uart_dma_t uart_dma_tag[UART_NUM_CHANNELS] =
-		{
-				{ UART0_DMA_TX_SIZE, uart0_tx_dma_buff, false },
-				{ UART1_DMA_TX_SIZE, uart1_tx_dma_buff, false },
-				{ UART2_DMA_TX_SIZE, uart2_tx_dma_buff, false },
-				{ UART3_DMA_TX_SIZE, uart3_tx_dma_buff, false },
-		};
+static uint8_t uart3_rx_dma_buff[UART3_DMA_RX_SIZE];
+uart_dma_t uart_dma[UART_NUM_CHANNELS] =
+{
+	{ UART0_DMA_TX_SIZE, UART0_DMA_RX_SIZE, uart0_tx_dma_buff, uart0_rx_dma_buff, false},
+	{ UART1_DMA_TX_SIZE, UART1_DMA_RX_SIZE, uart1_tx_dma_buff, uart1_rx_dma_buff, false},
+	{ UART2_DMA_TX_SIZE, UART2_DMA_RX_SIZE, uart2_tx_dma_buff, uart2_rx_dma_buff, false},
+	{ UART3_DMA_TX_SIZE, UART3_DMA_RX_SIZE, uart3_tx_dma_buff, uart3_rx_dma_buff, false},
+};
+
 /******************************************************************************/
 /* Function Prototypes for Private Functions with File Level Scope            */
 /******************************************************************************/
@@ -87,8 +98,8 @@ void Uart_InitIO(uint8_t chan);
 /******************************************************************************/
 
 void Uart_InitIO(uint8_t chan) {
-	USART_InitTypeDef USART_InitStructure;
-	GPIO_InitTypeDef GPIO_InitStructure;
+	USART_InitTypeDef USART_InitStructure = {0};
+	GPIO_InitTypeDef GPIO_InitStructure = {0};
 
 	switch (chan) {
 	case 0:
@@ -124,18 +135,21 @@ void Uart_InitIO(uint8_t chan) {
 		USART_Cmd(USART1, ENABLE);
 		break;
 	case 1:
+		GPIO_PinRemapConfig(GPIO_Remap_USART2,ENABLE);
 		/* Configure USART1 Rx (PA10) as input floating */
-		GPIO_InitStructure.GPIO_Pin = GPIO_Pin_3;
+		GPIO_InitStructure.GPIO_Pin = GPIO_Pin_6;
 		GPIO_InitStructure.GPIO_Mode = GPIO_Mode_IN_FLOATING;
-		GPIO_Init( GPIOA, &GPIO_InitStructure);
+		//GPIO_Init( GPIOA, &GPIO_InitStructure);
+		GPIO_Init( GPIOD, &GPIO_InitStructure);
 
 		/* Configure USART1 Tx (PA9) as alternate function push-pull */
-		GPIO_InitStructure.GPIO_Pin = GPIO_Pin_2;
+		GPIO_InitStructure.GPIO_Pin = GPIO_Pin_5;
 		GPIO_InitStructure.GPIO_Speed = GPIO_Speed_10MHz;
 		GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AF_PP;
-		GPIO_Init( GPIOA, &GPIO_InitStructure);
+		//GPIO_Init( GPIOA, &GPIO_InitStructure);
+		GPIO_Init( GPIOD, &GPIO_InitStructure);
 
-		USART_InitStructure.USART_BaudRate = 115200;
+		USART_InitStructure.USART_BaudRate = 9600;
 		USART_InitStructure.USART_WordLength = USART_WordLength_8b;
 		USART_InitStructure.USART_StopBits = USART_StopBits_1;
 		USART_InitStructure.USART_Parity = USART_Parity_No;
@@ -224,7 +238,7 @@ void Uart_InitIO(uint8_t chan) {
 
 void UART_ReConfig(uint32_t baudrate, uint16_t len, uint16_t stopbit,
 		uint16_t parity) {
-	USART_InitTypeDef USART_InitStructure;
+	USART_InitTypeDef USART_InitStructure = {0};
 
 	/* UART4 configuration ------------------------------------------------------*/
 	/* UART4 configured as follow:
@@ -329,7 +343,6 @@ void Uart_Initialize(uint8_t chan) {
  *******************************************************************************/
 bool Uart_Get_Char(uint8_t chan, uint8_t* ptr) {
 	bool ret = false;        // Return value. Assume buffer empty!
-	DMA_Channel_TypeDef *DMAy_Channelx;
 	// Error checking
 
 #if 0
@@ -338,22 +351,7 @@ bool Uart_Get_Char(uint8_t chan, uint8_t* ptr) {
 	if (!ptr)
 		return false;    // Do not accept NULL pointers!
 #endif
-	switch (chan) {
-	case 0:
-		DMAy_Channelx = DMA1_Channel5;
-		break;
-	case 1:
-		DMAy_Channelx = DMA1_Channel6;
-		break;
-	case 2:
-		DMAy_Channelx = DMA1_Channel3;
-		break;
-	case 3:
-		DMAy_Channelx = DMA2_Channel3;
-		break;
-	default:
-		return false;
-	}
+
 
 	if(0 != uart_chan[chan].rx_count){
 		*ptr = uart_chan[chan].rx_buf[uart_chan[chan].rx_out++]; // Store read data
@@ -428,7 +426,7 @@ bool Uart_Put_Char(uint8_t chan, uint8_t data) {
  * Description:
  *******************************************************************************/
 static void UART_DMAConfig(uint8_t channel) {
-	DMA_InitTypeDef DMA_InitStructure;
+	DMA_InitTypeDef DMA_InitStructure = {0};
 	switch(channel) {
 		case 0:
 		DMA_DeInit(DMA1_Channel4);
@@ -450,10 +448,10 @@ static void UART_DMAConfig(uint8_t channel) {
 
 		DMA_DeInit(DMA1_Channel5);
 		DMA_InitStructure.DMA_PeripheralBaseAddr = USART1_BASE + 4;
-		DMA_InitStructure.DMA_MemoryBaseAddr = (uint32_t) uart0_rx_buf;
+		DMA_InitStructure.DMA_MemoryBaseAddr = (uint32_t) uart0_rx_dma_buff;
 		DMA_InitStructure.DMA_DIR = DMA_DIR_PeripheralSRC;
-		DMA_InitStructure.DMA_Mode = DMA_Mode_Circular;
-		DMA_InitStructure.DMA_BufferSize = UART0_RX_BUF_SIZE;
+		DMA_InitStructure.DMA_Mode = DMA_Mode_Normal;
+		DMA_InitStructure.DMA_BufferSize = UART0_DMA_RX_SIZE;
 		DMA_Init(DMA1_Channel5, &DMA_InitStructure);
 		DMA_Cmd(DMA1_Channel5, ENABLE);
 		break;
@@ -477,10 +475,10 @@ static void UART_DMAConfig(uint8_t channel) {
 
 		DMA_DeInit(DMA1_Channel6);
 		DMA_InitStructure.DMA_PeripheralBaseAddr = USART2_BASE + 4;
-		DMA_InitStructure.DMA_MemoryBaseAddr = (uint32_t) uart1_rx_buf;
+		DMA_InitStructure.DMA_MemoryBaseAddr = (uint32_t) uart1_rx_dma_buff;
 		DMA_InitStructure.DMA_DIR = DMA_DIR_PeripheralSRC;
-		DMA_InitStructure.DMA_BufferSize = UART1_RX_BUF_SIZE;
-		DMA_InitStructure.DMA_Mode = DMA_Mode_Circular;
+		DMA_InitStructure.DMA_BufferSize = UART1_DMA_RX_SIZE;
+		DMA_InitStructure.DMA_Mode = DMA_Mode_Normal;
 		DMA_Init(DMA1_Channel6, &DMA_InitStructure);
 		DMA_Cmd(DMA1_Channel6, ENABLE);
 		break;
@@ -504,10 +502,10 @@ static void UART_DMAConfig(uint8_t channel) {
 
 		DMA_DeInit(DMA1_Channel3);
 		DMA_InitStructure.DMA_PeripheralBaseAddr = USART3_BASE + 4;
-		DMA_InitStructure.DMA_MemoryBaseAddr = (uint32_t) uart2_rx_buf;
+		DMA_InitStructure.DMA_MemoryBaseAddr = (uint32_t) uart2_rx_dma_buff;
 		DMA_InitStructure.DMA_DIR = DMA_DIR_PeripheralSRC;
-		DMA_InitStructure.DMA_BufferSize = UART2_RX_BUF_SIZE;
-		DMA_InitStructure.DMA_Mode = DMA_Mode_Circular;
+		DMA_InitStructure.DMA_BufferSize = UART2_DMA_RX_SIZE;
+		DMA_InitStructure.DMA_Mode = DMA_Mode_Normal;
 		DMA_Init(DMA1_Channel3, &DMA_InitStructure);
 		DMA_Cmd(DMA1_Channel3, ENABLE);
 		break;
@@ -531,10 +529,10 @@ static void UART_DMAConfig(uint8_t channel) {
 
 		DMA_DeInit(DMA2_Channel3);
 		DMA_InitStructure.DMA_PeripheralBaseAddr = UART4_BASE + 4;
-		DMA_InitStructure.DMA_MemoryBaseAddr = (uint32_t) uart3_rx_buf;
+		DMA_InitStructure.DMA_MemoryBaseAddr = (uint32_t) uart3_rx_dma_buff;
 		DMA_InitStructure.DMA_DIR = DMA_DIR_PeripheralSRC;
-		DMA_InitStructure.DMA_Mode = DMA_Mode_Circular;
-		DMA_InitStructure.DMA_BufferSize = UART3_RX_BUF_SIZE;
+		DMA_InitStructure.DMA_Mode = DMA_Mode_Normal;
+		DMA_InitStructure.DMA_BufferSize = UART3_DMA_RX_SIZE;
 		DMA_Init(DMA2_Channel3, &DMA_InitStructure);
 		DMA_Cmd(DMA2_Channel3, ENABLE);
 		break;
@@ -679,8 +677,6 @@ void UART_RX_ISR(uint8_t chan) {
  * Description: UART ERR Interrupt Service Routine
  *******************************************************************************/
 void UART_ERR_ISR(uint8_t chan) {
-	volatile uint8_t data;
-	volatile uint8_t err;
 	USART_TypeDef* tmp_USARTx;
 
 	switch (chan) {
@@ -702,8 +698,8 @@ void UART_ERR_ISR(uint8_t chan) {
 	}
 
 	//clear error
-	err = tmp_USARTx->SR;
-	data = (uint16_t) (tmp_USARTx->DR & (uint16_t) 0x01FF);
+	(void) tmp_USARTx->SR;
+	(void) tmp_USARTx->DR;
 }
 
 /*******************************************************************************
@@ -733,18 +729,20 @@ void UART_IDLE_ISR(uint8_t chan) {
 	}
 	DMA_Cmd(DMAy_Channelx,DISABLE);
 	uint16_t i;
-	uint16_t len = uart_dma_tag[chan].buf_size - DMA_GetCurrDataCounter(DMAy_Channelx);
+	uint16_t len = uart_dma[chan].rx_buf_size - DMA_GetCurrDataCounter(DMAy_Channelx);
 	for(i = 0; i < len; i++) {
 		if (uart_chan[chan].rx_count != uart_chan[chan].rx_size) {
+			uart_chan[chan].rx_buf[uart_chan[chan].rx_in++] = uart_dma[chan].rx_buff[i];
 			if ((uart_chan[chan].rx_in) >= (uart_chan[chan].rx_size)) {
 				uart_chan[chan].rx_in = 0; // Wrap index
 			}
-			uart_chan[chan].rx_in++;
+			uart_chan[chan].rx_count++;
 		} else                                    // Rx buffer full
 		{
 			break;
 		}
 	}
+	DMA_SetCurrDataCounter(DMAy_Channelx, 0);
 	DMA_Cmd(DMAy_Channelx,ENABLE);
 }
 
@@ -759,7 +757,7 @@ void UART_DMA_TC_ISR(uint8_t chan) {
 	DMA_Channel_TypeDef* DMAy_Channelx;
 
 	uint32_t addr;
-	DMA_InitTypeDef DMA_InitStructure;
+	DMA_InitTypeDef DMA_InitStructure = {0};
 	uint16_t i;
 	switch (chan) {
 	case 0:
@@ -785,18 +783,17 @@ void UART_DMA_TC_ISR(uint8_t chan) {
 	default:
 		return;
 	}
-//	if (!uart_dma_tag[chan].lock) {
-//		uart_dma_tag[chan].lock = true;
+	if (!uart_dma[chan].lock) {
 		if (uart_chan[chan].tx_count == 0) {
 			uart_chan[chan].tx_progress = false;
-//			uart_dma_tag[chan].lock = false;
 			return;
 		}
 
-		for (i = 0; i < uart_dma_tag[chan].buf_size; i++) {
+
+		uart_dma[chan].lock = true;
+		for (i = 0; i < uart_dma[chan].tx_buf_size; i++) {
 			if (uart_chan[chan].tx_count != 0) {
-				uart_dma_tag[chan].buf[i] =
-						uart_chan[chan].tx_buf[uart_chan[chan].tx_out++];
+				uart_dma[chan].tx_buf[i] = uart_chan[chan].tx_buf[uart_chan[chan].tx_out++];
 				if (uart_chan[chan].tx_out == uart_chan[chan].tx_size) {
 					uart_chan[chan].tx_out = 0;
 				}
@@ -807,7 +804,7 @@ void UART_DMA_TC_ISR(uint8_t chan) {
 		}
 		DMA_Cmd(DMAy_Channelx, DISABLE);
 		DMA_InitStructure.DMA_PeripheralBaseAddr =addr;
-		DMA_InitStructure.DMA_MemoryBaseAddr = (uint32_t) uart_dma_tag[chan].buf;
+		DMA_InitStructure.DMA_MemoryBaseAddr = (uint32_t) uart_dma[chan].tx_buf;
 		DMA_InitStructure.DMA_DIR = DMA_DIR_PeripheralDST;
 		DMA_InitStructure.DMA_BufferSize = i;
 		DMA_InitStructure.DMA_PeripheralInc = DMA_PeripheralInc_Disable;
@@ -819,11 +816,11 @@ void UART_DMA_TC_ISR(uint8_t chan) {
 		DMA_InitStructure.DMA_M2M = DMA_M2M_Disable;
 		DMA_Init(DMAy_Channelx, &DMA_InitStructure);
 		DMA_Cmd(DMAy_Channelx, ENABLE);
-//		uart_dma_tag[chan].lock = false;
-//	}
-//	else {
-//		uart_chan[chan].tx_progress = false;
-//	}
+		uart_dma[chan].lock = false;
+	}
+	else {
+		uart_chan[chan].tx_progress = false;
+	}
 }
 
 /******************************************************************************/
@@ -871,7 +868,7 @@ uint8_t UART_Transmit(uint8_t chan, const uint8_t* tx_buf,
 	DMA_Channel_TypeDef* DMAy_Channelx;
 	uint32_t addr;
 	uint32_t it_flag;
-	DMA_InitTypeDef DMA_InitStructure;
+	DMA_InitTypeDef DMA_InitStructure = {0};
 	uint16_t i;
 	switch (chan) {
 	case 0:
@@ -897,7 +894,7 @@ uint8_t UART_Transmit(uint8_t chan, const uint8_t* tx_buf,
 	default:
 		return 0;
 	}
-	if(chan >= UART_NUM_CHANNELS || tx_buf == 0 || bytes == 0) {
+	if( tx_buf == 0 || bytes == 0) {
 		return 0;
 	}
 
@@ -912,12 +909,12 @@ uint8_t UART_Transmit(uint8_t chan, const uint8_t* tx_buf,
 			ret = i;
 		}
 	}
-//	if(!uart_dma_tag[chan].lock){
-//		uart_dma_tag[chan].lock = true;
+	if(!uart_dma[chan].lock){
+		uart_dma[chan].lock = true;
 		if (!uart_chan[chan].tx_progress) {
-			for (i = 0; i < uart_dma_tag[chan].buf_size; i++) {
+			for (i = 0; i < uart_dma[chan].tx_buf_size; i++) {
 				if (uart_chan[chan].tx_count != 0) {
-					uart_dma_tag[chan].buf[i] =
+					uart_dma[chan].tx_buf[i] =
 							uart_chan[chan].tx_buf[uart_chan[chan].tx_out++];
 					if (uart_chan[chan].tx_out == uart_chan[chan].tx_size) {
 						uart_chan[chan].tx_out = 0;
@@ -930,7 +927,7 @@ uint8_t UART_Transmit(uint8_t chan, const uint8_t* tx_buf,
 			uart_chan[chan].tx_progress = true;
 			DMA_Cmd(DMAy_Channelx, DISABLE);
 			DMA_InitStructure.DMA_PeripheralBaseAddr =addr;
-			DMA_InitStructure.DMA_MemoryBaseAddr = (uint32_t) uart_dma_tag[chan].buf;
+			DMA_InitStructure.DMA_MemoryBaseAddr = (uint32_t) uart_dma[chan].tx_buf;
 			DMA_InitStructure.DMA_DIR = DMA_DIR_PeripheralDST;
 			DMA_InitStructure.DMA_BufferSize = i;
 			DMA_InitStructure.DMA_PeripheralInc = DMA_PeripheralInc_Disable;
@@ -942,10 +939,11 @@ uint8_t UART_Transmit(uint8_t chan, const uint8_t* tx_buf,
 			DMA_InitStructure.DMA_M2M = DMA_M2M_Disable;
 			DMA_Init(DMAy_Channelx, &DMA_InitStructure);
 			DMA_ClearITPendingBit(it_flag);
+			DMA_ITConfig(DMAy_Channelx, DMA_IT_TC, ENABLE);
 			DMA_Cmd(DMAy_Channelx, ENABLE);
 		}
-//		uart_dma_tag[chan].lock = false;
-//	}
+		uart_dma[chan].lock = false;
+	}
 #if 0
 	int i;
 
@@ -999,7 +997,7 @@ void USART1_IRQHandler(void) {
 	} else if (USART_GetITStatus(USART1, USART_IT_TC) != RESET) {
 		USART_ClearITPendingBit(USART1, USART_IT_TC);
 		//UART_TX_ISR(UART_DEBUG_CHANNEL);
-	} else if(USART_GetITStatus(USART1, USART_IT_IDLE)) {
+	} else if(USART_GetITStatus(USART1, USART_IT_IDLE) != RESET) {
 		USART_ClearITPendingBit(USART1, USART_IT_IDLE);
 		UART_IDLE_ISR(0);
 		(void) USART1->DR;
@@ -1013,9 +1011,9 @@ void USART2_IRQHandler(void) {
 	} else if (USART_GetITStatus(USART2, USART_IT_TC) != RESET) {
 		USART_ClearITPendingBit(USART2, USART_IT_TC);
 		//UART_TX_ISR(UART_RESERVED_CHANNEL1);
-	} else if(USART_GetITStatus(USART2, USART_IT_IDLE)) {
+	} else if(USART_GetITStatus(USART2, USART_IT_IDLE) != RESET) {
 		USART_ClearITPendingBit(USART2, USART_IT_IDLE);
-		UART_IDLE_ISR(0);
+		UART_IDLE_ISR(1);
 		(void) USART2->DR;
 	}
 }
@@ -1027,9 +1025,9 @@ void USART3_IRQHandler(void) {
 	} else if (USART_GetITStatus(USART3, USART_IT_TC) != RESET) {
 		USART_ClearITPendingBit(USART3, USART_IT_TC);
 		//UART_TX_ISR(UART_RESERVED_CHANNEL2);
-	} else if(USART_GetITStatus(USART3, USART_IT_IDLE)) {
+	} else if(USART_GetITStatus(USART3, USART_IT_IDLE) != RESET) {
 		USART_ClearITPendingBit(USART3, USART_IT_IDLE);
-		UART_IDLE_ISR(0);
+		UART_IDLE_ISR(2);
 		(void) USART3->DR;
 	}
 }
@@ -1041,9 +1039,9 @@ void UART4_IRQHandler(void) {
 	} else if (USART_GetITStatus(UART4, USART_IT_TC) != RESET) {
 		USART_ClearITPendingBit(UART4, USART_IT_TC);
 		//UART_TX_ISR(UART_MP3_CHANNEL);
-	} else if(USART_GetITStatus(UART4, USART_IT_IDLE)) {
+	} else if(USART_GetITStatus(UART4, USART_IT_IDLE) != RESET) {
 		USART_ClearITPendingBit(UART4, USART_IT_IDLE);
-		UART_IDLE_ISR(0);
+		UART_IDLE_ISR(3);
 		(void) UART4->DR;
 	}
 }

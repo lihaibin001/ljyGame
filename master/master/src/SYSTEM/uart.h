@@ -51,10 +51,10 @@
 #define UART0_RX_BUF_SIZE   2048
 //#define UART0_RX_BUF_SIZE   300
 #define UART0_TX_BUF_SIZE   256
-#define UART1_RX_BUF_SIZE   1
-#define UART1_TX_BUF_SIZE   1
-#define UART2_RX_BUF_SIZE   1
-#define UART2_TX_BUF_SIZE   1
+#define UART1_RX_BUF_SIZE   128
+#define UART1_TX_BUF_SIZE   128
+#define UART2_RX_BUF_SIZE   128
+#define UART2_TX_BUF_SIZE   128
 #define UART3_RX_BUF_SIZE   256
 #define UART3_TX_BUF_SIZE   256
 
@@ -66,9 +66,9 @@ typedef void (*uart_rx_func_ptr) (uint8_t ch, uint8_t err);
 typedef enum UART_CHANNEL_Tag
 {
     UART_DEBUG_CHANNEL = 0,
-	UART_RESERVED_CHANNEL1 = 1,
-	UART_RESERVED_CHANNEL2 = 2,
-    UART_MP3_CHANNEL = 3,
+	UART_MP3_CHANNEL_1 = 1,
+	UART_RESERVED_CHANNEL1 = 2,
+	UART_MP3_CHANNEL_2  = 3,
     UART_NUM_CHANNELS
 }UART_CHANNEL_T;
 /******************************************************************************/

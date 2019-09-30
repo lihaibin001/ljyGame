@@ -8,7 +8,8 @@
 #include "string.h"
 #include "sync.h"
 #include "mp3.h"
-
+#include "profile.h"
+#include "debug.h"
 typedef struct {
 	uint8_t lock :1;
 	uint8_t status :3;
@@ -26,7 +27,7 @@ uint8_t gGameMode;
 static uint8_t gVolume = 15;
 static volatile uint8_t gScore[2];
 static TimerHandle_t xTimers;
-static TimerHandle_t xTimers2;
+//static TimerHandle_t xTimers2;
 static Palte_status_t palteStatus[PLATE_AMOUNT];
 
 const uint8_t volume_image[] = {
@@ -454,6 +455,9 @@ bool maxtrixAppSelfTest(void) {
 //				msg.format = CAN_ID_STANDRD;
 //				msg.type = CAN_TYPE_DATA;
 				status = CanAppSendMsg(&msg);
+				if(status != RET_OK) {
+					DEBUG_WARNING("SND MSG FAIL:%d\r\n", status);
+				}
 			}
 		} else {
 			continue;
@@ -599,8 +603,7 @@ void maxtrixAppGameStart(void) {
 }
 
 void maxtriAppScoreIncrease(uint8_t player, uint16_t sound) {
-	mp3_send_command(0x15, 0x0);
-	mp3_send_command(0x25, sound);
+	mp3_send_command(0x25, sound, 1);
 	gScore[player]++;
 	maxtrixAppSetGameScoreRefresh();
 }
@@ -611,8 +614,7 @@ uint8_t maxtriAppGetScore(uint8_t player) {
 
 void maxtriAppScoreDecrease(uint8_t player, uint16_t sound) {
 	if(gScore[player] != 0) {
-		mp3_send_command(0x15, 0x0);
-		mp3_send_command(0x25, sound);
+		mp3_send_command(0x25, sound, 1);
 		gScore[player] -= 1;
 		maxtrixAppSetGameScoreRefresh();
 	}
@@ -625,6 +627,7 @@ static void vTimerCallback(void *p) {
 }
 
 void maxtriAppInit(void) {
+	gVolume = profile_get_volume();
 	xTimers = xTimerCreate("1stimer", pdMS_TO_TICKS(1000), pdTRUE,
 			(void*) 0, vTimerCallback);
 	if (xTimers == NULL) {
@@ -665,6 +668,10 @@ void maxtriAPpVolumeDecreae(void) {
 		return;
 	}
 	gVolume--;
+}
+
+void maxtriAppSaveVolume(void) {
+	profile_set_volume(gVolume);
 }
 void maxtriAppVolumeRefresh(void) {
 	uint8_t tens, units;

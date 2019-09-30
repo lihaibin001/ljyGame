@@ -11,19 +11,37 @@
 extern TimerHandle_t g_led_off_timer;
 static TimerHandle_t xTimers;
 static bool touchButtonSta;
+static uint32_t timer;
+static bool ledon;
 static void vTimerCallback(TimerHandle_t xTimer) {
 	uint8_t i;
 	static uint8_t debouching;
 	uint8_t stat = GPIO_ReadInputDataBit(GPIOC, GPIO_Pin_9);
+//	if(!ledon)
+//	{
+//		if(timer++ == 400)
+//		{
+//			ledon = true;
+//			while (!ws2812b_IsReady())
+//				;  // wait
+//			for (i = 0; i <= NUM_GRB_LEDS; i++) {
+//				leds[i].b = 0xFF;
+//				leds[i].g = 0xFF;
+//				leds[i].r = 0;
+//			}
+//			ws2812b_SendRGB(leds, NUM_GRB_LEDS);
+//			timer = 0;
+//		}
+//	}
 
 	if (stat && !touchButtonSta) {
-		if (++debouching == 3) {
+		if (++debouching == 2) {
 			touchButtonSta = true;
 			debouching = 0;
 		}
 	} else if (!stat && touchButtonSta) {
 
-		if (++debouching == 3) {
+		if (++debouching == 2) {
 			touchButtonSta = false;
 			debouching = 0;
 		}
@@ -46,23 +64,20 @@ static void vTimerCallback(TimerHandle_t xTimer) {
 					leds[i].b = 0;
 					leds[i].g = 0;
 					leds[i].r = 0;
-//				leds[i].b = rand() / 255;
-//				leds[i].g = rand() / 255;
-//				leds[i].r = rand() / 255;
 				}
 				ws2812b_SendRGB(leds, NUM_GRB_LEDS);
+				ledon = false;
 				can_frame_t frame;
 				frame.dataByte0 = 0;
 				frame.dataByte1 = plate_color;
 				CanAppSendMsg(&frame);
-
 			}
 		}
 	}
 }
 
 void at24qt_intit(void) {
-	xTimers = xTimerCreate("at24qtchecker", pdMS_TO_TICKS(20), pdTRUE,
+	xTimers = xTimerCreate("at24qtchecker", pdMS_TO_TICKS(5), pdTRUE,
 			(void*) 0, vTimerCallback);
 	xTimerStart(xTimers, 0);
 }

@@ -24,5 +24,6 @@ typedef enum
 
 
 void keyDetectInit(void);
+uint8_t keyGetStatus(uint8_t keyIndex);
 
 #endif

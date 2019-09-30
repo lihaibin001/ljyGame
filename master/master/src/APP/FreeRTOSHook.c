@@ -1,6 +1,5 @@
 #include "FreeRTOS.h"
 #include "task.h"
-//#include "peridic.h"
 #include "eeprom.h"
 #include "iic.h"
 #include "gpioInit.h"
@@ -12,7 +11,10 @@
 #include "keyDetect.h"
 #include "maxtrixApp.h"
 #include "sync.h"
-
+#include "profile.h"
+#include "debug.h"
+#include "mp3.h"
+#include "com.h"
 #define RCC_AHBPeriphClock (RCC_AHBPeriph_DMA1 | RCC_AHBPeriph_DMA2)
 
 #define RCC_APB2PeriphClock ( RCC_APB2Periph_AFIO \
@@ -33,7 +35,7 @@
 
 void mn_nvic_config(void)
 {
-    NVIC_InitTypeDef  NVIC_InitStructure;
+    NVIC_InitTypeDef  NVIC_InitStructure = {0};
 
 	NVIC_PriorityGroupConfig(NVIC_PriorityGroup_1);
 
@@ -67,10 +69,9 @@ void mn_nvic_config(void)
     NVIC_InitStructure.NVIC_IRQChannelSubPriority = 0x6;
     NVIC_Init(&NVIC_InitStructure);
 
-    NVIC_InitStructure.NVIC_IRQChannel = DMA1_Channel5_IRQn;
+    NVIC_InitStructure.NVIC_IRQChannel = DMA2_Channel5_IRQn;
     NVIC_InitStructure.NVIC_IRQChannelSubPriority = 0x6;
     NVIC_Init(&NVIC_InitStructure);
-
 }
 
 
@@ -92,12 +93,13 @@ void sysclok_deinit(void)
 
 void vApplicationDaemonTaskStartupHook( void )
 {
-	//RGBClearBuff();
-
 	sysclock_init();
+	//IWdog_Init();
+
 	mn_nvic_config();
 	gpioInit();
 	debug_init();
+	profile_load();
 	mp3_init();
     CanAppInit();
     keyDetectInit();
@@ -105,11 +107,12 @@ void vApplicationDaemonTaskStartupHook( void )
     maxtriAppInit();
     CreateDisplayTask();
     ps_task_create();
+    com_init();
 }
 
 void vApplicationIdleHook( void )
 {
-//	 RGBProcessor();
+
 }
 
 void vApplicationTickHook( void )

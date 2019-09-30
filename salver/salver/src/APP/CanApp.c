@@ -16,6 +16,7 @@
 #define PROTOCAL_GAME_OVER		(uint8_t)1
 #define PROTOCAL_SELF_TESET		(uint8_t)2
 #define PROTOCAL_START_GAME		(uint8_t)3
+#define PROTOCAL_SLEEP_REQ		(uint8_t)0xFF
 
 typedef void (*pvoidFunc)(void);
 
@@ -202,6 +203,9 @@ static void CanAppReceiveMsgHandler(void) {
 					vTaskDelay(500);
 				}
 			}
+			break;
+		case PROTOCAL_SLEEP_REQ:
+			//
 			break;
 		default:
 			break;

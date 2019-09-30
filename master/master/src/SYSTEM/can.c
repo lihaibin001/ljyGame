@@ -25,7 +25,7 @@ static CanHandler_t handler[canControllerIdxNum] = {
 static void filterConfig(const canFIrlterList_t *pFirlterList)
 {
 	uint8_t i;
-	CAN_FilterInitTypeDef CAN_FilterInitStructure;
+	CAN_FilterInitTypeDef CAN_FilterInitStructure = {0};
 	CAN_FilterInitStructure.CAN_FilterFIFOAssignment = 0;
 	CAN_FilterInitStructure.CAN_FilterMode = CAN_FilterMode_IdList;
 	CAN_FilterInitStructure.CAN_FilterScale = CAN_FilterScale_32bit;
@@ -51,7 +51,7 @@ static void filterConfig(const canFIrlterList_t *pFirlterList)
 
 static void filterDisbale(void)
 {
-	CAN_FilterInitTypeDef CAN_FilterInitStructure;
+	CAN_FilterInitTypeDef CAN_FilterInitStructure = {0};
 	CAN_FilterInitStructure.CAN_FilterActivation = DISABLE;
 	CAN_FilterInit(&CAN_FilterInitStructure);
 }
@@ -72,8 +72,8 @@ void CanInit(CanControllerIdx_t controller, CanBaud_t baud, pHanlderCb cb, const
 	}
 
 	CAN_TypeDef *pCan = (CAN_TypeDef *)pCanController[controller];
-	CAN_InitTypeDef CAN_InitStructure;
-	NVIC_InitTypeDef  NVIC_InitStructure;
+	CAN_InitTypeDef CAN_InitStructure = {0};
+	NVIC_InitTypeDef  NVIC_InitStructure = {0};
 
 	CAN_InitStructure.CAN_TTCM = DISABLE;
 	CAN_InitStructure.CAN_ABOM = DISABLE;
