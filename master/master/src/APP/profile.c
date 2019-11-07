@@ -22,18 +22,20 @@ const static profile_t default_profile = {
 		.s = {
 			.idle_duration = 1000*60*60*2,
 			.displayoff_duration = 1000*60*60,
-			.slaver_blink_interval = {{2000, 1500, 1000, 500}, {2000, 1500, 1000, 500}, {3000, 2300, 1500, 0}, {3000, 2300, 1500, 0}},
+			.slaver_blink_interval = {{3500, 2500, 1600, 1000}, {3500, 2500, 1600, 1000}, {2000, 2000, 3000, 0}, {3000, 2300, 1500, 0}},
 			.volume = 15,
 		}
 };
 
 void profile_load(void) {
 	uint16_t crc16;
+//	EE_Write_Data(0, default_profile.b, sizeof(profile_t));
 	EE_Read_Data(0, local_profile.b, sizeof(profile_t));
 	crc16 = crc16_cal(local_profile.b, sizeof(profile_t) - 2);
 	if(crc16 != local_profile.s.crc) {
 		memcpy(local_profile.b, default_profile.b, sizeof(profile_t));
 	}
+
 }
 
 void profile_save(void) {
